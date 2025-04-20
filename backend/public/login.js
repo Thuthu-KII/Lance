@@ -22,7 +22,7 @@ function signUp() {
     //send a request to a backend
 }
 
-function login() {
-    
+function login() {  
 }
-  
+
+module.exports = {selectRole, signUp, login}
