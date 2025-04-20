@@ -15,7 +15,7 @@ passport.use(new GoogleStrategy({
   // someone succesfully logs in
   async function(accessToken, refreshToken, profile/* this profile is the one you tap when you sign in, has all profile info */, cb) {
     try {
-        const { addUser, findUserByGoogleId } = require('./index.js'); // Import here to break circular dependency // import index
+        const { addUser, findUserByGoogleId } = require('../models/userModel.js'); // Import here to break circular dependency // import index
 
         let user = findUserByGoogleId.get(profile.id);
 
@@ -47,7 +47,7 @@ passport.serializeUser((user, cb) => {
   
   passport.deserializeUser(async (id, cb) => {
     try {
-        const {findUserById} = require("./index.js")
+        const {findUserById} = require("../models/userModel")
       const user = findUserById.get(id);
       cb(null, user);
     } catch (err) {
@@ -55,6 +55,8 @@ passport.serializeUser((user, cb) => {
     }
   });
 
-  module.exports={
-    username
-  }
+  module.exports = {
+    username,
+    passport
+  };
+  

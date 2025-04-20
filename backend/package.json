@@ -2,9 +2,9 @@
   "name": "api",
   "version": "1.0.0",
   "description": "",
-  "main": "routes/index.js",
+  "main": "app.js",
   "scripts": {
-    "dev": "nodemon routes/index.js",
+    "dev": "nodemon app.js",
     "test": "jest",
     "test:coverage": "jest --coverage --coverageReporters=text-lcov | tee coverage.lcov"
   },

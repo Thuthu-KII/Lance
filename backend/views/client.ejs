@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <title>Client Dashboard</title>
+    <link rel="stylesheet" href="/styles.css"> <!-- Link to your styles -->
+  </head>
+  
+    <header>
+      <h1>Welcome to Your Dashboard <%= user.displayName %>!</h1>
+      <nav>
+        <ul>
+          <li><a href="#applications">Job Applications</a></li>
+          <li><button id="openModalBtn">Post a New Job</button></li>
+          <li><a href="#accept-freelancer">Accept Freelancer</a></li>
+          <li><a href="#view-application">View Specific Application</a></li>
+        </ul>
+      </nav>
+    </header>
+  
+    <section id="applications">
+      <h2>Job Applications</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Freelancer</th>
+            <th>Job Title</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>John Doe</td>
+            <td>Web Developer</td>
+            <td>Pending</td>
+            <td><a href="/view-application/1">View</a></td>
+          </tr>
+          <tr>
+            <td>Jane Smith</td>
+            <td>Graphic Designer</td>
+            <td>Accepted</td>
+            <td><a href="/view-application/2">View</a></td>
+          </tr>
+          <tr>
+            <td>Mike Ross</td>
+            <td>Project Manager</td>
+            <td>Rejected</td>
+            <td><a href="/view-application/3">View</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  
+
+  
+
+ 
+  
+    <footer>
+      <p>&copy; 2025 Your Company</p>
+    </footer>
+  
+
+    <!-- The Modal -->
+    <div id="jobModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModalBtn">&times;</span>
+            <h2>Post a Job</h2>
+
+            <form id="jobForm" action="/client/post-job" method="POST">
+              <label for="ClientID">ClientID:</label>
+              <input type="number" id="ClientID" name="ClientID" required><br><br>
+
+              <label for="jobTitle">Job Title:</label>
+              <input type="text" id="jobTitle" name="jobTitle" required><br><br>
+            
+              <label for="jobDescription">Job Description:</label>
+              <textarea id="jobDescription" name="jobDescription" required></textarea><br><br>
+            
+              <label for="wage">Wage ($):</label>
+              <input type="number" id="wage" name="wage" required><br><br>
+            
+              <button type="submit">Post Job</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Get modal and buttons
+        const modal = document.getElementById('jobModal');
+        const openModalBtn = document.getElementById('openModalBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+
+        // Open the modal when the button is clicked
+        openModalBtn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        // Close the modal when the close button is clicked
+        closeModalBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // Close the modal when clicking outside the modal
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Handle the form submission
+        document.getElementById('jobForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const jobTitle = document.getElementById('jobTitle').value;
+            const jobDescription = document.getElementById('jobDescription').value;
+            const wage = document.getElementById('wage').value;
+            const ClientID = document.getElementById('ClientID').value;
+            console.log(ClientID);
+
+    //        POST data to the API
+            const url = '/client/post-job';
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  ClientID,
+                    jobTitle,
+                    jobDescription,
+                    wage
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Job Posted:',data);
+                alert('Job posted successfully!');
+                modal.style.display = "none";  // Close modal after posting job
+            })
+            .catch(error => {
+                console.log('Exrror posting job:', error);
+                alert('Error posting jobf',error);
+            });
+        });
+    </script>
+
+</body>
+</html>
