@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/js/script.js"></script>
+    <link href="/landingPage.css" rel="stylesheet">
+    
+</head>
+<body class="bg-gray-100">
+
+    <nav class="bg-white shadow-md">
+        <section class="container mx-auto flex justify-between items-center p-4">
+            <h1 class="text-2xl font-bold text-blue-600" href="/">Lance</h1>
+            <ul class="hidden md:flex space-x-6">
+                <li><a href="/" class="text-gray-600 hover:text-blue-500">Home</a></li>
+                <li><a href="#" class="text-gray-600 hover:text-blue-500">About</a></li>
+                <li><a href="#" class="text-gray-600 hover:text-blue-500">Services</a></li>
+                <li><a href="/contacts" class="text-gray-600 hover:text-blue-500">Contact</a></li>
+            </ul>
+            <button class="md:hidden text-gray-600">☰</button>
+        </section>
+    </nav>
+
+    <header id="header1" class="h-screen flex flex-col items-center justify-center text-center bg-cover bg-center bg-[url('/landingPageBackground.gif')] text-white">
+        <h1 id="welcome" class="text-6xl font-bold mb-4">Welcome to LanceAI</h1>
+        <p id="welcomeMsg" class="text-lg mb-6">We help you find the best freelancers in the game!</p>
+        <a id="getStartedBtn" href="/login" class="px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg shadow-md hover:bg-gray-200 transition">
+            Get Started
+        </a>
+    </header>
+
+    <!-- Features Section -->
+    <section class="container mx-auto py-16 text-center">
+        <h2 class="text-3xl font-bold mb-6">Why Choose Us?</h2>
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <section class="bg-white p-6 rounded-lg shadow-md hover:bg-sky-200">
+                <h3 class="text-xl font-semibold text-blue-600">Quick Search & Match</h3>
+                <p class="text-gray-600 mt-2">Our services are optimized for speed and efficiency.</p>
+            </section>
+            <section class="bg-white p-6 rounded-lg shadow-md hover:bg-sky-200">
+                <h3 class="text-xl font-semibold text-blue-600">Secure</h3>
+                <p class="text-gray-600 mt-2">We prioritize security to protect you by vetting out service providers</p>
+            </section>
+            <section class="bg-white p-6 rounded-lg shadow-md hover:bg-sky-200">
+                <h3 class="text-xl font-semibold text-blue-600">Support</h3>
+                <p class="text-gray-600 mt-2">Our team is available during working hours to assist you.</p>
+            </section>
+        </section>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="bg-blue-600 text-whi`te py-16 text-center">
+        <h2 class="text-3xl font-bold">Ready to get started?</h2>
+        <p class="mt-2 text-lg">Join us today and take your business to the next level.</p>
+        <a id="signUpBtn" href="/auth/google" class="mt-4 inline-block bg-white text-blue-600 px-6 py-3 rounded-lg shadow-md font-semibold hover:bg-gray-200 transition">
+            Sign Up Now
+        </a>
+    </section>
+
+    <footer class="bg-gray-800 text-white text-center py-6">
+        <p>&copy; Still Cooking</p>
+    </footer>
+
+</body>
+</html>
+
+
+<!-- <% error.forEach(err=>{ %>
+                        <p style="color:red;" class="notice"><%=err.message%></p>
+                   <% }) %> -->
