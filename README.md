@@ -20,7 +20,7 @@ Lance is a freelancer platform enabling clients to post jobs and freelancers to 
 
 Handles authentication logic including Google OAuth, role validation, and secure redirects.
 
-### Implemented Features:
+### Implemented Features(so far):
 - **Google OAuth with Role Identification**  
   Uses the OAuth `state` parameter to pass the user role (Client or Freelancer) during authentication.
 - **Passport Strategy and Serialization**
@@ -34,7 +34,7 @@ Handles authentication logic including Google OAuth, role validation, and secure
 
 Covers client-specific backend functionality: job posting, job application handling, and client dashboard operations.
 
-### Implemented Features:
+### Implemented Features(so far):
 - **Dashboard Rendering**
   - Modified `client.ejs`, `homepage.ejs`, and `login.ejs` to correctly render user data from routes.
 - **Client Job Posting (Stub-based)**
