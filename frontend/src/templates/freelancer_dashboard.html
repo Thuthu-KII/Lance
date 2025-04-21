@@ -37,21 +37,21 @@
     </style>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-gray-50 to-primary-50 font-sans">
-    <div class="flex h-screen overflow-hidden">
+    <section class="flex h-screen overflow-hidden">
         <!-- Sidebar -->
-        <div id="sidebar" class="fixed inset-y-0 left-0 transform -translate-x-full md:translate-x-0 transition duration-200 ease-in-out z-30 w-64 bg-white shadow-lg">
-            <div class="flex flex-col h-full">
+        <section id="sidebar" class="fixed inset-y-0 left-0 transform -translate-x-full md:translate-x-0 transition duration-200 ease-in-out z-30 w-64 bg-white shadow-lg">
+            <section class="flex flex-col h-full">
                 <!-- Logo Section -->
-                <div class="p-6 border-b">
-                    <div class="flex items-center space-x-3">
-                        <div class="h-10 w-10 bg-primary-500 rounded-lg flex items-center justify-center">
+                <section class="p-6 border-b">
+                    <section class="flex items-center space-x-3">
+                        <section class="h-10 w-10 bg-primary-500 rounded-lg flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                        </div>
+                        </section>
                         <span class="text-xl font-bold">Lance</span>
-                    </div>
-                </div>
+                    </section>
+                </section>
 
                 <!-- Navigation Links -->
                 <nav class="flex-1 p-4 space-y-2">
@@ -78,25 +78,25 @@
                 </nav>
 
                 <!-- Bottom Section with Sign Out -->
-                <div class="p-4 border-t">
+                <section class="p-4 border-t">
                     <button onclick="alert('Sign out clicked')" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-gray-50 transition duration-150 w-full">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                         </svg>
                         <span>Sign Out</span>
                     </button>
-                </div>
-            </div>
-        </div>
+                </section>
+            </section>
+        </section>
 
         <!-- Mobile Overlay -->
-        <div id="sidebar-overlay" class="fixed inset-0 bg-gray-800 bg-opacity-50 z-20 hidden md:hidden" onclick="toggleSidebar()"></div>
+        <section id="sidebar-overlay" class="fixed inset-0 bg-gray-800 bg-opacity-50 z-20 hidden md:hidden" onclick="toggleSidebar()"></section>
 
         <!-- Main Content -->
-        <div class="flex-1 flex flex-col md:pl-64">
+        <section class="flex-1 flex flex-col md:pl-64">
             <!-- Top Navigation Bar -->
             <header class="bg-white shadow-sm h-16 fixed w-full md:w-[calc(100%-16rem)] z-10">
-                <div class="px-4 h-full flex items-center justify-between">
+                <section class="px-4 h-full flex items-center justify-between">
                     <!-- Hamburger Menu Button (Mobile Only) -->
                     <button onclick="toggleSidebar()" class="p-2 rounded-lg hover:bg-gray-100 md:hidden">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -105,94 +105,94 @@
                     </button>
 
                     <!-- Profile Menu -->
-                    <div class="flex items-center space-x-4">
+                    <section class="flex items-center space-x-4">
                         <span class="text-sm text-gray-600">Boitumelo</span>
                         <button class="h-8 w-8 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 font-medium">
                             B
                         </button>
-                    </div>
-                </div>
+                    </section>
+                </section>
             </header>
 
             <!-- Main Content Area -->
             <main class="flex-1 overflow-y-auto pt-16">
-                <div class="p-6 md:p-8">
+                <section class="p-6 md:p-8">
                     <!-- Header Section -->
                     <header class="mb-8 glass-effect rounded-2xl p-6 shadow-lg">
-                        <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-                            <div class="flex items-center space-x-3">
-                                <div class="h-10 w-10 bg-primary-500 rounded-lg flex items-center justify-center">
+                        <section class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                            <section class="flex items-center space-x-3">
+                                <section class="h-10 w-10 bg-primary-500 rounded-lg flex items-center justify-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
-                                </div>
+                                </section>
                                 <h1 class="text-2xl font-bold text-gray-800">Lance Dashboard</h1>
-                            </div>
-                            <div class="flex items-center space-x-4">
-                                <div class="bg-white px-4 py-2 rounded-lg shadow-sm">
+                            </section>
+                            <section class="flex items-center space-x-4">
+                                <section class="bg-white px-4 py-2 rounded-lg shadow-sm">
                                     <span class="text-sm text-gray-500">Balance Due</span>
                                     <span class="ml-2 font-semibold text-gray-800">R 0</span>
-                                </div>
+                                </section>
                                 <button class="bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-lg transition duration-200 ease-in-out transform hover:scale-105">
                                     + New Job
                                 </button>
-                            </div>
-                        </div>
+                            </section>
+                        </section>
                     </header>
                     <!-- Welcome Section -->
                     <section class="mb-8 glass-effect rounded-2xl p-6 shadow-lg">
-                        <div class="space-y-2">
-                            <div class="flex items-center space-x-2">
+                        <section class="space-y-2">
+                            <section class="flex items-center space-x-2">
                                 <span class="text-sm bg-primary-100 text-primary-500 px-3 py-1 rounded-full">Welcome back</span>
                                 <h3 class="text-2xl font-semibold text-gray-800">Hi, Boitumelo </h3>
-                            </div>
+                            </section>
                             <p class="text-gray-500">Here's what's happening with your projects today.</p>
-                        </div>
+                        </section>
                     </section>
 
                     <!-- Stats Section -->
                     <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                        <div class="glass-effect rounded-2xl p-6 shadow-lg">
-                            <div class="flex items-center justify-between">
+                        <section class="glass-effect rounded-2xl p-6 shadow-lg">
+                            <section class="flex items-center justify-between">
                                 <h3 class="text-gray-500">Active Projects</h3>
                                 <span class="text-primary-500 bg-primary-50 p-2 rounded-lg">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                                     </svg>
                                 </span>
-                            </div>
+                            </section>
                             <p class="text-3xl font-bold text-gray-800 mt-2">12</p>
-                        </div>
-                        <div class="glass-effect rounded-2xl p-6 shadow-lg">
-                            <div class="flex items-center justify-between">
+                        </section>
+                        <section class="glass-effect rounded-2xl p-6 shadow-lg">
+                            <section class="flex items-center justify-between">
                                 <h3 class="text-gray-500">Completed</h3>
                                 <span class="text-green-500 bg-green-50 p-2 rounded-lg">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
                                 </span>
-                            </div>
+                            </section>
                             <p class="text-3xl font-bold text-gray-800 mt-2">23</p>
-                        </div>
-                        <div class="glass-effect rounded-2xl p-6 shadow-lg">
-                            <div class="flex items-center justify-between">
+                        </section>
+                        <section class="glass-effect rounded-2xl p-6 shadow-lg">
+                            <section class="flex items-center justify-between">
                                 <h3 class="text-gray-500">Pending</h3>
                                 <span class="text-yellow-500 bg-yellow-50 p-2 rounded-lg">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
                                 </span>
-                            </div>
+                            </section>
                             <p class="text-3xl font-bold text-gray-800 mt-2">4</p>
-                        </div>
+                        </section>
                     </section>
 
                     <!-- Table Section -->
                     <section class="glass-effect rounded-2xl shadow-lg overflow-hidden">
-                        <div class="p-6 border-b border-gray-100">
+                        <section class="p-6 border-b border-gray-100">
                             <h2 class="text-xl font-semibold text-gray-800">Current Jobs & Tasks</h2>
-                        </div>
-                        <div class="overflow-x-auto">
+                        </section>
+                        <section class="overflow-x-auto">
                             <table class="min-w-full">
                                 <thead>
                                     <tr class="bg-gray-50">
@@ -210,27 +210,27 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-gray-100" id="tableBody">
+                                <tbody class="sectionide-y sectionide-gray-100" id="tableBody">
                                     <!-- Loading State -->
                                     <tr id="loadingRow">
                                         <td colspan="4" class="px-6 py-8 text-center">
-                                            <div class="flex items-center justify-center space-x-3">
+                                            <section class="flex items-center justify-center space-x-3">
                                                 <svg class="animate-spin h-5 w-5 text-primary-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                                 </svg>
                                                 <span class="text-sm text-gray-500">Loading jobs...</span>
-                                            </div>
+                                            </section>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
+                        </section>
                     </section>
-                </div>
+                </section>
             </main>
-        </div>
-    </div>
+        </section>
+    </section>
 </body>
 <script src="/frontend/src/scripts/freelancerDashboard.js"></script>
 </html>
