@@ -9,6 +9,14 @@ const createTables = db.prepare(`
         displayName TEXT NOT NULL
     )
 `).run();
+// this is the only way i could get the code to run without getting an sqlite error
+try {
+    db.prepare(`ALTER TABLE users ADD COLUMN role TEXT DEFAULT 'user'`).run();
+} catch (err) {
+    if (!err.message.includes("duplicate column name")) {
+        throw err; // Only ignore if column already exists
+    }
+}
 const addUser = db.prepare(`
     INSERT OR IGNORE INTO users (googleId, email, displayName) 
     VALUES (@googleId, @email, @displayName)
@@ -22,5 +30,8 @@ const findUserByEmail = db.prepare(`
     SELECT * FROM users WHERE email = ?
 `); // Find user by email
 
+const updateUserRole = db.prepare(`
+    UPDATE users SET role = ? WHERE googleId = ?
+  `);
 const findUserById = db.prepare('SELECT * FROM users WHERE id = ?');
-module.exports = { addUser, findUserByEmail, findUserByGoogleId, findUserById};
+module.exports = { addUser, findUserByEmail, findUserByGoogleId, findUserById, updateUserRole};
