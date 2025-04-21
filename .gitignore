@@ -3,3 +3,4 @@ node_modules
 LANCE.db
 LANCE.db-shm
 LANCE.db-wal
+backend
