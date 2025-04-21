@@ -6,5 +6,4 @@ Codebase for the freelancer app, Lance
 simplify(String complex) | string complex is the complicated stuff | simplifier | simplifies complex stuff
 
 # Front end
-
 # Backend
