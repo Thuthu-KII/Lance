@@ -59,7 +59,7 @@ passport.serializeUser((user, cb) => {
     // /console.log(role, "   ", id);
 
     const user = findUserByGoogleId.get(id,role); // this must not be undefined if undefined the user doe
-  //  console.log(user);
+//    console.log(user);
     if (!user) return cb(new Error("User not found"));
     cb(null, [the_user,user,role]);
   });
