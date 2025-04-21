@@ -12,7 +12,7 @@ Codebase for the freelancer app, Lance.
 - [Contributing](#contributing)
 
 ## Overview
-Lance is a freelancer platform enabling clients to post jobs and freelancers to apply. This repository contains the backend and API logic for the platform.
+Lance is a freelancer platform enabling clients to post jobs and freelancers to apply. This repository `so far` contains the backend and API logic for the platform.
 
 ---
 
@@ -23,14 +23,10 @@ Handles authentication logic including Google OAuth, role validation, and secure
 ### Implemented Features:
 - **Google OAuth with Role Identification**  
   Uses the OAuth `state` parameter to pass the user role (Client or Freelancer) during authentication.
-
-- **Role Validation in Callback**  
-  Retrieves the role from `req.query.state` in `/google/callback` and redirects users to their respective dashboards.
-
 - **Passport Strategy and Serialization**
   - Populates a custom user object in the OAuth callback.
   - `serializeUser` stores only `googleId` and `role`.
-  - `deserializeUser` fetches user from the database using `googleId` and `role`, attaching it to `req.user`.
+  - `deserializeUser` fetches user from the database using `googleId` and `role`, attaching it to `req.user` it returns  [the_user,user,role] array of objs, the_user has the profile info such as name, email etc
 
 ---
 
@@ -39,12 +35,11 @@ Handles authentication logic including Google OAuth, role validation, and secure
 Covers client-specific backend functionality: job posting, job application handling, and client dashboard operations.
 
 ### Implemented Features:
-- **Client Job Posting (Stub-based)**
-  - Routes created to handle job posting via form submission.
-  - Uses temporary SQLite stubs locally; PostgreSQL integration expected for production.
-
 - **Dashboard Rendering**
   - Modified `client.ejs`, `homepage.ejs`, and `login.ejs` to correctly render user data from routes.
+- **Client Job Posting (Stub-based)**
+  - Routes created to handle job posting via form submission.
+  - Uses temporary SQLite stubs locally
 
 ---
 ### Backend Freelance
