@@ -17,12 +17,11 @@ jobs:
         with:
           node-version: "18"
 
-      - run: npm install --prefix backend
-      - run: npm test --prefix backend
-      - run: npm run test:coverage --prefix backend
+      - run: npm install 
+      - run: npm test  
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: backend/coverage/lcov.info
+          files: coverage/lcov.info
