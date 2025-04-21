@@ -109,8 +109,7 @@
             <h2>Post a Job</h2>
 
             <form id="jobForm" action="/client/post-job" method="POST">
-              <label for="ClientID">ClientID:</label>
-              <input type="number" id="ClientID" name="ClientID" required><br><br>
+      
 
               <label for="jobTitle">Job Title:</label>
               <input type="text" id="jobTitle" name="jobTitle" required><br><br>
@@ -156,8 +155,9 @@
             const jobTitle = document.getElementById('jobTitle').value;
             const jobDescription = document.getElementById('jobDescription').value;
             const wage = document.getElementById('wage').value;
-            const ClientID = document.getElementById('ClientID').value;
-            console.log(ClientID);
+            const ClientID =  "<%= user2.id %>";
+      //      console.log(ClientID);
+          
 
     //        POST data to the API
             const url = '/client/post-job';
