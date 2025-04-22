@@ -21,5 +21,6 @@ router.get("/dashboard/freelancer/jobs", (req,res) => {
 router.get("/dashboard/client", (req, res) => {
     res.render("Client", { user: req.user });
   });
-  router.get("/dashboard/freelancer", (req, res) => res.render("freelancer_dashboard"));
+// checking 
+router.get("/dashboard/freelancer", (req, res) => res.render("freelancer_dashboard"));
 module.exports = router;
