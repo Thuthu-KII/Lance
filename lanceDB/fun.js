@@ -44,7 +44,7 @@ async function showAvailableJobs() {
         });
 
         const plainJobs = jobs.map(job => job.get({ plain: true }));
-        console.log(plainJobs);
+        console.log(plainJobs); // return jobs as json
 
     } catch (err) {
         console.log("Could not retrieve job details:", err);
