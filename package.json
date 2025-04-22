@@ -29,7 +29,6 @@
     "supertest": "^7.1.0"
   },
   "jest": {
-    "testEnvironment": "jsdom",
-    "setupFiles": ["Lance/jest.setup.js"]
+    "testEnvironment": "jsdom"
   }
 }
