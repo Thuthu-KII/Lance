@@ -30,5 +30,6 @@
   },
   "jest": {
     "testEnvironment": "jsdom"
+    "setupFiles": ["Lance/jest.setup.js"]
   }
 }
