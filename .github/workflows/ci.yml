@@ -21,7 +21,7 @@ jobs:
         run: echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> $GITHUB_ENV
 
       - run: npm install
-      - run: npm test -- --coverage
+      - run: npm test 
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
