@@ -29,6 +29,13 @@ const Jobs = sequelize.define('Jobs', {
       max: 2
     }
   }, 
+  /*Wage: { //adding wage for a specific job to the DB table
+    type: DataTypes.INTEGER, 
+    defaultValue: 0,
+    allowNull : false,
+
+  } */
+
 },  {
   tableName: 'jobs', // Use lowercase for PostgreSQL
   schema: 'public', // Explicitly specify schema

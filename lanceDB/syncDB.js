@@ -1,5 +1,7 @@
 const sequelize = require('./sequelize');
-const Jobs = require('./schema')
+const Jobs = require('./schema');
+const l = require('./lancers-table');
+const c = require('./clients-table');
 /*
 async function syncDatabase() {
   try {
