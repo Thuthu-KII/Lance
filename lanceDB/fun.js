@@ -1,7 +1,7 @@
 const db = require('./schema'); // This gives access to all models
 const sequelize = require('./sequelize'); // Sequelize instance
 
-let name = "George";
+let name = "Georgess";
 let jobtitle = "MongoDB";
 let description = "Looking for an experienced guy who loves Mongo like me";
 let status = 0;
@@ -111,3 +111,5 @@ async function addClient(id, contact) {
         await sequelize.close();
     }
 }
+
+//addJob(name, jobtitle, description, status);
