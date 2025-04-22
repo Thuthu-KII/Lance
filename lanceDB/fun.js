@@ -1,124 +1,113 @@
-const jobs = require('./schema');
-const lancers = require('./lancers-table');
-const clients = require('./clients-table');
-const sequelize = require('./sequelize');
+const db = require('./schema'); // This gives access to all models
+const sequelize = require('./sequelize'); // Sequelize instance
 
 let name = "George";
 let jobtitle = "MongoDB";
-let description = "Looking for an experienced guy who loves Mongo like me"
+let description = "Looking for an experienced guy who loves Mongo like me";
 let status = 0;
 
-
-async function addJob(name,jobTitle,description,status){ //adds a job
-    try{
+async function addJob(name, jobTitle, description, status) {
+    try {
         await sequelize.authenticate();
         console.log("Connection to database established");
 
-        await jobs.sync();
+        await db.Jobs.sync();
 
-       const newJob = await jobs.create({
+        const newJob = await db.Jobs.create({
             clientName: name,
-            jobTitle: jobtitle,
-            description:description,
+            jobTitle: jobTitle,
+            description: description,
             Status: status
-
         });
 
-        console.log('Job created successfully.',newJob.toJSON() );
+        console.log('Job created successfully.', newJob.toJSON());
 
-
-    }catch(err){
-        console.log("Job could not be added to the database: " , err);
-
-
-    }finally{
+    } catch (err) {
+        console.log("Job could not be added to the database:", err);
+    } finally {
         await sequelize.close();
-        console.log('Conection closed');
-
+        console.log('Connection closed');
     }
 }
 
-async function showAvailableJobs(){ //shows all available jobs, returns JSON array that with relevant information
-    try{
+async function showAvailableJobs() {
+    try {
         await sequelize.authenticate();
         console.log("Connection to database established");
-        await jobs.sync();
-        const job = await jobs.findAll({attributes:['jobID','clientName','jobTitle','description'],
-            where:{
+        await db.Jobs.sync();
+
+        const jobs = await db.Jobs.findAll({
+            attributes: ['jobID', 'clientName', 'jobTitle', 'description'],
+            where: {
                 Status: 0
             }
         });
-        const plainjob = job.map(job => job.get({plain: true})); //returns  just the relevant job info that we wanted
-        plainjob[status] = 'Still taking applications';
-        console.log(plainjob);
-    }catch(err){
-        console.log("Could not retrieve job details: ", err);
 
-    }finally{
+        const plainJobs = jobs.map(job => job.get({ plain: true }));
+        console.log(plainJobs);
+
+    } catch (err) {
+        console.log("Could not retrieve job details:", err);
+    } finally {
         await sequelize.close();
-
     }
 }
 
-async function showSpecificJob(id){ //shows a specific job, returns a 
-    try{
+async function showSpecificJob(id) {
+    try {
         await sequelize.authenticate();
         console.log("Connection to database established");
-        await jobs.sync();
-        const job = await jobs.findAll({attributes:['clientName','jobTitle','description'],
-            where:{
-                jobId: id
-            }
-        }); //runs a select where a certain condition is met
-        console.log(job);
-    }catch(err){
-        console.log("Could not retrieve job details: ", err);
+        await db.Jobs.sync();
 
-    }finally{
+        const job = await db.Jobs.findOne({
+            attributes: ['clientName', 'jobTitle', 'description'],
+            where: { jobID: id }
+        });
+
+        console.log(job?.get({ plain: true }) || "Job not found");
+
+    } catch (err) {
+        console.log("Could not retrieve job details:", err);
+    } finally {
         await sequelize.close();
-
     }
-
 }
 
-async function addLancer(id,contact,occ){
-        try{
-            await sequelize.authenticate();
-            await jobs.sync();
-            const user = await clients.create({
-                lancerId : id,
-                contactInfo : contact,
-                occuptation: occ
-            });
-        }catch(e){
-            console.log("Error adding user. Please try again. ", e);
-        }finally{
-            await sequelize.close();
+async function addLancer(id, contact, occ) {
+    try {
+        await sequelize.authenticate();
+        await db.Lancers.sync();
 
-        }
-    
+        const user = await db.Lancers.create({
+            lancerId: id,
+            contactInfo: contact,
+            occupation: occ
+        });
+
+        console.log("Lancer added:", user.toJSON());
+
+    } catch (e) {
+        console.log("Error adding user. Please try again:", e);
+    } finally {
+        await sequelize.close();
+    }
 }
 
-async function addClient(id,contact){
-        try{
-            await sequelize.authenticate();
-            await jobs.sync();
-            const user = await clients.create({
-                clientId : id,
-                contactInfo : contact
-            });
-        }catch(e){
-            console.log("Error adding user. Please try again. ", e);
-        }finally{
-            await sequelize.close();
-            
-        }
-    
+async function addClient(id, contact) {
+    try {
+        await sequelize.authenticate();
+        await db.Clients.sync();
+
+        const user = await db.Clients.create({
+            clientId: id,
+            contactInfo: contact
+        });
+
+        console.log("Client added:", user.toJSON());
+
+    } catch (e) {
+        console.log("Error adding user. Please try again:", e);
+    } finally {
+        await sequelize.close();
+    }
 }
-
-addJob(name,jobtitle,description,status);
-showAvailableJobs();
-
-
-
-
