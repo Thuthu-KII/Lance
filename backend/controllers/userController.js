@@ -11,7 +11,6 @@ exports.postJob = (req, res) => {
       description: jobDescription, 
       wage: wage
     });
-    console.log("Sdfsdfs");
     res.json({ message: 'Job posted successfully!' });
   } catch (error) {
     res.status(500).json({ error: 'Failed to post job' });
