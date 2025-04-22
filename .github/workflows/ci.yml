@@ -16,8 +16,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "18"
+      
+      - name: Set environment variables
+        run: echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> $GITHUB_ENV
 
-      - run: npm install 
+      - run: npm install
       - run: npm test  
 
       - name: Upload coverage to Codecov
