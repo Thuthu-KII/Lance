@@ -1,6 +1,7 @@
 const request  = require('supertest');
-const app = require('../routes/index.js');
-
+const app = require('../routes/authRoutes.js');
+require('dotenv').config({ path: '../.env.test' });
+console.log('GOOGLE_CLIENT_ID:', process.env.GOOGLE_CLIENT_ID);
 
 describe('Auth routes', ()=>{
     it('should load /login route', async ()=>{

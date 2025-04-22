@@ -1,13 +1,16 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
-require('dotenv').config();
+//require('dotenv').config();
 
+const path = require('path');
 
-
+const envFile = process.env.NODE_ENV === 'test' ? '.env.test' : '.env';
+require('dotenv').config({
+  path: path.resolve(__dirname, '..', envFile)
+});  
 
 let userName="";
 let role="";
-
 
 //
 //console.log(process.env.GOOGLE_CLIENT_ID);
