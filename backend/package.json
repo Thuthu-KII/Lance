@@ -17,6 +17,7 @@
     "express": "^5.1.0",
     "express-openid-connect": "^2.18.0",
     "express-session": "^1.18.1",
+    "jsdom": "^26.1.0",
     "nodemon": "^3.1.9",
     "passport": "^0.7.0",
     "passport-google-oauth2": "^0.2.0"
