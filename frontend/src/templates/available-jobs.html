@@ -123,8 +123,9 @@
                                 <h1 class="text-2xl font-bold text-gray-800">Available Jobs</h1>
                                 <p class="text-gray-500">Find your next opportunity</p>
                             </section>
+                            <!--
                             <section class="flex space-x-4">
-                                <!-- Search Bar -->
+                                Search Bar
                                 <section class="relative">
                                     <input type="text" 
                                            placeholder="Search jobs..." 
@@ -137,7 +138,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                     </svg>
                                 </section>
-                                <!-- Filter Button -->
+                                <Filter Button
                                 <button class="flex items-center space-x-2 px-4 py-2 border rounded-lg hover:bg-gray-50">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
@@ -145,6 +146,7 @@
                                     <span>Filters</span>
                                 </button>
                             </section>
+                            -->
                         </section>
                     </section>
 
@@ -165,17 +167,16 @@
                     </section>
 
                     <!-- Jobs Grid -->
-                    <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <section class="grid grid-cols-1 md:grid-cols-2 gap-6" id="jobGrid">
                         <!-- Job Card -->
-                        <section class="glass-effect rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow cursor-pointer">
+                        <card id="loadingCard" class="glass-effect rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow cursor-pointer">
                             <section class="flex justify-between items-start mb-4">
                                 <section class="flex items-center space-x-3">
                                     <section class="h-12 w-12 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 font-medium">
                                         TE
                                     </section>
                                     <section>
-                                        <h3 class="font-semibold text-gray-800">Senior Frontend Developer</h3>
-                                        <p class="text-sm text-gray-500">Tech Enterprise Inc.</p>
+                                        <h3 class="font-semibold text-gray-800">Loading Jobs</h3>
                                     </section>
                                 </section>
                                 <button class="text-primary-500 hover:text-primary-600">
@@ -184,24 +185,7 @@
                                     </svg>
                                 </button>
                             </section>
-                            <section class="space-y-4">
-                                <p class="text-gray-600">Looking for an experienced frontend developer to join our team and help build modern web applications.</p>
-                                <section class="flex flex-wrap gap-2">
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 text-gray-600">React</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 text-gray-600">TypeScript</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 text-gray-600">Tailwind</span>
-                                </section>
-                                <section class="flex items-center justify-between pt-4 border-t border-gray-100">
-                                    <section class="flex items-center space-x-4">
-                                        <span class="text-sm text-gray-500">R80-R100/hr</span>
-                                        <span class="text-sm text-gray-500">Remote</span>
-                                    </section>
-                                    <button class="px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors">
-                                        Apply Now
-                                    </button>
-                                </section>
-                            </section>
-                        </section>
+                        </card>
 
                         <!-- Add more job cards here -->
                     </section>
@@ -221,4 +205,5 @@
         </section>
     </section>
 </body>
+<script src="/frontend/src/scripts/availableJobs.js"></script>
 </html>
