@@ -26,18 +26,18 @@ router.get("/select-role", (req, res) => {
   router.get("/set-role/:role", async (req, res) => {
     if (!req.user) return res.redirect("/");
     
+    // saving usertype in sqlite
     const { updateUserRole } = require('../models/userModel');
     updateUserRole.run(req.params.role, req.user.googleId);
     req.user.user_type = req.params.role;
     
     res.redirect(`/dashboard/${req.user.user_type}`);
   });
-// this should be in pages route
-  router.get("/dashboard/client", (req, res) => {
-    res.render("Client", { user: req.user });
-  });
-  router.get("/dashboard/freelancer", (req, res) => res.render("freelancer_dashboard"));
-
+// // this should be in pages route
+// router.get("/dashboard/client", (req, res) => {
+//   res.render("Client", { user: req.user });
+// });
+// router.get("/dashboard/freelancer", (req, res) => res.render("freelancer_dashboard"));
 
 router.get('/signed', isLogged, (req, res) => res.render("client", { user: req.user }));
 router.get('/auth/failure', (req, res) => res.render("homepage", { error: ["failed to authenticate email"] }));
