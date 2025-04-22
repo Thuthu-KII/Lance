@@ -11,28 +11,15 @@
   <!-- Main content wrapper -->
   <main class="flex-grow flex items-start justify-center pt-10">
     <section class="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
-      <!-- Role Selection -->
-      <section id="role-selection" class="text-center">
-          <h2 class="text-2xl font-bold text-blue-600 mb-6">What best describes your role?</h2>
-          <section class="flex justify-center gap-4">
-              <button onclick="selectRole('client')" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
-                Client
-              </button>
-              <button onclick="selectRole('freelancer')" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
-              Freelancer
-              </button>
-          </section>
-      </section>
-
-      <!-- Sign in Form (hidden by default) -->
-      <section id="Sign-up-section" style="display: none;" class="mt-8">
+      <!-- Sign up Form -->
+      <section id="Sign-up-section" class="mt-8">
           <h2 class="text-xl font-semibold text-gray-800 mb-4 text-center">
-              Sign up as <em id="user-role" class="text-blue-600 font-bold"></em>
+              Create your account
           </h2>
           <section class="flex flex-col gap-4">
               <input type="text" id="email" placeholder="Email" class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
               <input type="password" id="password" placeholder="Password" class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
-              <input type ="password" id="confirm" placeholder="Confirm Password" class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+              <input type="password" id="confirm" placeholder="Confirm Password" class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
               <button onclick="signUp()" class="mt-2 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">                
               Sign Up
               </button>
@@ -40,7 +27,6 @@
                 <img src="https://developers.google.com/identity/images/g-logo.png" class="w-5 h-5" alt="Google logo" />
                 <a href="/auth/google">Sign in with Google</a>
               </button>
-              
           </section>
       </section>
     </section>
