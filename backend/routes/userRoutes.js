@@ -12,8 +12,10 @@ router.post('/register', (req, res) => {
     addUser.run({ googleId, email, displayName });
     res.redirect('/login');
 });
-
+// posting job function listens to client.ejs
 router.post('/post-job', userController.postJob);
 
-
+router.get("/applications", (req,res)=>{
+    res.render("clientdash",{ user1: req.user[0], user2:req.user[1] });
+});
 module.exports = router;
