@@ -28,3 +28,22 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage/lcov.info
+
+      - name: Install serve, ngrok, and jq (required for URL extraction)
+        run: |
+          npm install -g serve ngrok
+          sudo apt-get install -y jq  # Required to parse ngrok's JSON output
+
+      - name: Serve and expose coverage report via ngrok
+        run: |
+          # Start the server in the background
+          npx serve -s ./coverage/lcov-report -l 4000 &
+          
+          # Start ngrok and capture its public URL
+          npx ngrok http 4000 > /dev/null &
+          sleep 5  # Wait for ngrok to initialize
+          NGROK_URL=$(curl -s http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url')
+          
+          # Make the URL available in workflow logs
+          echo "Coverage report is live at: $NGROK_URL"
+          echo "REPORT_URL=$NGROK_URL" >> $GITHUB_ENV
