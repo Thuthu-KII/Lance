@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: ["**"]
+    branches: ["backend-api"]
   pull_request:
-    branches: ["**"]
+    branches: ["backend-api"]
 
 jobs:
   test:
@@ -21,10 +21,10 @@ jobs:
         run: echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> $GITHUB_ENV
 
       - run: npm install
-      - run: npm test  
+      - run: npm test -- --coverage
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: coverage/lcov.info
+          files: ./coverage/lcov.info
