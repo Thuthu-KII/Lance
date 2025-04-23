@@ -17,6 +17,22 @@ router.get("/dashboard/freelancer/jobs", (req,res) => {
     res.render("jobs")
 })
 
+router.get("/applications", (req, res) => {
+    const jobId = req.query.jobId;
+    
+    if (!jobId) {
+        // No jobId? Back to the job list you go.
+        return res.redirect('/dashboard/client');
+    }
+
+    // Ideally, you'd pull applications tied to that jobId from your DB.
+    // For now, we just send the jobId to the template
+    res.render("applications", {
+        jobId: jobId,
+        // applications: getApplicationsForJob(jobId)
+    });
+});
+
 router.get("/jobdetails", (req, res) => {
     const jobId = req.query.jobId;
     if (!jobId) {
@@ -37,7 +53,7 @@ router.get("/dashboard/freelancer/profile", (req,res) => {
     res.render("profile")
 })
 router.get("/dashboard/client", (req, res) => {
-    res.render("Client", { user: req.user });
+    res.render("clientDashboard", { user: req.user });
   });
 // checking 
 router.get("/dashboard/freelancer", (req, res) => res.render("freelancer_dashboard"));

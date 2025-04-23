@@ -27,7 +27,7 @@ const jobs = [
     },
     {
         id: 3,
-        clientName: "Mike Brown",
+        clientName: "Mike",
         jobTitle: "SEO Optimization",
         description: "Improve website ranking and visibility",
         status: "Pending",
@@ -75,14 +75,14 @@ function populateTable() {
 
             row.innerHTML = `
                 <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="flex items-center">
-                        <div class="h-8 w-8 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 font-medium">
+                    <section class="flex items-center">
+                        <section class="h-8 w-8 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 font-medium">
                             ${job.clientName.charAt(0)}
-                        </div>
-                        <div class="ml-3">
+                        </section>
+                        <section class="ml-3">
                             <p class="text-sm font-medium text-gray-800">${job.clientName}</p>
-                        </div>
-                    </div>
+                        </section>
+                    </section>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                     <p class="text-sm text-gray-800">${job.jobTitle}</p>
