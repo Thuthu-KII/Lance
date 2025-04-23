@@ -315,17 +315,16 @@
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                  ClientID,
                     jobTitle,
                     jobDescription,
-                    wage
+                    wage,
                 }),
 
             })
             .then(response => response.json())
             .then(data => {
                 console.log('Job Posted:',data);
-                alert('Job posted successfully!');
+                alert('Job posted successfully! nigga!');
                 closeModal();  // Close modal after posting job
                  //just a log response
             console.log('Form submitted:', {
