@@ -51,6 +51,7 @@ function ensureAuthenticated(req, res, next) {
 
 router.get('/Client-in', isLogged,ensureAuthenticated, (req, res) => res.render("clientdash", { user1: req.user[0], user2:req.user[1] }));
 
+router.get('/Freelancer-in', isLogged,ensureAuthenticated, (req, res) => res.render("freelancer_dashboard", { user1: req.user[0], user2:req.user[1] }));
 router.get('/auth/failure', (req, res) => res.render("homepage", { error: ["failed to authenticate email"] }));
 router.get('/logout', (req, res) => req.logout(err => { 
     if (err) return res.status(500).send("Logout failed");

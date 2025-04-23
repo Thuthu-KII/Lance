@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Details - Lance</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-gray-50 to-primary-50 font-sans">
+    <section class="flex h-screen overflow-hidden">
+        <!-- Sidebar (same as jobs page) -->
+        <section id="sidebar" class="fixed inset-y-0 left-0 transform -translate-x-full md:translate-x-0 transition duration-200 ease-in-out z-30 w-64 bg-white shadow-lg">
+            <!-- Your existing sidebar content from jobs.txt -->
+        </section>
+
+        <!-- Main Content -->
+        <section class="flex-1 flex flex-col md:pl-64">
+            <!-- Top Navigation Bar -->
+            <header class="bg-white shadow-sm h-16 fixed w-full md:w-[calc(100%-16rem)] z-10">
+                <!-- Your existing header content from jobs.txt -->
+            </header>
+
+            <!-- Main Content Area -->
+            <main class="flex-1 overflow-y-auto pt-16">
+                <section class="p-6 md:p-8">
+                    <!-- Back Button -->
+                    <section class="mb-6">
+                        <button onclick="window.history.back()" class="flex items-center text-primary-600 hover:text-primary-800 transition duration-150">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                            </svg>
+                            <span class="ml-2">Back to Jobs</span>
+                        </button>
+                    </section>
+
+                    <!-- Job Details Section -->
+                    <section class="glass-effect rounded-2xl shadow-lg overflow-hidden">
+                        <section class="p-6 border-b border-gray-100">
+                            <h2 class="text-xl font-semibold text-gray-800">Job Details</h2>
+                        </section>
+                        
+                        <section id="jobDetails" class="p-6">
+                            <!-- Loading State -->
+                            <section id="loadingState" class="text-center">
+                                <section class="flex items-center justify-center space-x-3">
+                                    <svg class="animate-spin h-5 w-5 text-primary-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    <span class="text-sm text-gray-500">Loading job details...</span>
+                                </section>
+                            </section>
+
+                            <!-- Job Content (will be populated dynamically) -->
+                            <section id="jobContent" class="hidden">
+                                <section class="mb-6">
+                                    <h1 class="text-2xl font-bold text-gray-800 job-title">Job Title</h1>
+                                    <section class="flex flex-wrap gap-2 mt-3">
+                                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium job-category">Category</span>
+                                        <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium job-budget">Budget</span>
+                                        <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-xs font-medium job-duration">Duration</span>
+                                    </section>
+                                </section>
+
+                                <section class="mb-6">
+                                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Job Description</h3>
+                                    <p class="text-gray-600 job-description">Job description will appear here...</p>
+                                </section>
+
+                                <section class="mb-6">
+                                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Requirements</h3>
+                                    <ul class="list-disc list-inside text-gray-600 job-requirements">
+                                        <!-- Requirements will be added here by JavaScript -->
+                                    </ul>
+                                </section>
+
+                                <section class="mb-6">
+                                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Additional Information</h3>
+                                    <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <section class="flex items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            </svg>
+                                            <span class="text-gray-600 job-location">Location</span>
+                                        </section>
+                                        <section class="flex items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                            </svg>
+                                            <span class="text-gray-600 job-posted">Posted 3 days ago</span>
+                                        </section>
+                                    </section>
+                                </section>
+
+                                <section class="mt-8">
+                                    <button id="applyButton" class="bg-primary-500 hover:bg-primary-600 text-white px-6 py-3 rounded-lg transition duration-200 transform hover:scale-105">
+                                        Apply for this Job
+                                    </button>
+                                </section>
+                            </section>
+                        </section>
+                    </section>
+                </section>
+            </main>
+        </section>
+    </section>
+
+    <script>
+        // Function to fetch job details from the server
+        async function fetchJobDetails(jobId) {
+            try {
+                // Show loading state
+                document.getElementById('loadingState').classList.remove('hidden');
+                document.getElementById('jobContent').classList.add('hidden');
+                
+                // In a real app, you would make an API call here
+                // Example:
+                // const response = await fetch(`/api/jobs/${jobId}`);
+                // const job = await response.json();
+                
+                // For now, we'll simulate an API response
+                await new Promise(resolve => setTimeout(resolve, 800)); // Simulate network delay
+                
+                // This would come from your API response
+                const job = {
+                    id: jobId,
+                    title: "Website Development for E-commerce Store",
+                    description: "Looking for an experienced web developer to create an e-commerce website with product listings, shopping cart, and payment integration. The ideal candidate should have experience with React, Node.js, and MongoDB. The project needs to be completed within 4-6 weeks.",
+                    requirements: [
+                        "3+ years of web development experience",
+                        "Proficiency in React and Node.js",
+                        "Experience with MongoDB or similar databases",
+                        "Understanding of RESTful APIs",
+                        "Experience with payment gateway integration is a plus"
+                    ],
+                    category: "web-development",
+                    budget: "R5000 - R10000",
+                    duration: "3-6 weeks",
+                    location: "Remote",
+                    posted: "2023-05-15"
+                };
+                
+                // Render the job details
+                renderJobDetails(job);
+                
+            } catch (error) {
+                console.error('Error fetching job details:', error);
+                // Show error state
+                document.getElementById('loadingState').innerHTML = `
+                    <div class="text-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <h3 class="mt-2 text-lg font-medium text-gray-700">Error loading job details</h3>
+                        <p class="mt-1 text-gray-500">Please try again later</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // Function to render job details
+        function renderJobDetails(job) {
+            document.getElementById('jobContent').classList.remove('hidden');
+            document.getElementById('loadingState').classList.add('hidden');
+            
+            // Fill in the job data
+            document.querySelector('.job-title').textContent = job.title;
+            document.querySelector('.job-category').textContent = job.category.replace('-', ' ');
+            document.querySelector('.job-budget').textContent = job.budget;
+            document.querySelector('.job-duration').textContent = job.duration;
+            document.querySelector('.job-description').textContent = job.description;
+            document.querySelector('.job-location').textContent = job.location;
+            document.querySelector('.job-posted').textContent = `Posted ${formatDate(job.posted)}`;
+            
+            // Add requirements
+            const requirementsList = document.querySelector('.job-requirements');
+            requirementsList.innerHTML = '';
+            job.requirements.forEach(req => {
+                const li = document.createElement('li');
+                li.textContent = req;
+                requirementsList.appendChild(li);
+            });
+            
+            // Set up apply button
+            document.getElementById('applyButton').addEventListener('click', () => {
+                applyForJob(job.id);
+            });
+        }
+        
+        // Helper function to format date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffInDays = Math.floor((now - date) / (1000 * 60 * 60 * 24));
+            
+            if (diffInDays === 0) return "today";
+            if (diffInDays === 1) return "yesterday";
+            return `${diffInDays} days ago`;
+        }
+         // fixed the apply function here
+        function applyForJob(jobId) {
+            setTimeout(() => {
+            window.location.href = `/apply?jobId=${jobId}`;
+        }, 300);
+    }
+        // Function to handle job application
+        // function applyForJob(jobId) {
+        //     alert(`Applying for job ID: ${jobId}`);
+        //     // In a real app, you would make an API call here
+        //     // Then redirect to application confirmation or show success message
+        // }
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get job ID from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const jobId = urlParams.get('jobId');
+            
+            if (jobId) {
+                fetchJobDetails(jobId);
+            } else {
+                // No job ID provided, redirect back to jobs page
+                window.location.href = '/dashboard/freelancer/jobs';
+            }
+        });
+    </script>
+</body>
+</html>
