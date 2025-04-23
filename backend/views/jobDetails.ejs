@@ -228,13 +228,18 @@
             if (diffInDays === 1) return "yesterday";
             return `${diffInDays} days ago`;
         }
-        
-        // Function to handle job application
+         // fixed the apply function here
         function applyForJob(jobId) {
-            alert(`Applying for job ID: ${jobId}`);
-            // In a real app, you would make an API call here
-            // Then redirect to application confirmation or show success message
-        }
+            setTimeout(() => {
+            window.location.href = `/apply?jobId=${jobId}`;
+        }, 300);
+    }
+        // Function to handle job application
+        // function applyForJob(jobId) {
+        //     alert(`Applying for job ID: ${jobId}`);
+        //     // In a real app, you would make an API call here
+        //     // Then redirect to application confirmation or show success message
+        // }
         
         // Initialize the page
         document.addEventListener('DOMContentLoaded', () => {
