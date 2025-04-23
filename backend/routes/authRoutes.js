@@ -9,10 +9,8 @@ router.get("/auth/google", passport.authenticate('google', { scope: ["email", "p
 router.get("/google/callback", passport.authenticate('google', { failureRedirect: 'auth/failure', }),
     async (req, res) => {
         if (!req.user.user_type) {
-      // If user does not have a role, redirect to role selection
         return res.redirect("/select-role");
         }
-    // Redirect based on role
         res.redirect(`/dashboard/${req.user.user_type}`);
     }
 );
