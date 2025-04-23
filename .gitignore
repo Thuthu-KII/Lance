@@ -1,6 +1,3 @@
-node_modules
 .env
-LANCE.db
-LANCE.db-shm
-LANCE.db-wal
-backend
+
+node_modules/
