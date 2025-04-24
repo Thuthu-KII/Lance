@@ -10,7 +10,7 @@ let userName="";
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/google/callback" // when we enter google/auth redirect them using this url
+    callbackURL: "http://lance-1.onrender.com/google/callback" // when we enter google/auth redirect them using this url
   },
   // someone succesfully logs in
   async function(accessToken, refreshToken, profile/* this profile is the one you tap when you sign in, has all profile info */, cb) {
