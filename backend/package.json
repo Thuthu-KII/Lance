@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon app.js",
     "test": "jest",
-    "test:coverage": "jest --coverage --coverageReporters=text-lcov | tee coverage.lcov"
+    "test:coverage": "jest --coverage --coverageReporters=text-lcov | tee coverage.lcov",
+    "start":"node app.js"
   },
   "keywords": [],
   "author": "",
