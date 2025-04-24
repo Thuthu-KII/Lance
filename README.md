@@ -1,4 +1,4 @@
-[![Visit Site](https://img.shields.io/badge/Live%20Demo-Azure-blue?style=for-the-badge)](https://<your-app-name>.azurewebsites.net)
+[![Visit Site](https://img.shields.io/badge/Live%20Demo-Azure-blue?style=for-the-badge)](https://lance-gx1d.onrender.com)
 
 
 # Lance
