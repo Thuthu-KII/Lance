@@ -37,7 +37,7 @@ router.get("/select-role", (req, res) => {
 // });
 // router.get("/dashboard/freelancer", (req, res) => res.render("freelancer_dashboard"));
 
-router.get('/signed', isLogged, (req, res) => res.render("client", { user: req.user }));
+router.get('/signed', isLogged, (req, res) => res.render("client"));
 router.get('/auth/failure', (req, res) => res.render("homepage", { error: ["failed to authenticate email"] }));
 router.get('/logout', (req, res) => req.logout(err => { 
     if (err) return res.status(500).send("Logout failed");

@@ -56,7 +56,7 @@ router.get("/apply", (req, res) => {
 });
 // routes to dashboard per user type.
 router.get("/dashboard/client", (req, res) => {
-    res.render("clientDashboard", { user: req.user });
+    res.render("clientDashboard");
   });
 
 router.get("/dashboard/freelancer/profile", (req,res) => {
