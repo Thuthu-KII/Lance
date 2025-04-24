@@ -15,7 +15,7 @@ Codebase for the freelancer app, Lance.
 Lance is a freelancer platform enabling clients to post jobs and freelancers to apply. This repository `so far` contains the backend and API logic for the platform.
 
 ---
-
+  
 ## Backend Auth
 
 Handles authentication logic including Google OAuth, role validation, and secure redirects.
