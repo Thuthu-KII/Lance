@@ -42,13 +42,13 @@ Covers client-specific backend functionality: job posting, job application handl
   - Uses temporary SQLite stubs locally
 ## Current Progress (29 April)
 
-### Freelancer Dashboard
-- ✅ Added signout functionality  
-- ⚠️ **Security Concern**: Back arrow still allows navigation back (needs fix)  
+### Client Dashboard
+-  Added signout functionality  **added it to freelancer dash by mistake, george please note my apologies** 
+- **Security Concern**: Back arrow still allows navigation back (needs fix)  
 - Updated `href` for signout to point to `/logout` endpoint  
 
 ### Job Postings
-- ✅ Can post jobs (see [`jobsModel.js`](./jobsModel.js) for stored fields)  
+-  Can post jobs (see [`jobsModel.js`](./jobsModel.js) for stored fields)  
 - **Note**: Still **not connected to a database**  
 
 ---
