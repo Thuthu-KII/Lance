@@ -40,8 +40,36 @@ Covers client-specific backend functionality: job posting, job application handl
 - **Client Job Posting (Stub-based)**
   - Routes created to handle job posting via form submission.
   - Uses temporary SQLite stubs locally
-  - can o=post jobs, check jobsModel.js to see what is stored
-  - 
+## Current Progress (29 April)
+
+### Freelancer Dashboard
+- ✅ Added signout functionality  
+- ⚠️ **Security Concern**: Back arrow still allows navigation back (needs fix)  
+- Updated `href` for signout to point to `/logout` endpoint  
+
+### Job Postings
+- ✅ Can post jobs (see [`jobsModel.js`](./jobsModel.js) for stored fields)  
+- **Note**: Still **not connected to a database**  
+
+---
+
+## TO-DO
+- [ ] Fix back-button security issue after logout  
+- [ ] Update Client-side functions (profile, etc.)  
+- [ ] Connect job postings to database  
+
+---
+
+## Key Files Modified
+| File | Changes |  
+|------|---------|  
+| Freelancer Dashboard | Signout routing + security fixes(still need fixing) |  
+
+---
+## Security Notes
+- Cache-control headers are set in `/logout` route  but isnt working **note**
+- Sessions are destroyed on logout  
+- Session cookie (`connect.sid`) is cleared  
 
 ---
 ### Backend Freelance
