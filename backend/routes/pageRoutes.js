@@ -4,6 +4,7 @@ const router = express.Router();
 
 // Routes for rendering pages
 router.get("/", (req, res) => {
+    res.set("Cache-Control", "no-store"); // Prevent caching
     res.render("homepage");
 });
 router.get("/login", (req, res) => {
@@ -16,19 +17,7 @@ router.get("/contacts", (req, res) => {
 router.get("/dashboard/freelancer/jobs", (req,res) => {
     res.render("jobs")
 })
-router.get("/logout",(req, res, next) => {
-    req.logout((err) => { // Logout user from Passport
-        if (err) {
-            console.error("Logout error:", err);
-            return res.status(500).send("Logout failed");
-        }
-        req.session.destroy((err) => { // Destroy session
-            if (err) return next(err);
-            res.clearCookie('connect.sid'); // Clear session cookie
-            res.redirect('/'); // Redirect to homepage
-        });
-    });
-});
+
 
 router.get("/applications", (req, res) => {
     const jobId = req.query.jobId;

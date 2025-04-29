@@ -53,10 +53,27 @@ router.get('/Client-in', isLogged,ensureAuthenticated, (req, res) => res.render(
 
 router.get('/Freelancer-in', isLogged,ensureAuthenticated, (req, res) => res.render("freelancer_dashboard", { user1: req.user[0], user2:req.user[1] }));
 router.get('/auth/failure', (req, res) => res.render("homepage", { error: ["failed to authenticate email"] }));
-router.get('/logout', (req, res) => req.logout(err => { 
-    if (err) return res.status(500).send("Logout failed");
-    req.session.destroy(err => { if (err) return next(err); res.clearCookie('connect.sid').redirect('/'); }); 
-}));
+// router.get('/logout', (req, res) => req.logout(err => { 
+//     if (err) return res.status(500).send("Logout failed");
+//     req.session.destroy(err => { if (err) return next(err); res.clearCookie('connect.sid').redirect('/lo'); }); 
+// }));
+router.get("/logout",(req, res, next) => {
+  req.logout((err) => { // Logout user from Passport
+      if (err) {
+          console.error("Logout error:", err);
+          return res.status(500).send("Logout failed");
+      }
+      req.session.destroy((err) => { // Destroy session
+          if (err) return next(err);
+          res.clearCookie('connect.sid'); // Clear session cookie
+          // Set headers to prevent caching
+          res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+          res.set('Pragma', 'no-cache');
+          res.set('Expires', '0');
+          res.redirect('/'); // Redirect to homepage
+      });
+  });
+});
 
 
 module.exports = router;
