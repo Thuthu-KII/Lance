@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "test": "echo \"Skipping tests\"",
+    "test": "echo \"Skipping tests\"",
     "start": "node app.js"
   },
   "keywords": [],
