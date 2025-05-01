@@ -1,12 +1,17 @@
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define('clients', {
     clientId: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       primaryKey: true,
+      autoIncrement: true,
     },
-    contactInfo: {
+    personalInfo: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    rating: {
+      type: DataTypes.STRING,
+      allowNull: true
     },
   }, {
     tableName: 'clients',        // Use lowercase for PostgreSQL
