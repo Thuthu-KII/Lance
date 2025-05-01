@@ -8,7 +8,7 @@ async function syncDatabase() {
     //connects yo the db server on azure 
     await sequelize.authenticate();
     // Sync all schemas
-    await sequelize.sync({ force: false }); // Use force: true only in development to drop tables
+    await sequelize.sync({ force: true }); // Use force: true only in development to drop tables
     console.log('All models were synchronized successfully.');
     
   } catch (error) {
