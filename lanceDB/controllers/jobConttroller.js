@@ -1,3 +1,4 @@
+const { where } = require('sequelize');
 const db = require('../schema');
 const sequelize = require('../sequelize');
 
@@ -26,3 +27,21 @@ exports.addJob = async (req, res) => {
         res.status(500).json({ error: 'Failed to add job' });
     }
 };
+
+exports.updateStatus = async (req, res) => {
+    const { id, update } = req.body;
+    try {
+        await db.Jobs.sync();
+        
+        const job = await db.Jobs.update(
+            { Status: update },          // Fields to update
+            { where: { jobId: id } }     // WHERE clause
+        );
+        
+        res.status(200).json({ message: "Job status updated" });
+    } catch (err) {
+        console.error(err); // Helpful for debugging
+        res.status(500).json({ error: "Failed to update job status" });
+    }
+};
+
