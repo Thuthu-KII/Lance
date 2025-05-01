@@ -16,8 +16,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "18"
-#echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> $GITHUB_ENV
-#TESTING TESTING
+
       - name: Set environment variables
         run: |
           echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> $GITHUB_ENV
@@ -33,5 +32,5 @@ jobs:
         uses: coverallsapp/github-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          coveralls-token: ${{ secrets.COVERALLS_REPO_TOKEN }}
           path-to-lcov: ./coverage/lcov.info
-          coveralls-endpoint: https://coveralls.io
