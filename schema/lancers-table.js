@@ -1,17 +1,34 @@
 module.exports = (sequelize, DataTypes) => {
-  return sequelize.define('lancers', {
+  return sequelize.define('Lancers', {
     lancerId: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       primaryKey: true,
+      autoIncrement: true,
     },
-    contactInfo: {
-      type: DataTypes.STRING,
-      allowNull: false,
+    personalInfo: {
+      type: DataTypes.JSONB,
+      allowNull: true,
     },
-    occupation: {
-      type: DataTypes.STRING,
-      allowNull: false,
+    skills: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull: true,
     },
+    stats: {
+      type: DataTypes.JSONB,
+      allowNull: true,
+    },
+    balance: {
+      type: DataTypes.FLOAT,
+      allowNull: true,
+    },
+    rating: {
+      type: DataTypes.FLOAT,
+      allowNull: true,
+    },
+    reviews: {
+      type: DataTypes.JSONB,
+      allowNull: true,
+    }
   }, {
     tableName: 'lancers',        // Use lowercase for PostgreSQL
     schema: 'public',            // Explicitly specify schema
