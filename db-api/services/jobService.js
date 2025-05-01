@@ -21,5 +21,21 @@ export async function createJob(jobData) {
     return await res.json();
   }
 
+
+
+  export async function updateStatus(info){
+    const res = await fetch(`${url}/jobs/updateStatus`,{
+      method : 'POST',
+      headers: {'Content-Type' : 'application/json'},
+      body: JSON.stringify(info)
+
+    });
+    if(!res.ok){
+      const errorText = await res.text();
+      throw new Error(`Failed to update job status: ${errorText}`);
+    }
+    return await res.json();
+  }
+
  let jobs = await getJobs();  //needs await since getJobs is asnync function
  console.log(jobs);
