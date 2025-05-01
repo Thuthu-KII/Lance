@@ -4,8 +4,8 @@ on:
   push:
     branches: [ backend-api ]
   pull_request:
-    branches: [ backend-api ]   
-   
+    branches: [ backend-api ]
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -16,35 +16,21 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "18"
-      
+#echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> $GITHUB_ENV
       - name: Set environment variables
-        run: echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> $GITHUB_ENV
+        run: |
+          echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "NODE_ENV=test" >> $GITHUB_ENV
 
-      - run: npm install
+      - name: Install dependencies
+        run: npm install
 
-      - name: Skip tests temporarily
-        run: echo "⚠️ Skipping tests and coverage temporarily..."
+      - name: Run tests with coverage
+        run: npm test -- --coverage
 
-      # - run: npm test -- --coverage
-      #   continue-on-error: true    # ← tests failures won’t stop the job
-
-      # - name: Upload coverage to Codecov
-      #   uses: codecov/codecov-action@v4
-      #   with:
-      #     token: ${{ secrets.CODECOV_TOKEN }}
-      #     files: ./coverage/lcov.info
-      #   continue-on-error: true    # ← Codecov errors won’t stop the job
-
-      # - name: Install serve, ngrok, and jq (required for URL extraction)
-      #   run: |
-      #     npm install -g serve ngrok
-      #     sudo apt-get install -y jq
-
-      # - name: Serve and expose coverage report via ngrok
-      #   run: |
-      #     npx serve -s ./coverage/lcov-report -l 4000 &
-      #     npx ngrok http 4000 > /dev/null &
-      #     sleep 5
-      #     NGROK_URL=$(curl -s http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url')
-      #     echo "Coverage report is live at: $NGROK_URL"
-      #     echo "REPORT_URL=$NGROK_URL" >> $GITHUB_ENV
+      - name: Upload coverage to Coveralls
+        uses: coverallsapp/github-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: ./coverage/lcov.info
+          coveralls-endpoint: https://coveralls.io

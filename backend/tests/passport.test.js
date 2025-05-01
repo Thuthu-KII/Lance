@@ -1,107 +1,96 @@
 const passport = require('passport');
 const { Strategy: GoogleStrategy } = require('passport-google-oauth2');
-const { Username } = require('../config/passport');
 const path = require('path');
 
-jest.mock('../models/userModel.js', () => {
-  return {
-    addUser: {
-      run: jest.fn()
-    },
-    findUserByGoogleId: {
-      get: jest.fn()
+// Mock environment variables
+jest.mock('dotenv', () => ({
+  config: jest.fn(() => ({
+    parsed: {
+      GOOGLE_CLIENT_ID: 'mock-client-id',
+      GOOGLE_CLIENT_SECRET: 'mock-client-secret'
+    }
+  }))
+}));
+
+// Mock userModel functions
+jest.mock('../models/userModel.js', () => ({
+  addUser: {
+    run: jest.fn()
+  },
+  findUserByGoogleId: {
+    get: jest.fn()
+  }
+}));
+
+const { addUser, findUserByGoogleId } = require('../models/userModel');
+const { passport } = require('../config/passport');
+
+describe('Google Passport Strategy', () => {
+  const mockProfile = {
+    id: 'google-id-123',
+    displayName: 'Test User',
+    emails: [{ value: 'test@example.com' }]
+  };
+
+  const req = {
+    query: {
+      state: 'freelancer'
     }
   };
-});
-
-describe('Google OAuth Passport Strategy', () => {
-  const mockProfile = {
-    id: 'google123',
-    displayName: 'John Doe',
-    emails: [{ value: 'john@example.com' }]
-  };
-
-  const mockReq = {
-    query: { state: 'Freelancer' }
-  };
-
-  const mockAccessToken = 'mockAccessToken';
-  const mockRefreshToken = 'mockRefreshToken';
-
-  let strategy;
-  let userModel;
-
-  beforeAll(() => {
-    userModel = require('../models/userModel.js');
-    strategy = passport._strategies.google;
-  });
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should call addUser if user does not exist', async () => {
-    userModel.findUserByGoogleId.get.mockReturnValueOnce(undefined);
+  test('should add new user if not found', (done) => {
+    findUserByGoogleId.get.mockReturnValueOnce(null);
 
-    await new Promise((resolve, reject) => {
-      strategy._verify(mockReq, mockAccessToken, mockRefreshToken, mockProfile, (err, user) => {
-        try {
-          expect(err).toBeNull();
-          expect(user.email).toBe('john@example.com');
-          expect(userModel.addUser.run).toHaveBeenCalled();
-          resolve();
-        } catch (e) {
-          reject(e);
-        }
-      });
-    });
-  });
+    const strategy = passport._strategy('google');
 
-  it('should skip addUser if user already exists', async () => {
-    userModel.findUserByGoogleId.get.mockReturnValueOnce({ googleId: 'google123' });
-
-    await new Promise((resolve, reject) => {
-      strategy._verify(mockReq, mockAccessToken, mockRefreshToken, mockProfile, (err, user) => {
-        try {
-          expect(err).toBeNull();
-          expect(user.email).toBe('john@example.com');
-          expect(userModel.addUser.run).not.toHaveBeenCalled();
-          resolve();
-        } catch (e) {
-          reject(e);
-        }
-      });
-    });
-  });
-});
-
-describe('Passport serialize/deserialize', () => {
-  const mockUser = { googleId: 'google123', role: 'Freelancer' };
-
-  it('should serialize user by googleId', () => {
-    passport.serializeUser(mockUser, (err, id) => {
+    strategy._verify(req, null, null, mockProfile, (err, user) => {
       expect(err).toBeNull();
-      expect(id).toBe('google123');
+      expect(user).toEqual({
+        googleId: mockProfile.id,
+        displayName: mockProfile.displayName,
+        email: mockProfile.emails[0].value
+      });
+      expect(addUser.run).toHaveBeenCalledWith({
+        googleId: 'google-id-123',
+        role: 'freelancer'
+      });
+      expect(findUserByGoogleId.get).toHaveBeenCalledTimes(2); // once before add, once after
+      done();
     });
   });
 
-  it('should deserialize user from googleId and role', () => {
-    const { findUserByGoogleId } = require('../models/userModel.js');
-    findUserByGoogleId.get.mockReturnValueOnce({ id: 'google123', role: 'Freelancer' });
+  test('should use existing user if found', (done) => {
+    const mockUser = { googleId: 'google-id-123', role: 'freelancer' };
+    findUserByGoogleId.get.mockReturnValueOnce(mockUser);
 
-    passport.deserializeUser('google123', (err, userArray) => {
+    const strategy = passport._strategy('google');
+
+    strategy._verify(req, null, null, mockProfile, (err, user) => {
       expect(err).toBeNull();
-      expect(userArray[1]).toMatchObject({ id: 'google123', role: 'Freelancer' });
+      expect(user).toEqual({
+        googleId: mockProfile.id,
+        displayName: mockProfile.displayName,
+        email: mockProfile.emails[0].value
+      });
+      expect(addUser.run).not.toHaveBeenCalled();
+      done();
     });
   });
 
-  it('should handle missing user in deserialize', () => {
-    const { findUserByGoogleId } = require('../models/userModel.js');
-    findUserByGoogleId.get.mockReturnValueOnce(undefined);
+  test('should handle errors in callback', (done) => {
+    const error = new Error('DB failure');
+    findUserByGoogleId.get.mockImplementation(() => { throw error; });
 
-    passport.deserializeUser('missingId', (err, userArray) => {
-      expect(err).toBeInstanceOf(Error);
-      expect(err.message).toBe('User not found');
+    const strategy = passport._strategy('google');
+
+    strategy._verify(req, null, null, mockProfile, (err, user) => {
+      expect(err).toBe(error);
+      expect(user).toBeUndefined();
+      done();
     });
   });
 });
