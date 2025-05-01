@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "dev": "nodemon app.js",
-    "test": "jest --coverage "
+    "test": "jest --coverage ",
+    "start" : "yarn"
   },
   "keywords": [],
   "author": "",
