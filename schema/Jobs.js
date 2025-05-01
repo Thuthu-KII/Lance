@@ -5,8 +5,12 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true,
     },
-    clientName: {
-      type: DataTypes.STRING,
+    lancerId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    clientId: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     jobTitle: {
@@ -17,13 +21,26 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    Status: {
+    status: {
       type: DataTypes.INTEGER,
       defaultValue: 0,
       validate: {
         min: 0,
         max: 2,
       },
+    },
+    wage: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    },
+    Duration: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    accepted: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false, // optional
     },
   }, {
     tableName: 'jobs',
