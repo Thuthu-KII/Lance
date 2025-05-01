@@ -17,6 +17,7 @@ jobs:
         with:
           node-version: "18"
 #echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> $GITHUB_ENV
+#TESTING TESTING
       - name: Set environment variables
         run: |
           echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> $GITHUB_ENV
