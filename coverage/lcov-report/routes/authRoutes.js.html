@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">71.87% </span>
+                <span class="strong">61.53% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>23/32</span>
+                <span class='fraction'>24/39</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">70% </span>
+                <span class="strong">63.63% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>7/10</span>
+                <span class='fraction'>7/11</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">84% </span>
+                <span class="strong">65.71% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>21/25</span>
+                <span class='fraction'>23/35</span>
             </div>
         
             
@@ -124,7 +124,25 @@
 <a name='L59'></a><a href='#L59'>59</a>
 <a name='L60'></a><a href='#L60'>60</a>
 <a name='L61'></a><a href='#L61'>61</a>
-<a name='L62'></a><a href='#L62'>62</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -179,8 +197,26 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -236,13 +272,31 @@ function ensureAuthenticated(req, res, next) {
   }
   
 &nbsp;
-router.get('/Client-in', isLogged,ensureAuthenticated, <span class="fstat-no" title="function not covered" >(r</span>eq, res) =&gt; <span class="cstat-no" title="statement not covered" >res.render("client", { user1: req.user[0], user2:req.user[1] }))</span>;
+router.get('/Client-in', isLogged,ensureAuthenticated, <span class="fstat-no" title="function not covered" >(r</span>eq, res) =&gt; <span class="cstat-no" title="statement not covered" >res.render("clientdash", { user1: req.user[0], user2:req.user[1] }))</span>;
 &nbsp;
+router.get('/Freelancer-in', isLogged,ensureAuthenticated, <span class="fstat-no" title="function not covered" >(r</span>eq, res) =&gt; <span class="cstat-no" title="statement not covered" >res.render("freelancer_dashboard", { user1: req.user[0], user2:req.user[1] }))</span>;
 router.get('/auth/failure', (req, res) =&gt; res.render("homepage", { error: ["failed to authenticate email"] }));
-router.get('/logout', (req, res) =&gt; req.logout(<span class="fstat-no" title="function not covered" >er</span>r =&gt; { 
-<span class="cstat-no" title="statement not covered" >    if (err) <span class="cstat-no" title="statement not covered" >return res.status(500).send("Logout failed");</span></span>
-<span class="cstat-no" title="statement not covered" >    req.session.destroy(<span class="fstat-no" title="function not covered" >er</span>r =&gt; { <span class="cstat-no" title="statement not covered" >if (err) <span class="cstat-no" title="statement not covered" >return next(err); <span class="cstat-no" title="statement not covered" ></span></span>res.clearCookie('connect.sid').redirect('/'); </span>}); </span>
-}));
+// router.get('/logout', (req, res) =&gt; req.logout(err =&gt; { 
+//     if (err) return res.status(500).send("Logout failed");
+//     req.session.destroy(err =&gt; { if (err) return next(err); res.clearCookie('connect.sid').redirect('/lo'); }); 
+// }));
+router.get("/logout",(req, res, next) =&gt; {
+  req.logout(<span class="fstat-no" title="function not covered" >(e</span>rr) =&gt; { // Logout user from Passport
+<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+<span class="cstat-no" title="statement not covered" >          console.error("Logout error:", err);</span>
+<span class="cstat-no" title="statement not covered" >          return res.status(500).send("Logout failed");</span>
+      }
+<span class="cstat-no" title="statement not covered" >      req.session.destroy(<span class="fstat-no" title="function not covered" >(e</span>rr) =&gt; { // Destroy session</span>
+<span class="cstat-no" title="statement not covered" >          if (err) <span class="cstat-no" title="statement not covered" >return next(err);</span></span>
+<span class="cstat-no" title="statement not covered" >          res.clearCookie('connect.sid'); </span>// Clear session cookie
+          // Set headers to prevent caching
+<span class="cstat-no" title="statement not covered" >          res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');</span>
+<span class="cstat-no" title="statement not covered" >          res.set('Pragma', 'no-cache');</span>
+<span class="cstat-no" title="statement not covered" >          res.set('Expires', '0');</span>
+<span class="cstat-no" title="statement not covered" >          res.redirect('/'); </span>// Redirect to homepage
+      });
+  });
+});
 &nbsp;
 &nbsp;
 module.exports = router;
@@ -253,7 +307,7 @@ module.exports = router;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-04-23T08:20:24.661Z
+                at 2025-05-02T11:57:02.700Z
             </div>
         <script src="../prettify.js"></script>
         <script>

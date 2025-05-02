@@ -40,7 +40,7 @@ Covers client-specific backend functionality: job posting, job application handl
 - **Client Job Posting (Stub-based)**
   - Routes created to handle job posting via form submission.
   - Uses temporary SQLite stubs locally
-## Current Progress (29 April)
+
 
 ### Client Dashboard
 -  Added signout functionality  **added it to freelancer dash by mistake, george please note my apologies** 
