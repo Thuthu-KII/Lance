@@ -28,3 +28,15 @@ exports.addLancer = async (req,res) => {
         res.status(500).json({error: 'Could not add Lancer', details: e.message});
     }
 }
+
+exports.getProfile = async (req,res) =>{
+    const{lancerId} = req.body;
+
+    try{
+        const user = await db.lncrs.findOne({ where: { lancerId: lancerId } });
+        res.status(200).json(user);
+
+    }catch(e){
+        res.status(500).json({error: 'could not get profile', message:e.message});
+    }
+}

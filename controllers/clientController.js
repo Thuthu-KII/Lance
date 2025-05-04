@@ -24,3 +24,15 @@ exports.addClient = async (req,res) => {
         res.status(500).json({error: "Could not add client"});
     }
 }
+
+exports.getProfile = async (req,res) =>{
+    const{clientId} = req.body;
+
+    try{
+        const user = await db.client.findOne({ where: { clientId: clientId } });
+        res.status(200).json(user);
+
+    }catch(e){
+        res.status(500).json({error: 'could not get profile', message:e.message});
+    }
+}
