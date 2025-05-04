@@ -1,12 +1,12 @@
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define('clients', {
     clientId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       primaryKey: true,
-      autoIncrement: true,
+      //autoIncrement: true,
     },
     personalInfo: {
-      type: DataTypes.STRING,
+      type: DataTypes.JSONB,
       allowNull: false,
     },
     rating: {
@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true
     },
   }, {
-    tableName: 'clients',        // Use lowercase for PostgreSQL
+    tableName: 'client',        // Use lowercase for PostgreSQL
     schema: 'public',            // Explicitly specify schema
     timestamps: true,
     freezeTableName: true        // Prevents Sequelize from pluralizing

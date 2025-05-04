@@ -5,13 +5,23 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true,
     },
-    lancerId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
+    lancerID: {
+      type: DataTypes.STRING,
+      references: {
+        model: 'lncrs',
+        key: 'lancerId'
+      },
+      onDelete : 'CASCADE',
+      onUpdate: 'CASCADE'
     },
     clientId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+      type: DataTypes.STRING,
+      references: {
+        model: 'client',
+        key: 'clientId'
+      },
+      onDelete : 'CASCADE',
+      onUpdate: 'CASCADE'
     },
     jobTitle: {
       type: DataTypes.STRING,
@@ -22,18 +32,15 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     status: {
-      type: DataTypes.INTEGER,
-      defaultValue: 0,
-      validate: {
-        min: 0,
-        max: 2,
-      },
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'Pending',
     },
     wage: {
       type: DataTypes.FLOAT,
       allowNull: false,
     },
-    Duration: {
+    duration: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -43,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: false, // optional
     },
   }, {
-    tableName: 'jobs',
+    tableName: 'Job',
     schema: 'public',
     timestamps: true,
     freezeTableName: true,

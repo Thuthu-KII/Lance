@@ -5,9 +5,14 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      freelancerID: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
+      lancerID: {
+        type: DataTypes.STRING,
+        references: {
+          model: 'lncrs',
+          key: 'lancerId'
+        },
+        onDelete : 'CASCADE',
+        onUpdate: 'CASCADE'
       },
       occupation: {
         type: DataTypes.STRING,
@@ -18,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true, // URL to CV
       },
     }, {
-      tableName: 'applications',
+      tableName: 'Application',
       schema: 'public',
       timestamps: true,
       freezeTableName: true,

@@ -4,15 +4,16 @@ const sequelize = require('../sequelize');
 
 exports.addClient = async (req,res) => {
 
-   const{id, contact} = req.body;
+   const{id, personalInfo, rating} = req.body;
 
     try {
         await sequelize.authenticate();
-        await db.Clients.sync();
+        //await db.Clients.sync();
 
-        const user = await db.Clients.create({
+        const user = await db.client.create({
             clientId: id,
-            contactInfo: contact
+            personalInfo: personalInfo,
+            rating: rating
         });
 
         res.status(201).json(user.toJSON());

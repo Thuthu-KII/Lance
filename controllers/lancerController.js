@@ -4,15 +4,20 @@ const sequelize = require('../sequelize');
 
 exports.addLancer = async (req,res) => {
 
-   const{id, contact, occ} = req.body; 
+   const{lancerId, personalInfo, skills,stats,reviews,balance,rating} = req.body; 
     try {
         await sequelize.authenticate();
-        await db.Lancers.sync();
+        //await db.lncrs.sync();
 
-        const user = await db.Lancers.create({
-            lancerId: id,
-            contactInfo: contact,
-            occupation: occ
+        const user = await db.lncrs.create({
+            lancerId: lancerId,
+            personalInfo: personalInfo,
+            skills: skills,
+            stats: stats,
+            balance: balance,
+            rating: rating,
+            reviews: reviews
+           
         });
 
         //console.log("Lancer added:", user.toJSON());
@@ -20,7 +25,7 @@ exports.addLancer = async (req,res) => {
 
     } catch (e) {
         //console.log("Error adding user. Please try again:", e);
-        res.status(500).json({error: 'Could not add Lancer'});
+        res.status(500).json({error: 'Could not add Lancer', details: e.message});
     } finally {
         await sequelize.close();
     }
