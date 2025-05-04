@@ -40,34 +40,24 @@ export async function createJob(jobData) {
  // Function to fetch jobs from the server
  async function fetchJobs(page = 1, filters = {}) {
     try {
-        // Show loading state
         document.getElementById('loadingState').classList.remove('hidden');
         document.getElementById('jobsList').classList.add('hidden');
         document.getElementById('emptyState').classList.add('hidden');
         document.getElementById('pagination').classList.add('hidden');
-        
-        await new Promise(resolve => setTimeout(resolve, 10)); // Simulate network delay
-        
-        // This would come from your API response
-        const jobs = await getJobs();
-        
-        // Render the jobs
+
+        const jobs = await getJobs(); // jobs is an array
+        console.log("Fetched jobs:", jobs); // for debugging
+
         renderJobs(jobs);
-        
-        // Update pagination
-        updatePagination(jobs.currentPage, jobs.totalPages);
-        
-        // If no jobs, show empty state
-        if (jobs.jobs.length === 0) {
+
+        if (jobs.length === 0) {
             document.getElementById('emptyState').classList.remove('hidden');
         } else {
             document.getElementById('jobsList').classList.remove('hidden');
-            document.getElementById('pagination').classList.remove('hidden');
         }
-        
+
     } catch (error) {
         console.error('Error fetching jobs:', error);
-        // Show error state
         document.getElementById('emptyState').classList.remove('hidden');
         document.getElementById('emptyState').querySelector('h3').textContent = "Error loading jobs";
         document.getElementById('emptyState').querySelector('p').textContent = "Please try again later";
@@ -75,6 +65,7 @@ export async function createJob(jobData) {
         document.getElementById('loadingState').classList.add('hidden');
     }
 }
+
 
 // Function to render jobs
 function renderJobs(jobs) {
