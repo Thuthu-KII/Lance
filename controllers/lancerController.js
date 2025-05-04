@@ -6,7 +6,7 @@ exports.addLancer = async (req,res) => {
 
    const{lancerId, personalInfo, skills,stats,reviews,balance,rating} = req.body; 
     try {
-        await sequelize.authenticate();
+        //await sequelize.authenticate();
         //await db.lncrs.sync();
 
         const user = await db.lncrs.create({

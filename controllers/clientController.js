@@ -7,7 +7,7 @@ exports.addClient = async (req,res) => {
    const{id, personalInfo, rating} = req.body;
 
     try {
-        await sequelize.authenticate();
+        //await sequelize.authenticate();
         //await db.Clients.sync();
 
         const user = await db.client.create({

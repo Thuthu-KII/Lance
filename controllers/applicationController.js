@@ -22,16 +22,14 @@ exports.countApplications = async (req, res) => {
 
     } catch (e) {
         res.status(500).json({ error: 'An error has occured', details: e.message });
-    } finally {
-        await sequelize.close();
-    }
+    } 
 };
 
 exports.addApplication = async (req,res) => {
     const{applicationID,lancerID,occupation,CV} = req.body;
 
     try{
-        await sequelize.authenticate();
+        //await sequelize.authenticate();
 
         const apply = await db.Application.create({
             //applicationID : applicationID,
@@ -43,7 +41,5 @@ exports.addApplication = async (req,res) => {
         res.status(200).json(apply.toJSON());
     }catch(e){
         res.status(500).json({error: 'An error has occured', details: e.message})
-    }finally {
-        await sequelize.close();
     }
 };
