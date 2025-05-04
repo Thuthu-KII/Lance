@@ -26,7 +26,5 @@ exports.addLancer = async (req,res) => {
     } catch (e) {
         //console.log("Error adding user. Please try again:", e);
         res.status(500).json({error: 'Could not add Lancer', details: e.message});
-    } finally {
-        await sequelize.close();
     }
 }
