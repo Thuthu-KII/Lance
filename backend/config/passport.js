@@ -19,7 +19,7 @@ let the_user;
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "https://pr4zc9r1-3000.inc1.devtunnels.ms//google/callback", // when we enter google/auth redirect them using this url
+    callbackURL: "https://lance-gx1d.onrender.com/google/callback", // when we enter google/auth redirect them using this url
     passReqToCallback: true
   },
   // someone succesfully logs in
