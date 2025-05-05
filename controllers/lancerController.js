@@ -40,3 +40,19 @@ exports.getProfile = async (req,res) =>{
         res.status(500).json({error: 'could not get profile', message:e.message});
     }
 }
+
+exports.updateProfile = async(req,res) =>{
+    const{personalInfo,lancerId,skills} = req.body;
+    try{
+        const info = await db.client.update(
+            {personalInfo : personalInfo,
+                skills: skills
+            },
+            {where : {lancerId : lancerId}}
+        )
+        res.status(201).json({message: "Profile successsfully updated"});
+    }catch(e){
+        res.status(500).json({error : e, details: e.message})
+    }
+
+}
