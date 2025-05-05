@@ -3,6 +3,7 @@ const GoogleStrategy = require('passport-google-oauth2').Strategy;
 //require('dotenv').config();
 
 const path = require('path');
+//const { addClient } = require('../models/clientModel.js');
 
 const envFile = process.env.NODE_ENV === 'test' ? '.env.test' : '.env';
 require('dotenv').config({
@@ -18,7 +19,7 @@ let the_user;
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/google/callback", // when we enter google/auth redirect them using this url
+    callbackURL: "https://pr4zc9r1-3000.inc1.devtunnels.ms//google/callback", // when we enter google/auth redirect them using this url
     passReqToCallback: true
   },
   // someone succesfully logs in
@@ -26,7 +27,9 @@ passport.use(new GoogleStrategy({
      role= req.query.state;
     try {
         const { addUser, findUserByGoogleId } = require('../models/userModel.js'); // Import here to break circular dependency // import index
-         the_user = {
+        //const {addClient, getProfile} = require('../models/clientModel.js');
+        
+        the_user = {
           googleId: profile.id,
           displayName: profile.displayName,
           email: profile.emails[0].value
