@@ -64,5 +64,5 @@ jobs:
         with:
           app-name: 'LanceApp'
           slot-name: 'Production'
-          package: .
+          package: release.zip
           
