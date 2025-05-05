@@ -8,7 +8,7 @@ const authRoutes = require('./routes/authRoutes');
 const pageRoutes = require('./routes/pageRoutes');
 const userRoutes = require('./routes/userRoutes');
 
-// Middleware for session,passport
+// Middleware for session,passport.
 app.use(session({
     secret: "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",
     resave: false,
@@ -40,3 +40,4 @@ const port = process.env.PORT || 3000;
 app.listen(port, '0.0.0.0', () => {
   console.log(`Server running on port ${port}`);
 });
+console.log("App started successfully");

@@ -14,7 +14,7 @@ let userName="";
 let role="";
 
 //
-//console.log(process.env.GOOGLE_CLIENT_ID);
+//console.log(process.env.GOOGLE_CLIENT_ID):
 let the_user;
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
