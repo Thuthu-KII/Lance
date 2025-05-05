@@ -1,4 +1,4 @@
-[![codecov](https://codecov.io/gh/Thuthu-KII/Lance/branch/backend-api/graph/badge.svg)](https://codecov.io/gh/Thuthu-KII/Lance)
+[![Coverage Status](https://coveralls.io/repos/github/Thuthu-KII/Lance/badge.svg?branch=backend-api)](https://coveralls.io/github/Thuthu-KII/Lance?branch=backend-api)
 
 # Lance
 Codebase for the freelancer app, Lance.
