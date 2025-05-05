@@ -57,7 +57,7 @@ exports.updateStatus = async (req, res) => {
 };
 
 exports.addApplication = async (req,res) => {
-    const{applicationID,lancerID,occupation,CV} = req.body;
+    const{applicationID,lancerID,occupation,CV} = req.query;
 
     try{
         //await sequelize.authenticate();
@@ -76,7 +76,7 @@ exports.addApplication = async (req,res) => {
 };
 
 exports.countApplications = async (req, res) => {
-    const { applicationID } = req.body; 
+    const { applicationID } = req.query; 
     console.log(applicationID);
 
     try {
