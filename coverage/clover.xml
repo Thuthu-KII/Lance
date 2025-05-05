@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1746187022953" clover="3.2.0">
-  <project timestamp="1746187022954" name="All files">
+<coverage generated="1746440122740" clover="3.2.0">
+  <project timestamp="1746440122740" name="All files">
     <metrics statements="74" coveredstatements="46" conditionals="14" coveredconditionals="3" methods="18" coveredmethods="11" elements="106" coveredelements="60" complexity="0" loc="74" ncloc="74" packages="4" files="4" classes="4"/>
     <package name="config">
       <metrics statements="28" coveredstatements="12" conditionals="6" coveredconditionals="1" methods="3" coveredmethods="0"/>
-      <file name="passport.js" path="C:\Users\wits-user\Downloads\Lance2.0\Lance\Lance\backend\config\passport.js">
+      <file name="passport.js" path="C:\Users\wits-user\Downloads\Lance2.0\Lance\backend\config\passport.js">
         <metrics statements="28" coveredstatements="12" conditionals="6" coveredconditionals="1" methods="3" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -38,7 +38,7 @@
     </package>
     <package name="controllers">
       <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
-      <file name="authController.js" path="C:\Users\wits-user\Downloads\Lance2.0\Lance\Lance\backend\controllers\authController.js">
+      <file name="authController.js" path="C:\Users\wits-user\Downloads\Lance2.0\Lance\backend\controllers\authController.js">
         <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="7" count="2" type="cond" truecount="2" falsecount="0"/>
         <line num="10" count="2" type="stmt"/>
@@ -46,7 +46,7 @@
     </package>
     <package name="public">
       <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
-      <file name="login.js" path="C:\Users\wits-user\Downloads\Lance2.0\Lance\Lance\backend\public\login.js">
+      <file name="login.js" path="C:\Users\wits-user\Downloads\Lance2.0\Lance\backend\public\login.js">
         <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
         <line num="3" count="3" type="stmt"/>
         <line num="6" count="3" type="stmt"/>
@@ -61,7 +61,7 @@
     </package>
     <package name="routes">
       <metrics statements="35" coveredstatements="23" conditionals="6" coveredconditionals="0" methods="11" coveredmethods="7"/>
-      <file name="authRoutes.js" path="C:\Users\wits-user\Downloads\Lance2.0\Lance\Lance\backend\routes\authRoutes.js">
+      <file name="authRoutes.js" path="C:\Users\wits-user\Downloads\Lance2.0\Lance\backend\routes\authRoutes.js">
         <metrics statements="35" coveredstatements="23" conditionals="6" coveredconditionals="0" methods="11" coveredmethods="7"/>
         <line num="1" count="2" type="stmt"/>
         <line num="2" count="2" type="stmt"/>
