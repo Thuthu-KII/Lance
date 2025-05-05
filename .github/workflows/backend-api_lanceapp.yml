@@ -26,7 +26,6 @@ jobs:
       - name: Install dependencies
         run: |
           cd backend
-          npm install
 
       - name: Zip artifact for deployment
         run: |
