@@ -8,7 +8,7 @@ const authRoutes = require('./routes/authRoutes');
 const pageRoutes = require('./routes/pageRoutes');
 const userRoutes = require('./routes/userRoutes');
 
-// Middleware for session, passport
+// Middleware for session,passport
 app.use(session({
     secret: "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",
     resave: false,
