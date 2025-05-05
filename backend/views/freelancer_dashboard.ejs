@@ -79,7 +79,7 @@
 
                 <!-- Bottom Section with Sign Out -->
                 <section class="p-4 border-t">
-                    <button onclick="" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-gray-50 transition duration-150 w-full">
+                    <button class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-gray-50 transition duration-150 w-full">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                         </svg>
@@ -210,7 +210,7 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody class="sectionide-y sectionide-gray-100" id="tableBody">
+                                <tbody class="divide-y divide-gray-100" id="tableBody">
                                     <!-- Loading State -->
                                     <tr id="loadingRow">
                                         <td colspan="4" class="px-6 py-8 text-center">
@@ -231,6 +231,175 @@
             </main>
         </section>
     </section>
+
+    <script>
+        // Toggle Sidebar Function
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
+
+        const url = 'https://lance-api-ftcehba3hhheg9hu.southafricanorth-01.azurewebsites.net';
+        
+        // Function to get jobs from API
+        async function getJobs() {
+            try {
+                const res = await fetch(`${url}/jobs`);
+                if (!res.ok) throw new Error('Failed to fetch jobs');
+                return await res.json();
+            } catch (error) {
+                console.error('API Error:', error);
+                throw error;
+            }
+        }
+
+        // Store jobs data
+        let jobs = [];
+
+        // Handle Row Click
+        function handleRowClick(jobId) {
+            console.log('Clicked job:', jobId);
+            const row = document.querySelector(`[data-job-id="${jobId}"]`);
+            if (row) {
+                row.classList.add('bg-gray-50');
+                
+                setTimeout(() => {
+                    window.location.href = `/job-details/${jobId}`;
+                }, 300);
+            }
+        }
+
+        // Create Status Badge
+        function createStatusBadge(status, color) {
+            const colors = {
+                yellow: 'bg-yellow-50 text-yellow-600 border border-yellow-200',
+                green: 'bg-green-50 text-green-600 border border-green-200',
+                gray: 'bg-gray-50 text-gray-600 border border-gray-200'
+            };
+            return `px-3 py-1 rounded-full text-xs font-medium ${colors[color] || colors.gray}`;
+        }
+
+        // Populate Table
+        function populateTable() {
+            const tableBody = document.getElementById('tableBody');
+            const loadingRow = document.getElementById('loadingRow');
+
+            if (loadingRow) {
+                loadingRow.remove();
+            }
+
+            if (!Array.isArray(jobs) || jobs.length === 0) {
+                showEmptyState(tableBody);
+                return;
+            }
+
+            jobs.forEach(job => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-gray-50 transition-colors duration-150 cursor-pointer';
+                
+                // Use optional chaining or fallbacks for potentially undefined properties
+                const jobId = job.jobId || job.jobID || job.id || 'unknown';
+                
+                row.setAttribute('data-job-id', jobId);
+                row.setAttribute('onclick', `handleRowClick('${jobId}')`);
+                row.setAttribute('tabindex', '0');
+                row.setAttribute('role', 'button');
+                row.setAttribute('title', 'Click to view details');
+
+                const clientName = job.clientName || 'Unknown Client';
+                const clientInitial = clientName ? clientName.charAt(0) : '?';
+                const jobTitle = job.jobTitle || 'Untitled Job';
+                const description = job.description || 'No description';
+                const status = job.status || 'Unknown';
+                const statusColor = job.statusColor || 'gray';
+
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <div class="h-8 w-8 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 font-medium">
+                                ${clientInitial}
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm font-medium text-gray-800">${clientName}</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <p class="text-sm text-gray-800">${jobTitle}</p>
+                    </td>
+                    <td class="px-6 py-4">
+                        <p class="text-sm text-gray-600">${description}</p>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="${createStatusBadge(status, statusColor)}">
+                            ${status}
+                        </span>
+                    </td>
+                `;
+
+                tableBody.appendChild(row);
+            });
+        }
+
+        function showEmptyState(tableBody) {
+            const emptyRow = document.createElement('tr');
+            emptyRow.innerHTML = `
+                <td colspan="4" class="px-6 py-8 text-center">
+                    <p class="text-gray-500">No jobs found</p>
+                </td>
+            `;
+            tableBody.appendChild(emptyRow);
+        }
+
+        function showErrorMessage() {
+            const tableBody = document.getElementById('tableBody');
+            const loadingRow = document.getElementById('loadingRow');
+            
+            if (loadingRow) {
+                loadingRow.remove();
+            }
+            
+            const errorRow = document.createElement('tr');
+            errorRow.innerHTML = `
+                <td colspan="4" class="px-6 py-8 text-center">
+                    <p class="text-red-500">Failed to load jobs. Please try again.</p>
+                </td>
+            `;
+            tableBody.appendChild(errorRow);
+        }
+
+        // Fetch and populate jobs
+        async function fetchAndPopulateJobs() {
+            try {
+                jobs = await getJobs();
+                console.log("Fetched jobs:", jobs); // For debugging
+                populateTable();
+            } catch (error) {
+                console.error('Error fetching jobs:', error);
+                showErrorMessage();
+            }
+        }
+
+        // Initialize when document is ready
+        document.addEventListener('DOMContentLoaded', fetchAndPopulateJobs);
+
+        // Handle keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                const focusableRows = document.querySelectorAll('tr[tabindex="0"]');
+                focusableRows.forEach(row => {
+                    row.addEventListener('focus', () => {
+                        row.classList.add('bg-gray-50');
+                    });
+                    row.addEventListener('blur', () => {
+                        row.classList.remove('bg-gray-50');
+                    });
+                });
+            }
+        });
+    </script>
 </body>
-<script src="/freelancerDashboard.js"></script>
 </html>

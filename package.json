@@ -2,11 +2,11 @@
   "name": "api",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "backend/app.js",
   "scripts": {
-    "dev": "nodemon app.js",
-    "test": "jest --coverage --detectOpenHandles",
-    "start": "yarn"
+    "dev": "nodemon backend/app.js",
+    "test": "jest --coverage ",
+    "start": "node backend/app.js"
   },
   "keywords": [],
   "author": "",
