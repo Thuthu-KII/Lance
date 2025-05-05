@@ -1,4 +1,3 @@
-// At the top of your test file
 const { TextEncoder, TextDecoder } = require('util');
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;

@@ -1,3 +1,5 @@
+global.setImmediate = global.setImmediate || ((fn) => setTimeout(fn, 0));
+
 const { TextEncoder, TextDecoder } = require('util');
 
 global.TextEncoder = TextEncoder;
