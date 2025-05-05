@@ -4,9 +4,9 @@
   "description": "",
   "main": "backend/app.js",
   "scripts": {
-    "dev": "nodemon app.js",
+    "dev": "nodemon backend/app.js",
     "test": "jest --coverage ",
-    "start": "node app.js"
+    "start": "node backend/app.js"
   },
   "keywords": [],
   "author": "",
