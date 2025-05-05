@@ -4,7 +4,7 @@ const sequelize = require('../sequelize');
 exports.showAvailableJobs = async (req, res) => {
     try {
         //await db.Jobs.sync();
-        const jobs = await db.Job.findAll({ where: { status: "Pending" } });
+        const jobs = await db.Job.findAll();
         res.status(200).json(jobs.map(j => j.get({ plain: true })));
     } catch (err) {
         console.log("Error adding job:", err); // 🔍 This shows the actual error in the console
