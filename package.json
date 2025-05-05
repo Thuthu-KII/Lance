@@ -2,11 +2,11 @@
   "name": "api",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "backend/app.js",
   "scripts": {
     "dev": "nodemon app.js",
     "test": "jest --coverage ",
-    "start": "yarn"
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "",
