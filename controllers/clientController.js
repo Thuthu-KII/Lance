@@ -26,7 +26,7 @@ exports.addClient = async (req,res) => {
 }
 
 exports.getProfile = async (req,res) =>{
-    const{clientId} = req.body;
+    const{clientId} = req.query;
 
     try{
         const user = await db.client.findOne({ where: { clientId: clientId } });
