@@ -30,7 +30,7 @@ router.get("/auth/google",(req, res, next) => {
 });
 
 
-router.get("/google/callback",(req,res,next)=>{
+router.get("/auth/google/callback",(req,res,next)=>{ // google is redirecting to auth/google/callback changed from /google/callback
 
 const role = req.query.state;
 
@@ -49,7 +49,7 @@ function ensureAuthenticated(req, res, next) {
   }
   
 
-router.get('/Client-in', isLogged,ensureAuthenticated, (req, res) => res.render("clientdash", { user1: req.user[0], user2:req.user[1] }));
+router.get('/Client-in', isLogged,ensureAuthenticated, (req, res) => res.render("clientDashboard", { user1: req.user[0], user2:req.user[1] }));
 
 router.get('/Freelancer-in', isLogged,ensureAuthenticated, (req, res) => res.render("freelancer_dashboard", { user1: req.user[0], user2:req.user[1] }));
 router.get('/auth/failure', (req, res) => res.render("homepage", { error: ["failed to authenticate email"] }));
