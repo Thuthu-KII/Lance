@@ -13,12 +13,12 @@ exports.showAvailableJobs = async (req, res) => {
 };
 
 exports.addJob = async (req, res) => {
-    const { jobId, lancerId, clientId, jobTitle, description,status,wage,duration,accepted } = req.body;
+    const { jobId, lancerID, clientId, jobTitle, description,status,wage,duration,accepted } = req.body;
     try {
         //await db.Jobs.sync();
         const job = await db.Job.create({
             //jobId: jobId,
-            lancerId : lancerId,
+            lancerID : lancerID,
             clientId : clientId,
             jobTitle : jobTitle,
             description: description,

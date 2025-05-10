@@ -7,10 +7,16 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 // Import models (use PascalCase for model names)
+db.lncrs = require('./lancers-table')(sequelize, DataTypes);
+db.client = require('./clients-table')(sequelize, DataTypes);
+db.admin = require('./admin')(sequelize,DataTypes);
 db.Job = require('./Jobs')(sequelize, DataTypes);
 db.Application = require('./applications')(sequelize, DataTypes);
-db.client = require('./clients-table')(sequelize, DataTypes);
-db.lncrs = require('./lancers-table')(sequelize, DataTypes);
+
+
+
+
+
 
 // Define associations
 /*

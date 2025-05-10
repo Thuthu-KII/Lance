@@ -14,6 +14,15 @@ module.exports = (sequelize, DataTypes) => {
         onDelete : 'CASCADE',
         onUpdate: 'CASCADE'
       },
+      jobID : {
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'Job',
+          key: 'jobID'
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      },
       occupation: {
         type: DataTypes.STRING,
         allowNull: false,

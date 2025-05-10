@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     personalInfo: {
       type: DataTypes.JSONB,
-      allowNull: false,
+      allowNull: true,
     },
     rating: {
       type: DataTypes.STRING,

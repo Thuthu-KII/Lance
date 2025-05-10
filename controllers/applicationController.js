@@ -26,7 +26,7 @@ exports.countApplications = async (req, res) => {
 };
 
 exports.addApplication = async (req,res) => {
-    const{applicationID,lancerID,occupation,CV} = req.body;
+    const{applicationID,lancerID,occupation,CV,jobId} = req.body;
 
     try{
         //await sequelize.authenticate();
@@ -35,7 +35,8 @@ exports.addApplication = async (req,res) => {
             //applicationID : applicationID,
             lancerID : lancerID,
             occupation : occupation,
-            CV: CV
+            CV: CV,
+            jobId : jobId
         });
 
         res.status(200).json(apply.toJSON());
