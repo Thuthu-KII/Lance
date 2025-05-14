@@ -52,13 +52,7 @@ async function addLancer(details) {
 
 async function getLancerByGoogleId(id){
       try {
-    const response = await fetch(`${url}/lancers/getLancerByGoogleId?googleId=${id}`)/*, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(details)
-    });*/
+    const response = await fetch(`${url}/lancers/getLancerByGoogleId?googleId=${id}`)
 
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
@@ -71,3 +65,4 @@ async function getLancerByGoogleId(id){
   }
 }
 //console.log(viewLancerProfile(id));
+console.log(getLancerByGoogleId(`l001`));
