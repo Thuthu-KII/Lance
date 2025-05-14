@@ -20,6 +20,7 @@ exports.addLancer = async (req, res) => {
         const user = await db.lncrs.create({
             lancerId,
             personalInfo,
+            userName,
             skills,
             stats,
             reviews,
