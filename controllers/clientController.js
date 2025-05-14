@@ -3,12 +3,12 @@ const db = require('../schema');
 const sequelize = require('../sequelize');
 
 exports.addClient = async (req, res) => {
-    const { id, personalInfo, rating } = req.query;
+    const { clientId, personalInfo, rating } = req.body;
 
     try {
         // Check if a client with the same ID already exists
         const existingClient = await db.client.findOne({
-            where: { clientId: id }
+            where: { clientId: clientId }
         });
 
         if (existingClient) {
@@ -19,10 +19,10 @@ exports.addClient = async (req, res) => {
 
         // If not, create the new client
         const user = await db.client.create({
-            clientId: id,
-            personalInfo: personalInfo,
-            rating: rating
-        });
+                    clientId,
+                    personalInfo,
+                    rating
+                });
 
         res.status(201).json(user.toJSON());
 
@@ -48,7 +48,7 @@ exports.getProfile = async (req,res) =>{
     }
 }
 
-exports.updateProfile = async(req,res) =>{
+/*exports.updateProfile = async(req,res) =>{
     const{personalInfo,clientId} = req.body;
     try{
         const info = await db.client.update(
@@ -60,4 +60,4 @@ exports.updateProfile = async(req,res) =>{
         res.status(500).json({error : e, details: e.message})
     }
 
-}
+}*/

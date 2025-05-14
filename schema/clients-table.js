@@ -1,5 +1,8 @@
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define('clients', {
+    userName:{type: DataTypes.STRING,
+      allowNull : false,
+    },
     clientId: {
       type: DataTypes.STRING,
       primaryKey: true,
