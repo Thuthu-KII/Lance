@@ -37,38 +37,19 @@ exports.addLancer = async (req, res) => {
     }
 };
 
-// Get Profile
-exports.getProfile = async (req, res) => {
-    const { lancerId } = req.body;
 
-    try {
-        const user = await db.lncrs.findOne({ where: { lancerId } });
-
-        if (!user) {
-            return res.status(404).json({
-                error: 'Lancer not found with this ID.'
-            });
-        }
-
-        res.status(200).json(user);
-
-    } catch (e) {
-        res.status(500).json({
-            error: 'Could not get profile',
-            message: e.message
-        });
-    }
-};
 //adding get function.
 exports.getLancerByGoogleId = async (req, res) => {
     const { googleId } = req.query;
+    
 
     if (!googleId) {
         return res.status(400).json({ error: 'Missing googleId parameter.' });
     }
+    console.log('Google ID is, ' , googleId);
 
     try {
-        const user = await db.lncrs.findOne({ where: { googleId: googleId } });
+        const user = await db.lncrs.findOne({ where: { lancerId: googleId } });
 
         if (!user) {
             return res.status(404).json({ error: 'Lancer not found.' });

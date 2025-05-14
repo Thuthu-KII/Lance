@@ -50,15 +50,15 @@ async function addLancer(details) {
   }
 }
 
-async function viewLancerProfile(id){
+async function getLancerByGoogleId(id){
       try {
-    const response = await fetch(`${url}/lancers/profile`, {
-      method: 'POST',
+    const response = await fetch(`${url}/lancers/getLancerByGoogleId?googleId=${id}`)/*, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(details)
-    });
+    });*/
 
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
@@ -70,5 +70,4 @@ async function viewLancerProfile(id){
     console.error('Fetch error:', error);
   }
 }
-
 //console.log(viewLancerProfile(id));
