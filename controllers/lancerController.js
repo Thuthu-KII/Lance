@@ -4,7 +4,7 @@ const sequelize = require('../sequelize');
 
 // Add Lancer
 exports.addLancer = async (req, res) => {
-    const { lancerId, personalInfo, skills, stats, reviews, balance, rating } = req.body;
+    const { userName,lancerId, personalInfo, skills, stats, reviews, balance, rating } = req.body;
 
     try {
         // Check if lancer already exists
@@ -20,7 +20,7 @@ exports.addLancer = async (req, res) => {
         const user = await db.lncrs.create({
             lancerId,
             personalInfo,
-            userName,
+            userName, 
             skills,
             stats,
             reviews,

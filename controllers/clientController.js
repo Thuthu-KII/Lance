@@ -3,7 +3,7 @@ const db = require('../schema');
 const sequelize = require('../sequelize');
 
 exports.addClient = async (req, res) => {
-    const { clientId, personalInfo, rating } = req.body;
+    const { userName, clientId, personalInfo, rating } = req.body;
 
     try {
         // Check if a client with the same ID already exists
@@ -19,6 +19,7 @@ exports.addClient = async (req, res) => {
 
         // If not, create the new client
         const user = await db.client.create({
+            userName,
                     clientId,
                     personalInfo,
                     rating
