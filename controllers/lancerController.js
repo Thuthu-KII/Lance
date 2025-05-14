@@ -2,44 +2,64 @@ const { Jobs } = require('../schema');
 const db = require('../schema');
 const sequelize = require('../sequelize');
 
-exports.addLancer = async (req,res) => {
+// Add Lancer
+exports.addLancer = async (req, res) => {
+    const { lancerId, personalInfo, skills, stats, reviews, balance, rating } = req.body;
 
-   const{lancerId, personalInfo, skills,stats,reviews,balance,rating} = req.body; 
     try {
-        //await sequelize.authenticate();
-        //await db.lncrs.sync();
+        // Check if lancer already exists
+        const existingLancer = await db.lncrs.findOne({ where: { lancerId: lancerId } });
 
+        if (existingLancer) {
+            return res.status(409).json({
+                error: 'Lancer already exists with this ID.'
+            });
+        }
+
+        // Create new lancer
         const user = await db.lncrs.create({
-            lancerId: lancerId,
-            personalInfo: personalInfo,
-            skills: skills,
-            stats: stats,
-            balance: balance,
-            rating: rating,
-            reviews: reviews
-           
+            lancerId,
+            personalInfo,
+            skills,
+            stats,
+            reviews,
+            balance,
+            rating
         });
 
-        //console.log("Lancer added:", user.toJSON());
         res.status(201).json(user.toJSON());
 
     } catch (e) {
-        //console.log("Error adding user. Please try again:", e);
-        res.status(500).json({error: 'Could not add Lancer', details: e.message});
+        res.status(500).json({
+            error: 'Could not add Lancer',
+            details: e.message
+        });
     }
-}
+};
 
-exports.getProfile = async (req,res) =>{
-    const{lancerId} = req.body;
+// Get Profile
+exports.getProfile = async (req, res) => {
+    const { lancerId } = req.body;
 
-    try{
-        const user = await db.lncrs.findOne({ where: { lancerId: lancerId } });
+    try {
+        const user = await db.lncrs.findOne({ where: { lancerId } });
+
+        if (!user) {
+            return res.status(404).json({
+                error: 'Lancer not found with this ID.'
+            });
+        }
+
         res.status(200).json(user);
 
-    }catch(e){
-        res.status(500).json({error: 'could not get profile', message:e.message});
+    } catch (e) {
+        res.status(500).json({
+            error: 'Could not get profile',
+            message: e.message
+        });
     }
-}
+};
+
 
 exports.updateProfile = async(req,res) =>{
     const{personalInfo,lancerId,skills} = req.body;

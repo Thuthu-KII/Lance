@@ -2,14 +2,22 @@ const { Jobs } = require('../schema');
 const db = require('../schema');
 const sequelize = require('../sequelize');
 
-exports.addClient = async (req,res) => {
-
-   const{id, personalInfo, rating} = req.body;
+exports.addClient = async (req, res) => {
+    const { id, personalInfo, rating } = req.query;
 
     try {
-        //await sequelize.authenticate();
-        //await db.Clients.sync();
+        // Check if a client with the same ID already exists
+        const existingClient = await db.client.findOne({
+            where: { clientId: id }
+        });
 
+        if (existingClient) {
+            return res.status(409).json({ 
+                error: "Client already exists with this ID." 
+            });
+        }
+
+        // If not, create the new client
         const user = await db.client.create({
             clientId: id,
             personalInfo: personalInfo,
@@ -18,12 +26,14 @@ exports.addClient = async (req,res) => {
 
         res.status(201).json(user.toJSON());
 
-       
-
     } catch (e) {
-        res.status(500).json({error: "Could not add client", details: e.message});
+        res.status(500).json({ 
+            error: "Could not add client", 
+            details: e.message 
+        });
     }
-}
+};
+
 
 exports.getProfile = async (req,res) =>{
     const{clientId} = req.query;

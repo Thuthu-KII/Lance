@@ -71,4 +71,4 @@ async function viewLancerProfile(id){
   }
 }
 
-console.log(viewLancerProfile(id));
+//console.log(viewLancerProfile(id));

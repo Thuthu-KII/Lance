@@ -9,11 +9,9 @@ const requestBody = {
 
 async function appCount(id){ //takes in an integer
 await fetch(`${url}/jobs/countApp?applicationID=${id}`, {
-  method: 'GET', // or 'POST', 'PUT', 'DELETE'
+  method: 'GET', 
   headers: {
     'Content-Type': 'application/json',
- //   'Authorization': 'Bearer YOUR_ACCESS_TOKEN', // Optional
-    // Add other custom headers as needed
   }
 })
 .then(response => {
@@ -66,7 +64,7 @@ async function updateJobStatus(details){ //takes in a json object
   headers: {
     'Content-Type': 'application/json'
   },
-  body: JSON.stringify(details)
+  body: JSON.stringify(requestBody)
 })
 .then(response => {
   if (!response.ok) {
