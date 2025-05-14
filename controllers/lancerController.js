@@ -59,7 +59,27 @@ exports.getProfile = async (req, res) => {
         });
     }
 };
+//adding get function.
+exports.getLancerByGoogleId = async (req, res) => {
+    const { googleId } = req.query;
 
+    if (!googleId) {
+        return res.status(400).json({ error: 'Missing googleId parameter.' });
+    }
+
+    try {
+        const user = await db.lncrs.findOne({ where: { googleId: googleId } });
+
+        if (!user) {
+            return res.status(404).json({ error: 'Lancer not found.' });
+        }
+
+        return res.status(200).json(user);
+    } catch (e) {
+        console.error('Error fetching lancer by Google ID:', e);
+        return res.status(500).json({ error: 'Internal Server Error', details: e.message });
+    }
+};
 
 exports.updateProfile = async(req,res) =>{
     const{personalInfo,lancerId,skills} = req.body;
