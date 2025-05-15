@@ -12,6 +12,7 @@ db.client = require('./clients-table')(sequelize, DataTypes);
 db.admin = require('./admin')(sequelize,DataTypes);
 db.Job = require('./Jobs')(sequelize, DataTypes);
 db.Application = require('./applications')(sequelize, DataTypes);
+db.Application = require('./payments')(sequelize, DataTypes);
 
 
 
