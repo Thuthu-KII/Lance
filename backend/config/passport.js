@@ -4,7 +4,7 @@ const GoogleStrategy = require('passport-google-oauth2').Strategy;
 
 const path = require('path');
 //const { addClient } = require('../models/clientModel.js');
-
+const { addLancer, addClient, getLancerByGoogleId, getClientByGoogleId } = require('../api/userApi');
 const envFile = process.env.NODE_ENV === 'test' ? '.env.test' : '.env';
 require('dotenv').config({
   path: path.resolve(__dirname, '..', envFile)
@@ -23,52 +23,76 @@ passport.use(new GoogleStrategy({
     passReqToCallback: true
   },
   // someone succesfully logs in
-  async function(req,accessToken, refreshToken, profile/* this profile is the one you tap when you sign in, has all profile info */, cb) {
-     role= req.query.state;
-    try {
-        const { addUser, findUserByGoogleId } = require('../models/userModel.js'); // Import here to break circular dependency // import index
-        //const {addClient, getProfile} = require('../models/clientModel.js');
-        
-        the_user = {
-          googleId: profile.id,
-          displayName: profile.displayName,
-          email: profile.emails[0].value
-        };
-        let user = findUserByGoogleId.get(profile.id,role);
+  async (req, accessToken, refreshToken, profile, done) => {
+   // console.log("Google Profile:", profile); //for google information 109238854959249109365
+    const role = req.query.state;
+    //console.log("📌 Google Profile Display Name:", profile.displayName);
+    const userInfo = {
+        lancerId: profile.id,
+        googleId: profile.id,
+        userName: profile.displayName,
+        email: profile.emails[0].value,
+        role: role
+    };
 
-        if (!user) {
-            const newUser = {
-                googleId: profile.id,
-                role:req.query.state
-              //  email: profile.emails[0].value,
-              //  displayName: profile.displayName
-            };
-            addUser.run(newUser); // added our new user 
-            user = findUserByGoogleId.get(profile.id,role);  // return a google id&role only
-          }
-       // console.log(the_user);
-        cb(null, the_user); 
-    } catch (error) {
-        cb(error);
+    try {
+        let existingUser = null;
+
+        if (role === "Client") {
+            existingUser = await getClientByGoogleId(profile.id);
+            if (!existingUser) await addClient(userInfo);
+        } else if (role === "Freelancer") {
+            existingUser = await getLancerByGoogleId(profile.id);
+            if (existingUser) {
+                existingUser.role = "Freelancer";
+                existingUser.userName = existingUser.userName || profile.displayName;
+            }            if (!existingUser) await addLancer(userInfo);
+        } else {
+            return done(new Error('Invalid role received during authentication'), null);
+        }
+
+        return done(null, existingUser || userInfo);
+    } catch (err) {
+        return done(err, null);
     }
 }
 
 ));
 const Username = userName;
 
-passport.serializeUser((user, cb) => {
-    cb(null, user.googleId);
-  });
+passport.serializeUser((user, done) => {    
+    if (user.lancerId) {
+        done(null, { id: user.lancerId, role: 'Freelancer' });
+    } else if (user.clientId) {
+        done(null, { id: user.clientId, role: 'Client' });
+    } else {
+        done(new Error("Unable to determine user role during serialization."));
+    }
+});
   
-  passport.deserializeUser(async (id, cb) => {
-    const { findUserByGoogleId } = require("../models/userModel");
-    // /console.log(role, "   ", id);
+passport.deserializeUser(async (sessionData, done) => {
+    try {
+        const { id, role } = sessionData;
 
-    const user = findUserByGoogleId.get(id,role); // this must not be undefined if undefined the user doe
-//    console.log(user);
-    if (!user)  return cb(null, { message: "User already has an account", user });
-    cb(null, [the_user,user,role]);
-  });
+        let user = null;
+        if (role === 'Freelancer') {
+            user = await getLancerByGoogleId(id);
+        } else if (role === 'Client') {
+            user = await getClientByGoogleId(id);
+        }
+
+        if (!user) {
+            return done(new Error("User not found during deserialization."));
+        }
+        user.role = role;
+        if (!user.userName) {
+            user.userName = 'User'; // Fallback if no username is found
+        }
+        done(null, user);
+    } catch (err) {
+        done(err, null);
+    }
+});
 
   module.exports = {
     Username,

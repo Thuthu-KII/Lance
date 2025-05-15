@@ -15,7 +15,7 @@ router.get("/contacts", (req, res) => {
 });
 // added a page route for jobs view , demo jobs though.
 router.get("/dashboard/freelancer/jobs", (req,res) => {
-    res.render("jobs")
+    res.render("jobs",{user: req.user});
 })
 
 
@@ -64,5 +64,5 @@ router.get("/dashboard/client", (req, res) => {
 router.get("/dashboard/freelancer/profile", (req,res) => {
     res.render("profile")
 })
-router.get("/dashboard/freelancer", (req, res) => res.render("freelancer_dashboard"));
+router.get("/dashboard/freelancer", (req, res) => res.render("freelancer_dashboard",{ user: req.user } ));
 module.exports = router;
