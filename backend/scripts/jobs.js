@@ -1,6 +1,6 @@
 const url = 'https://lance-api-ftcehba3hhheg9hu.southafricanorth-01.azurewebsites.net'; //await
 
-export async function createJob(jobData) {
+async function createJob(jobData) {
     const res = await fetch(`${url}/jobs`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -15,15 +15,14 @@ export async function createJob(jobData) {
     return await res.json();
   }
   
-  export async function getJobs() {
+async function getJobs() {
     const res = await fetch(`${url}/jobs`);
     if (!res.ok) throw new Error('Failed to fetch jobs');
     return await res.json();
   }
 
 
-
-  export async function updateStatus(info){
+ async function updateStatus(info){
     const res = await fetch(`${url}/jobs/updateStatus`,{
       method : 'POST',
       headers: {'Content-Type' : 'application/json'},
@@ -182,3 +181,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 });
+
+module.exports = {createJob, getJobs, updateStatus, fetchJobs, renderJobs, formatDate, updatePagination, getCurrentFilters, applyForJob};
