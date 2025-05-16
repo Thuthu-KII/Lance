@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="/css/styles.css">
+  <title><%= title %></title>
+</head><body>
+  <header><nav>
+    <a href="/">Home</a>
+    <% if (user) { %>
+      <a href="/logout">Logout</a>
+    <% } else { %>
+      <a href="/login">Login</a>
+    <% } %>
+  </nav></header>
+  <main><%- body %></main>
+  <footer>&copy; 2025 Lancer</footer>
+</body></html>

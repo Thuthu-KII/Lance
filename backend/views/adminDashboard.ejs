@@ -1,0 +1,16 @@
+<% layout('layout', { title:'Admin Dashboard', user:user }) %>
+<h2>Admin Panel</h2>
+<h3>Users</h3>
+<ul>
+  <% users.forEach(u=>{ %>
+    <li><%= u.displayName %> (<%= u.role %>)
+      <% if (u.role==='Freelancer' && !u.policeClearancePath) { %>
+        <form action="/admin/activate/<%=u.id%>" method="post">
+          <button>Activate</button>
+        </form>
+      <% } %>
+    </li>
+  <% }) %>
+</ul>
+<h3>Jobs</h3>
+<ul><% jobs.forEach(j=>{ %><li><%=j.title%></li><% }) %></ul>
