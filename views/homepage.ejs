@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LanceAI - Connect with Top Freelancers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Glassmorphism with Vibrant Depth */
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1), inset 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+        .glass-effect-dark {
+            background: rgba(17, 24, 39, 0.3);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+        /* Smooth Hover and Transition Effects */
+        .hover-scale {
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+        }
+        .hover-scale:hover {
+            transform: scale(1.08);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        /* Fade and Slide Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        .animate-fade-in-down {
+            animation: fadeInDown 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        .animate-pulse {
+            animation: pulse 3s infinite ease-in-out;
+        }
+        /* Parallax Effect for Hero */
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        /* Glowing Button */
+        .glow-btn {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .glow-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shine 3s infinite;
+        }
+        @keyframes shine {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: -100%; }
+        }
+        /* Floating Particles (for hero section) */
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float linear infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0); opacity: 0.8; }
+            50% { transform: translateY(-100px) translateX(20px); opacity: 0.2; }
+            100% { transform: translateY(0) translateX(0); opacity: 0.8; }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 font-['Inter',sans-serif] overflow-x-hidden">
+    <!-- Navigation Bar -->
+    <nav class="glass-effect fixed top-0 left-0 w-full z-50 py-4">
+        <section class="container mx-auto flex justify-between items-center px-6">
+            <h1 class="text-3xl font-extrabold text-indigo-600 flex items-center space-x-2 animate-fade-in-down">
+                <i class="fa-solid fa-rocket text-indigo-500"></i>
+                <span>LanceAI</span>
+            </h1>
+            <ul class="hidden md:flex space-x-8">
+                <li><a href="/" class="text-gray-700 hover:text-indigo-500 font-medium text-lg transition">Home</a></li>
+                <li><a href="#" class="text-gray-700 hover:text-indigo-500 font-medium text-lg transition">About</a></li>
+                <li><a href="#" class="text-gray-700 hover:text-indigo-500 font-medium text-lg transition">Services</a></li>
+                <li><a href="/contacts" class="text-gray-700 hover:text-indigo-500 font-medium text-lg transition">Contact</a></li>
+            </ul>
+            <button id="mobileMenuBtn" class="md:hidden text-gray-700 focus:outline-none">
+                <i class="fa-solid fa-bars text-2xl"></i>
+            </button>
+        </section>
+        <!-- Mobile Menu -->
+        <section id="mobileMenu" class="glass-effect hidden fixed top-16 left-0 w-full p-6 md:hidden z-50 flex flex-col space-y-6">
+            <a href="/" class="text-gray-700 hover:text-indigo-500 font-medium text-lg transition">Home</a>
+            <a href="#" class="text-gray-700 hover:text-indigo-500 font-medium text-lg transition">About</a>
+            <a href="#" class="text-gray-700 hover:text-indigo-500 font-medium text-lg transition">Services</a>
+            <a href="/contacts" class="text-gray-700 hover:text-indigo-500 font-medium text-lg transition">Contact</a>
+        </section>
+    </nav>
+
+    <!-- Header Hero Section with Parallax and Particles -->
+    <header class="h-screen flex flex-col items-center justify-center text-center bg-cover bg-center bg-[url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1000&auto=format&fit=crop')] text-white relative overflow-hidden parallax">
+        <div class="absolute inset-0 bg-gradient-to-br from-indigo-900/60 via-purple-900/40 to-transparent z-0"></div>
+        <!-- Particles for Visual Effect -->
+        <div class="particle" style="top: 20%; left: 10%; animation-duration: 5s;"></div>
+        <div class="particle" style="top: 40%; left: 80%; animation-duration: 7s;"></div>
+        <div class="particle" style="top: 60%; left: 30%; animation-duration: 4s;"></div>
+        <div class="particle" style="top: 80%; left: 60%; animation-duration: 6s;"></div>
+        <section class="glass-effect p-10 rounded-3xl text-center z-10 animate-fade-in-up max-w-4xl mx-4">
+            <h1 id="welcome" class="text-6xl md:text-8xl font-extrabold mb-6 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-indigo-100">Welcome to LanceAI</h1>
+            <p id="welcomeMsg" class="text-2xl md:text-3xl mb-10 text-indigo-50 leading-relaxed">We revolutionize your business by connecting you with world-class freelancers!</p>
+            <a id="getStartedBtn" href="/login" class="px-10 py-5 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold text-lg rounded-xl shadow-xl hover:from-indigo-600 hover:to-purple-700 transition hover-scale glow-btn inline-block">
+                Get Started Now
+            </a>
+        </section>
+    </header>
+
+    <!-- Features Section with Interactive Cards -->
+    <section class="container mx-auto py-24 text-center relative z-10">
+        <h2 class="text-5xl font-extrabold mb-16 text-indigo-900 animate-fade-in-up bg-clip-text text-transparent bg-gradient-to-r from-indigo-700 to-purple-700">Why Choose LanceAI?</h2>
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-10 px-6">
+            <section class="glass-effect p-10 rounded-3xl hover-scale backdrop-blur-lg animate-fade-in-up bg-gradient-to-br from-white/20 to-indigo-50/10" style="animation-delay: 0.2s;">
+                <i class="fa-solid fa-bolt-lightning text-4xl text-indigo-500 mb-6"></i>
+                <h3 class="text-3xl font-bold text-indigo-700 mb-4">Instant Matchmaking</h3>
+                <p class="text-gray-700 mt-4 text-lg leading-relaxed max-w-xs mx-auto">Our AI-driven platform matches you with top freelancers in seconds.</p>
+            </section>
+            <section class="glass-effect p-10 rounded-3xl hover-scale backdrop-blur-lg animate-fade-in-up bg-gradient-to-br from-white/20 to-purple-50/10" style="animation-delay: 0.4s;">
+                <i class="fa-solid fa-shield-alt text-4xl text-purple-500 mb-6"></i>
+                <h3 class="text-3xl font-bold text-purple-700 mb-4">Unmatched Security</h3>
+                <p class="text-gray-700 mt-4 text-lg leading-relaxed max-w-xs mx-auto">We vet every freelancer to ensure trust and secure transactions.</p>
+            </section>
+            <section class="glass-effect p-10 rounded-3xl hover-scale backdrop-blur-lg animate-fade-in-up bg-gradient-to-br from-white/20 to-blue-50/10" style="animation-delay: 0.6s;">
+                <i class="fa-solid fa-headset text-4xl text-blue-500 mb-6"></i>
+                <h3 class="text-3xl font-bold text-blue-700 mb-4">Premium Support</h3>
+                <p class="text-gray-700 mt-4 text-lg leading-relaxed max-w-xs mx-auto">Our team is available 24/7 to assist with any queries or issues.</p>
+            </section>
+        </section>
+    </section>
+
+    <!-- Call to Action with Dramatic Visuals -->
+    <section class="bg-gradient-to-br from-indigo-900 via-purple-800 to-blue-900 text-white py-24 text-center relative overflow-hidden">
+        <div class="absolute inset-0 opacity-5">
+            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
+                        <path d="M 80 0 L 0 0 0 80" fill="none" stroke="white" stroke-width="1"/>
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#grid)" />
+            </svg>
+        </div>
+        <div class="particle" style="top: 10%; left: 20%; animation-duration: 6s;"></div>
+        <div class="particle" style="top: 30%; left: 70%; animation-duration: 5s;"></div>
+        <div class="particle" style="top: 50%; left: 40%; animation-duration: 7s;"></div>
+        <section class="container mx-auto z-10 relative animate-fade-in-up">
+            <h2 class="text-5xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-indigo-200">Ready to Revolutionize Your Workflow?</h2>
+            <p class="mt-6 text-2xl max-w-3xl mx-auto text-indigo-100 leading-relaxed">Join LanceAI now and unlock access to elite freelancers who can transform your vision into reality.</p>
+            <a id="signUpBtn" href="/auth/google" class="mt-10 inline-block bg-gradient-to-r from-white to-indigo-100 text-indigo-700 px-10 py-5 rounded-xl shadow-2xl font-bold text-lg hover:from-indigo-100 hover:to-white hover:text-indigo-800 transition hover-scale glow-btn animate-pulse">
+                Login with Google
+            </a>
+        </section>
+    </section>
+
+    <!-- Footer with Modern Touch -->
+    <footer class="glass-effect-dark text-white text-center py-10 relative z-10">
+        <section class="container mx-auto px-6">
+            <p class="text-lg mb-4">&copy; 2023 LanceAI. All rights reserved.</p>
+            <section class="flex justify-center space-x-6 mt-4">
+                <a href="#" class="text-indigo-300 hover:text-indigo-100 transition"><i class="fa-brands fa-twitter text-xl"></i></a>
+                <a href="#" class="text-indigo-300 hover:text-indigo-100 transition"><i class="fa-brands fa-linkedin-in text-xl"></i></a>
+                <a href="#" class="text-indigo-300 hover:text-indigo-100 transition"><i class="fa-brands fa-github text-xl"></i></a>
+                <a href="#" class="text-indigo-300 hover:text-indigo-100 transition"><i class="fa-brands fa-instagram text-xl"></i></a>
+            </section>
+        </section>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth Scroll for Links (if needed)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

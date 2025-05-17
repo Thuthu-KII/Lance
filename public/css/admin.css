@@ -1,0 +1,100 @@
+/* Base Styles */
+:root {
+  --primary-purple: #6d28d9;
+  --glass-bg: rgba(255, 255, 255, 0.15);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --text-dark: #1e293b;
+  --text-light: #f8fafc;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+}
+
+/* Admin Layout */
+.admin-container {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+}
+
+.admin-sidebar {
+  background: var(--primary-purple);
+  color: var(--text-light);
+  padding: 1.5rem;
+  position: fixed;
+  width: 250px;
+  height: 100vh;
+}
+
+.admin-main {
+  grid-column: 2;
+  padding: 2rem;
+}
+
+/* Cards */
+.stat-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.report-card {
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Buttons */
+.btn-resolve {
+  background: var(--success);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.btn-details {
+  background: var(--primary-purple);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  text-decoration: none;
+}
+
+/* Badges */
+.badge-pending {
+  background: var(--warning);
+  color: var(--text-dark);
+  padding: 0.25rem 0.5rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .admin-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .admin-sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+  }
+  
+  .admin-main {
+    grid-column: 1;
+  }
+}
