@@ -1,0 +1,46 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn-debug.log
+
+# Environment variables
+.env
+
+# Logs
+logs/
+*.log
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Uploaded files (in development)
+public/uploads/cvs/*
+public/uploads/clearances/*
+!public/uploads/cvs/.gitkeep
+!public/uploads/clearances/.gitkeep
+
+# Dependencies
+.npm/
+.pnp/
+.pnp.js
+
+# IDE/Editor folders
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Testing
+coverage/
+
+# Build
+dist/
+build/

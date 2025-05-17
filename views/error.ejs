@@ -1,0 +1,30 @@
+<%- contentFor('body') %>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card text-center">
+        <div class="card-header">
+          <h1 class="card-title">Error <%= status %></h1>
+        </div>
+        <div class="card-body">
+          <div class="mb-4">
+            <svg width="100" height="100" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4Z" stroke="#e74c3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M15 9L9 15" stroke="#e74c3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9 9L15 15" stroke="#e74c3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          
+          <h2 class="mb-3">Oops! Something went wrong.</h2>
+          <p class="mb-4"><%= message %></p>
+          
+          <div class="d-flex justify-content-center">
+            <a href="/" class="btn btn-primary mr-3">Go to Homepage</a>
+            <button onclick="history.back()" class="btn btn-light">Go Back</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

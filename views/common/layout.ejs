@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Freelancer Management Platform</title>
+  <link rel="stylesheet" href="/css/common.css">
+  <% if (locals.cssFiles) { %>
+    <% cssFiles.forEach(function(css) { %>
+      <link rel="stylesheet" href="/css/<%= css %>">
+    <% }); %>
+  <% } %>
+</head>
+<body>
+  <%- include('./header') %>
+
+  <div class="container">
+    <% if (success_msg && success_msg.length > 0) { %>
+      <div class="alert alert-success">
+        <%= success_msg %>
+      </div>
+    <% } %>
+
+    <% if (error_msg && error_msg.length > 0) { %>
+      <div class="alert alert-danger">
+        <%= error_msg %>
+      </div>
+    <% } %>
+
+    <% if (error && error.length > 0) { %>
+      <div class="alert alert-danger">
+        <%= error %>
+      </div>
+    <% } %>
+
+    <%- body %>
+  </div>
+
+  <%- include('./footer') %>
+
+  <% if (locals.jsFiles) { %>
+    <% jsFiles.forEach(function(js) { %>
+      <script src="/js/<%= js %>"></script>
+    <% }); %>
+  <% } %>
+</body>
+</html>

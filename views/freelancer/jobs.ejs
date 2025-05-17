@@ -1,0 +1,106 @@
+<%- contentFor('body') %>
+
+<div class="container">
+  <h1 class="mb-4">Available Jobs</h1>
+  
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <div class="form-group">
+        <input type="text" id="jobSearch" class="form-control" placeholder="Search jobs...">
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <div class="form-group">
+        <select id="jobSort" class="form-control">
+          <option value="latest">Latest First</option>
+          <option value="budget-high">Highest Budget</option>
+          <option value="budget-low">Lowest Budget</option>
+          <option value="deadline">Closest Deadline</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  
+  <% if (jobs.length === 0) { %>
+    <div class="alert alert-info">
+      <p>No jobs available at the moment.</p>
+    </div>
+  <% } else { %>
+    <div class="job-list" id="jobContainer">
+      <% jobs.forEach(function(job) { %>
+        <div class="job-item" data-budget="<%= job.budget %>" data-date="<%= job.created_at %>" data-deadline="<%= job.deadline || '9999-12-31' %>">
+          <h3 class="job-title"><a href="/jobs/<%= job.id %>"><%= job.title %></a></h3>
+          <div class="job-company">
+            <%= job.company_name || `${job.first_name} ${job.last_name}` %>
+          </div>
+          <div class="job-details">
+            <div class="job-budget">Budget: $<%= parseFloat(job.budget).toFixed(2) %></div>
+            <% if (job.deadline) { %>
+              <div class="job-deadline">Deadline: <%= new Date(job.deadline).toLocaleDateString() %></div>
+            <% } %>
+          </div>
+          <div class="job-description">
+            <%= job.description.length > 200 ? job.description.substring(0, 200) + '...' : job.description %>
+          </div>
+          <div class="job-actions">
+            <a href="/jobs/<%= job.id %>" class="btn btn-primary">View Details</a>
+            <a href="/jobs/<%= job.id %>/apply" class="btn btn-secondary">Apply Now</a>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  <% } %>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('jobSearch');
+    const sortSelect = document.getElementById('jobSort');
+    const jobContainer = document.getElementById('jobContainer');
+    const jobItems = document.querySelectorAll('.job-item');
+    
+    // Search functionality
+    searchInput.addEventListener('keyup', function() {
+      const searchText = searchInput.value.toLowerCase();
+      
+      jobItems.forEach(function(item) {
+        const jobText = item.textContent.toLowerCase();
+        
+        if (jobText.includes(searchText)) {
+          item.style.display = '';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+    
+    // Sort functionality
+    sortSelect.addEventListener('change', function() {
+      const sortValue = sortSelect.value;
+      const jobsArray = Array.from(jobItems);
+      
+      jobsArray.sort(function(a, b) {
+        if (sortValue === 'latest') {
+          return new Date(b.dataset.date) - new Date(a.dataset.date);
+        } else if (sortValue === 'budget-high') {
+          return parseFloat(b.dataset.budget) - parseFloat(a.dataset.budget);
+        } else if (sortValue === 'budget-low') {
+          return parseFloat(a.dataset.budget) - parseFloat(b.dataset.budget);
+        } else if (sortValue === 'deadline') {
+          return new Date(a.dataset.deadline) - new Date(b.dataset.deadline);
+        }
+      });
+      
+      // Remove all existing items
+      jobItems.forEach(function(item) {
+        item.remove();
+      });
+      
+      // Append sorted items
+      jobsArray.forEach(function(item) {
+        jobContainer.appendChild(item);
+      });
+    });
+  });
+</script>

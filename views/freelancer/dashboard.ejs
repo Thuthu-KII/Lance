@@ -1,0 +1,146 @@
+<%- contentFor('body') %>
+
+<h1 class="mb-4">Freelancer Dashboard</h1>
+
+<div class="dashboard-stats">
+  <div class="stat-card">
+    <div class="stat-card-value"><%= counts.applications %></div>
+    <div class="stat-card-label">Applications</div>
+  </div>
+  
+  <div class="stat-card">
+    <div class="stat-card-value"><%= counts.activeJobs %></div>
+    <div class="stat-card-label">Active Jobs</div>
+  </div>
+  
+  <div class="stat-card">
+    <div class="stat-card-value"><%= counts.completedJobs %></div>
+    <div class="stat-card-label">Completed</div>
+  </div>
+</div>
+
+<div class="quick-actions mb-4">
+  <a href="/jobs/browse" class="btn btn-primary quick-action-btn">Find Jobs</a>
+  <a href="/freelancer/applications" class="btn btn-secondary quick-action-btn">My Applications</a>
+  <a href="/freelancer/jobs" class="btn btn-light quick-action-btn">Active Jobs</a>
+  <a href="/profile" class="btn btn-light quick-action-btn">Edit Profile</a>
+</div>
+
+<div class="dashboard-container">
+  <div class="dashboard-card">
+    <div class="dashboard-card-header">
+      <h2 class="dashboard-card-title">Active Jobs</h2>
+      <a href="/freelancer/jobs" class="btn btn-sm btn-primary">View All</a>
+    </div>
+    <div class="dashboard-card-body">
+      <% if (activeJobs.length === 0) { %>
+        <p class="text-center text-muted">You don't have any active jobs.</p>
+      <% } else { %>
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Client</th>
+                <th>Budget</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% activeJobs.forEach(function(job) { %>
+                <tr>
+                  <td><%= job.title %></td>
+                  <td><%= job.client_first_name %> <%= job.client_last_name %></td>
+                  <td>$<%= parseFloat(job.budget).toFixed(2) %></td>
+                  <td>
+                    <span class="status-badge status-<%= job.status.replace(' ', '-') %>">
+                      <%= job.status.charAt(0).toUpperCase() + job.status.slice(1) %>
+                    </span>
+                  </td>
+                  <td>
+                    <a href="/freelancer/jobs/<%= job.id %>" class="btn btn-sm btn-light">View</a>
+                    <% if (job.status === 'in-progress') { %>
+                      <form action="/freelancer/jobs/<%= job.id %>/complete" method="POST" style="display: inline;">
+                        <button type="submit" class="btn btn-sm btn-success">Mark Complete</button>
+                      </form>
+                    <% } %>
+                  </td>
+                </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      <% } %>
+    </div>
+  </div>
+  
+  <div class="dashboard-card">
+    <div class="dashboard-card-header">
+      <h2 class="dashboard-card-title">Recent Applications</h2>
+      <a href="/freelancer/applications" class="btn btn-sm btn-primary">View All</a>
+    </div>
+    <div class="dashboard-card-body">
+      <% if (applications.length === 0) { %>
+        <p class="text-center text-muted">You haven't applied to any jobs yet.</p>
+      <% } else { %>
+        <div class="activity-list">
+          <% applications.forEach(function(application) { %>
+            <div class="activity-item">
+              <div class="d-flex justify-content-between">
+                <div>
+                  Applied to <strong><%= application.title %></strong> 
+                  by <%= application.client_first_name %> <%= application.client_last_name %>
+                </div>
+                <span class="status-badge status-<%= application.status %>">
+                  <%= application.status.charAt(0).toUpperCase() + application.status.slice(1) %>
+                </span>
+              </div>
+              <div class="activity-time">
+                <%= new Date(application.created_at).toLocaleString() %>
+              </div>
+            </div>
+          <% }); %>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<div class="dashboard-container mt-4">
+  <div class="dashboard-card">
+    <div class="dashboard-card-header">
+      <h2 class="dashboard-card-title">Available Jobs</h2>
+      <a href="/jobs/browse" class="btn btn-sm btn-primary">View All</a>
+    </div>
+    <div class="dashboard-card-body">
+      <% if (availableJobs.length === 0) { %>
+        <p class="text-center text-muted">No available jobs matching your skills at the moment.</p>
+      <% } else { %>
+        <div class="job-list">
+          <% availableJobs.forEach(function(job) { %>
+            <div class="job-item">
+              <h3 class="job-title"><a href="/jobs/<%= job.id %>"><%= job.title %></a></h3>
+              <div class="job-company">
+                <%= job.company_name || 'Individual Client' %>
+              </div>
+              <div class="job-details">
+                <div class="job-budget">Budget: $<%= parseFloat(job.budget).toFixed(2) %></div>
+                <% if (job.deadline) { %>
+                  <div class="job-deadline">Deadline: <%= new Date(job.deadline).toLocaleDateString() %></div>
+                <% } %>
+              </div>
+              <div class="job-description">
+                <%= job.description.length > 150 ? job.description.substring(0, 150) + '...' : job.description %>
+              </div>
+              <div class="job-actions">
+                <a href="/jobs/<%= job.id %>" class="btn btn-primary">View Job</a>
+                <a href="/jobs/<%= job.id %>/apply" class="btn btn-secondary">Apply Now</a>
+              </div>
+            </div>
+          <% }); %>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</div>

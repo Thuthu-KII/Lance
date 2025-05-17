@@ -1,0 +1,119 @@
+<%- contentFor('body') %>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h1 class="card-title">Payment for Job</h1>
+        </div>
+        <div class="card-body">
+          <div class="mb-4">
+            <h3><%= job.title %></h3>
+            <p class="text-muted">Budget: $<%= parseFloat(job.budget).toFixed(2) %></p>
+          </div>
+
+          <div class="alert alert-info mb-4">
+            <p>Your job will be posted and visible to freelancers after payment is completed.</p>
+          </div>
+
+          <div id="payment-form" class="mb-4">
+            <div class="form-group">
+              <label for="card-frame" class="form-label">Payment Details</label>
+              <div id="card-frame" class="p-3 border rounded"></div>
+              <div id="payment-error" class="text-danger mt-2"></div>
+            </div>
+            
+            <div class="mb-3">
+              <p><strong>Total Amount: $<%= parseFloat(job.budget).toFixed(2) %></strong></p>
+            </div>
+
+            <button id="pay-button" class="btn btn-primary btn-lg">Pay Now</button>
+            <div id="payment-processing" class="d-none mt-3">
+              <p>Processing payment...</p>
+              <div class="progress">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div id="payment-success" class="d-none">
+            <div class="alert alert-success">
+              <h4>Payment Successful!</h4>
+              <p>Your job has been posted successfully.</p>
+            </div>
+            <a href="/client/jobs" class="btn btn-primary">View My Jobs</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://js.yoco.com/sdk/v1/yoco-sdk-web.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const yoco = new window.YocoSDK({
+      publicKey: '<%= yocoPublicKey %>'
+    });
+    
+    const payButton = document.getElementById('pay-button');
+    const paymentForm = document.getElementById('payment-form');
+    const paymentSuccess = document.getElementById('payment-success');
+    const paymentProcessing = document.getElementById('payment-processing');
+    const paymentError = document.getElementById('payment-error');
+    
+    // Create the card frame
+    const cardFrame = yoco.inline({
+      element: '#card-frame',
+      layout: 'standard'
+    });
+    
+    payButton.addEventListener('click', function(event) {
+      event.preventDefault();
+      payButton.disabled = true;
+      paymentProcessing.classList.remove('d-none');
+      paymentError.textContent = '';
+      
+      yoco.tokenize({
+        name: '<%= user.profile.first_name %> <%= user.profile.last_name %>',
+        callback: async function(result) {
+          if (result.error) {
+            payButton.disabled = false;
+            paymentProcessing.classList.add('d-none');
+            paymentError.textContent = result.error.message;
+            return;
+          }
+          
+          // Send token to the server
+          try {
+            const response = await fetch('/payments/job/<%= job.id %>', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                token: result.id
+              })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+              paymentForm.classList.add('d-none');
+              paymentSuccess.classList.remove('d-none');
+            } else {
+              payButton.disabled = false;
+              paymentProcessing.classList.add('d-none');
+              paymentError.textContent = data.message || 'Payment failed. Please try again.';
+            }
+          } catch (error) {
+            payButton.disabled = false;
+            paymentProcessing.classList.add('d-none');
+            paymentError.textContent = 'An error occurred. Please try again.';
+          }
+        }
+      });
+    });
+  });
+</script>

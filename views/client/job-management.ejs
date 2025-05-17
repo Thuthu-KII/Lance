@@ -1,0 +1,126 @@
+<%- contentFor('body') %>
+
+<div class="container">
+  <div class="mb-4 d-flex justify-content-between align-items-center">
+    <h1>My Jobs</h1>
+    <a href="/jobs/create" class="btn btn-primary">Post New Job</a>
+  </div>
+  
+  <div class="card mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h2 class="card-title mb-0">Job Management</h2>
+      <div class="d-flex">
+        <input type="text" id="jobSearch" class="form-control form-control-sm mr-2" placeholder="Search jobs...">
+        <select id="statusFilter" class="form-control form-control-sm">
+          <option value="all">All Statuses</option>
+          <option value="open">Open</option>
+          <option value="in-progress">In Progress</option>
+          <option value="completed">Completed</option>
+          <option value="pending">Pending</option>
+        </select>
+      </div>
+    </div>
+    <div class="card-body">
+      <% if (jobs.length === 0) { %>
+        <div class="alert alert-info">
+          <p>You haven't posted any jobs yet.</p>
+          <a href="/jobs/create" class="btn btn-primary mt-2">Post Your First Job</a>
+        </div>
+      <% } else { %>
+        <div class="table-responsive">
+          <table class="table table-hover" id="jobsTable">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Budget</th>
+                <th>Status</th>
+                <th>Payment</th>
+                <th>Posted</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% jobs.forEach(function(job) { %>
+                <tr data-status="<%= job.status %>">
+                  <td><%= job.title %></td>
+                  <td>$<%= parseFloat(job.budget).toFixed(2) %></td>
+                  <td>
+                    <span class="status-badge status-<%= job.status.replace(' ', '-') %>">
+                      <%= job.status.charAt(0).toUpperCase() + job.status.slice(1) %>
+                    </span>
+                  </td>
+                  <td>
+                    <span class="badge badge-<%= job.payment_status === 'paid' ? 'success' : 'warning' %>">
+                      <%= job.payment_status.charAt(0).toUpperCase() + job.payment_status.slice(1) %>
+                    </span>
+                  </td>
+                  <td><%= new Date(job.created_at).toLocaleDateString() %></td>
+                  <td>
+                    <div class="btn-group">
+                      <a href="/client/jobs/<%= job.id %>" class="btn btn-sm btn-light">View</a>
+                      
+                      <% if (job.status === 'open' && job.payment_status === 'paid') { %>
+                        <a href="/client/jobs/<%= job.id %>/applications" class="btn btn-sm btn-primary">Applications</a>
+                      <% } %>
+                      
+                      <% if (job.status === 'open' && job.payment_status === 'unpaid') { %>
+                        <a href="/payments/job/<%= job.id %>" class="btn btn-sm btn-success">Pay</a>
+                      <% } %>
+                      
+                      <% if (job.status === 'open' && job.payment_status === 'paid') { %>
+                        <a href="/jobs/<%= job.id %>/edit" class="btn btn-sm btn-secondary">Edit</a>
+                        
+                        <form action="/jobs/<%= job.id %>?_method=DELETE" method="POST" onsubmit="return confirm('Are you sure you want to delete this job?');" class="d-inline">
+                          <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                      <% } %>
+                      
+                      <% if (job.status === 'completed') { %>
+                        <a href="/jobs/<%= job.id %>/invoice" class="btn btn-sm btn-info">Invoice</a>
+                      <% } %>
+                    </div>
+                  </td>
+                </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('jobSearch');
+    const statusFilter = document.getElementById('statusFilter');
+    const table = document.getElementById('jobsTable');
+    const rows = table.getElementsByTagName('tr');
+    
+    // Combined filter function
+    function filterTable() {
+      const searchText = searchInput.value.toLowerCase();
+      const statusValue = statusFilter.value;
+      
+      for (let i = 1; i < rows.length; i++) {
+        const row = rows[i];
+        const rowText = row.textContent.toLowerCase();
+        const rowStatus = row.dataset.status;
+        
+        // Check both search text and status filter
+        const matchesSearch = rowText.includes(searchText);
+        const matchesStatus = statusValue === 'all' || rowStatus === statusValue;
+        
+        if (matchesSearch && matchesStatus) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      }
+    }
+    
+    // Add event listeners
+    searchInput.addEventListener('keyup', filterTable);
+    statusFilter.addEventListener('change', filterTable);
+  });
+</script>

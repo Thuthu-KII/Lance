@@ -1,0 +1,118 @@
+<%- contentFor('body') %>
+
+<h1 class="mb-4">Admin Dashboard</h1>
+
+<div class="dashboard-stats">
+  <div class="stat-card">
+    <div class="stat-card-value"><%= counts.clients %></div>
+    <div class="stat-card-label">Clients</div>
+  </div>
+  
+  <div class="stat-card">
+    <div class="stat-card-value"><%= counts.freelancers %></div>
+    <div class="stat-card-label">Freelancers</div>
+  </div>
+  
+  <div class="stat-card">
+    <div class="stat-card-value"><%= counts.jobs %></div>
+    <div class="stat-card-label">Total Jobs</div>
+  </div>
+  
+  <div class="stat-card">
+    <div class="stat-card-value">$<%= parseFloat(counts.payments).toFixed(2) %></div>
+    <div class="stat-card-label">Total Payments</div>
+  </div>
+</div>
+
+<div class="quick-actions mb-4">
+  <a href="/admin/approvals" class="btn btn-primary quick-action-btn">
+    Pending Approvals <span class="badge badge-light"><%= counts.pendingApprovals %></span>
+  </a>
+  <a href="/admin/reports" class="btn btn-danger quick-action-btn">
+    Reports <span class="badge badge-light"><%= counts.reports %></span>
+  </a>
+  <a href="/admin/users" class="btn btn-secondary quick-action-btn">Manage Users</a>
+  <a href="/admin/jobs" class="btn btn-light quick-action-btn">Manage Jobs</a>
+</div>
+
+<div class="dashboard-container">
+  <div class="dashboard-card">
+    <div class="dashboard-card-header">
+      <h2 class="dashboard-card-title">Recent Jobs</h2>
+      <a href="/admin/jobs" class="btn btn-sm btn-primary">View All</a>
+    </div>
+    <div class="dashboard-card-body">
+      <% if (recentJobs.length === 0) { %>
+        <p class="text-center text-muted">No jobs found in the system.</p>
+      <% } else { %>
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Client</th>
+                <th>Budget</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% recentJobs.forEach(function(job) { %>
+                <tr>
+                  <td><%= job.title %></td>
+                  <td><%= job.first_name %> <%= job.last_name %></td>
+                  <td>$<%= parseFloat(job.budget).toFixed(2) %></td>
+                  <td>
+                    <span class="status-badge status-<%= job.status.replace(' ', '-') %>">
+                      <%= job.status.charAt(0).toUpperCase() + job.status.slice(1) %>
+                    </span>
+                  </td>
+                  <td><%= new Date(job.created_at).toLocaleDateString() %></td>
+                  <td>
+                    <a href="/admin/jobs/<%= job.id %>" class="btn btn-sm btn-light">View</a>
+                  </td>
+                </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      <% } %>
+    </div>
+  </div>
+  
+  <div class="dashboard-card">
+    <div class="dashboard-card-header">
+      <h2 class="dashboard-card-title">System Status</h2>
+    </div>
+    <div class="dashboard-card-body">
+      <div class="mb-3">
+        <h4 class="mb-2">Pending Tasks</h4>
+        <ul class="list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Freelancer Approvals
+            <span class="badge badge-primary badge-pill"><%= counts.pendingApprovals %></span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Reports to Review
+            <span class="badge badge-danger badge-pill"><%= counts.reports %></span>
+          </li>
+        </ul>
+      </div>
+      
+      <div>
+        <h4 class="mb-2">Quick Stats</h4>
+        <ul class="list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Active Jobs
+            <span class="badge badge-warning badge-pill"><%= counts.jobs - recentJobs.filter(j => j.status === 'completed').length %></span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Total Users
+            <span class="badge badge-info badge-pill"><%= parseInt(counts.clients) + parseInt(counts.freelancers) %></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

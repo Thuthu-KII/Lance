@@ -1,0 +1,104 @@
+<%- contentFor('body') %>
+
+<div class="hero bg-primary p-5 mb-5 rounded">
+  <div class="row align-items-center">
+    <div class="col-12 col-md-6">
+      <h1 class="mb-3">Find the perfect freelancer for your project</h1>
+      <p class="mb-4">Connect with skilled professionals, post jobs, and get your projects done efficiently.</p>
+      <div class="d-flex">
+        <% if (!user) { %>
+          <a href="/auth/register" class="btn btn-light mr-3">Sign Up</a>
+          <a href="/auth/login" class="btn btn-secondary">Login</a>
+        <% } else if (user.role === 'client') { %>
+          <a href="/jobs/create" class="btn btn-light mr-3">Post a Job</a>
+          <a href="/client/dashboard" class="btn btn-secondary">My Dashboard</a>
+        <% } else if (user.role === 'freelancer') { %>
+          <a href="/jobs/browse" class="btn btn-light mr-3">Find Jobs</a>
+          <a href="/freelancer/dashboard" class="btn btn-secondary">My Dashboard</a>
+        <% } %>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 text-center mt-4 mt-md-0">
+      <img src="https://via.placeholder.com/600x400" alt="Freelancer Platform" class="img-fluid rounded shadow">
+    </div>
+  </div>
+</div>
+
+<div class="row mb-5">
+  <div class="col-12 text-center mb-4">
+    <h2>How It Works</h2>
+    <p class="text-muted">Our platform makes it easy to connect clients and freelancers</p>
+  </div>
+  
+  <div class="col-12 col-md-4 mb-4">
+    <div class="card h-100">
+      <div class="card-body text-center">
+        <h3 class="card-title">1. Post a Job</h3>
+        <p class="card-text">Clients can post jobs with details about their requirements and budget.</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-12 col-md-4 mb-4">
+    <div class="card h-100">
+      <div class="card-body text-center">
+        <h3 class="card-title">2. Find Talent</h3>
+        <p class="card-text">Freelancers apply with their qualifications and you choose the best fit.</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-12 col-md-4 mb-4">
+    <div class="card h-100">
+      <div class="card-body text-center">
+        <h3 class="card-title">3. Complete Projects</h3>
+        <p class="card-text">Work together efficiently and securely through our platform.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-5 bg-light p-4 rounded">
+  <div class="col-12 text-center mb-4">
+    <h2>Featured Categories</h2>
+    <p class="text-muted">Explore popular job categories on our platform</p>
+  </div>
+  
+  <div class="col-6 col-md-3 mb-3">
+    <div class="card p-3 text-center">
+      <h4>Web Development</h4>
+    </div>
+  </div>
+  
+  <div class="col-6 col-md-3 mb-3">
+    <div class="card p-3 text-center">
+      <h4>Design</h4>
+    </div>
+  </div>
+  
+  <div class="col-6 col-md-3 mb-3">
+    <div class="card p-3 text-center">
+      <h4>Writing</h4>
+    </div>
+  </div>
+  
+  <div class="col-6 col-md-3 mb-3">
+    <div class="card p-3 text-center">
+      <h4>Marketing</h4>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12 text-center mb-4">
+    <h2>Join Our Community Today</h2>
+    <p class="text-muted mb-4">Start hiring or working on projects in minutes</p>
+    
+    <% if (!user) { %>
+      <a href="/auth/register/client" class="btn btn-primary mr-3">Register as Client</a>
+      <a href="/auth/register/freelancer" class="btn btn-secondary">Register as Freelancer</a>
+    <% } else { %>
+      <a href="/jobs/browse" class="btn btn-primary">Explore Jobs</a>
+    <% } %>
+  </div>
+</div>

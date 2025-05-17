@@ -1,0 +1,169 @@
+.dashboard-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -10px;
+}
+
+.dashboard-card {
+  flex: 1 0 calc(50% - 20px);
+  margin: 10px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.dashboard-card-header {
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard-card-title {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--dark-color);
+}
+
+.dashboard-card-body {
+  padding: 1.25rem;
+}
+
+.dashboard-stats {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -10px 1.5rem;
+}
+
+.stat-card {
+  flex: 1 0 calc(25% - 20px);
+  margin: 10px;
+  padding: 1.25rem;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: var(--shadow);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.stat-card-value {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+
+.stat-card-label {
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -5px 1.5rem;
+}
+
+.quick-action-btn {
+  flex: 1 0 calc(25% - 10px);
+  margin: 5px;
+}
+
+@media (max-width: 992px) {
+  .stat-card {
+    flex: 1 0 calc(50% - 20px);
+  }
+  
+  .quick-action-btn {
+    flex: 1 0 calc(50% - 10px);
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-card {
+    flex: 1 0 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .stat-card {
+    flex: 1 0 100%;
+  }
+  
+  .quick-action-btn {
+    flex: 1 0 100%;
+  }
+}
+
+.activity-list {
+  list-style: none;
+  padding: 0;
+}
+
+.activity-item {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+}
+
+.activity-time {
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.25em 0.4em;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+}
+
+.status-open {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.status-in-progress {
+  background-color: var(--warning-color);
+  color: white;
+}
+
+.status-completed {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.status-pending {
+  background-color: #6c757d;
+  color: white;
+}
+
+.status-hired {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.status-rejected {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+.chart-container {
+  height: 300px;
+  margin-bottom: 1.5rem;
+}

@@ -1,0 +1,35 @@
+<%- contentFor('body') %>
+
+<div class="auth-container">
+  <div class="auth-header">
+    <h1>Login</h1>
+    <p>Access your FreelanceHub account</p>
+  </div>
+  
+  <form action="/auth/login" method="POST" class="auth-form">
+    <div class="form-group">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" id="email" name="email" class="form-control" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" id="password" name="password" class="form-control" required>
+    </div>
+    
+    <button type="submit" class="btn btn-primary btn-block">Login</button>
+  </form>
+  
+  <div class="auth-divider">
+    <span>OR</span>
+  </div>
+  
+  <a href="/auth/google" class="social-btn">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google Logo">
+    Continue with Google
+  </a>
+  
+  <div class="auth-links">
+    <p>Don't have an account? <a href="/auth/register">Register</a></p>
+  </div>
+</div>

@@ -1,0 +1,96 @@
+<%- contentFor('body') %>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h1 class="card-title text-center">
+            <%= edit ? 'Edit Job' : 'Create New Job' %>
+          </h1>
+        </div>
+        <div class="card-body">
+          <form action="<%= edit ? `/jobs/${job.id}?_method=PUT` : '/jobs/create' %>" method="POST">
+            <div class="form-group">
+              <label for="title" class="form-label">Job Title*</label>
+              <input 
+                type="text" 
+                id="title" 
+                name="title" 
+                class="form-control" 
+                value="<%= edit ? job.title : '' %>" 
+                required
+              >
+            </div>
+            
+            <div class="form-group">
+              <label for="description" class="form-label">Job Description*</label>
+              <textarea 
+                id="description" 
+                name="description" 
+                class="form-control" 
+                rows="5" 
+                required
+              ><%= edit ? job.description : '' %></textarea>
+            </div>
+            
+            <div class="form-group">
+              <label for="requirements" class="form-label">Requirements</label>
+              <textarea 
+                id="requirements" 
+                name="requirements" 
+                class="form-control" 
+                rows="3"
+              ><%= edit ? job.requirements : '' %></textarea>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="budget" class="form-label">Budget ($)*</label>
+                  <input 
+                    type="number" 
+                    id="budget" 
+                    name="budget" 
+                    class="form-control" 
+                    step="0.01" 
+                    min="5" 
+                    value="<%= edit ? job.budget : '' %>" 
+                    required
+                  >
+                </div>
+              </div>
+              
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="deadline" class="form-label">Deadline</label>
+                  <input 
+                    type="date" 
+                    id="deadline" 
+                    name="deadline" 
+                    class="form-control" 
+                    value="<%= edit && job.deadline ? new Date(job.deadline).toISOString().split('T')[0] : '' %>"
+                  >
+                </div>
+              </div>
+            </div>
+            
+            <div class="alert alert-info mt-3 mb-4">
+              <p class="mb-0">
+                <strong>Note:</strong> 
+                <%= edit ? 'Changes to your job posting will be applied immediately.' : 'You will be redirected to payment after creating the job.' %>
+              </p>
+            </div>
+            
+            <div class="d-flex justify-content-between">
+              <a href="/client/jobs" class="btn btn-light">Cancel</a>
+              <button type="submit" class="btn btn-primary">
+                <%= edit ? 'Update Job' : 'Create Job' %>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

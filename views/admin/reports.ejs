@@ -1,0 +1,60 @@
+<%- contentFor('body') %>
+
+<div class="container">
+  <h1 class="mb-4">Reports</h1>
+  
+  <div class="card">
+    <div class="card-header">
+      <h2 class="card-title">Reported Issues</h2>
+    </div>
+    <div class="card-body">
+      <% if (reports.length === 0) { %>
+        <div class="alert alert-info">
+          <p>No reports found in the system.</p>
+        </div>
+      <% } else { %>
+        <div class="table-responsive">
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Reported By</th>
+                <th>Reported User</th>
+                <th>Job</th>
+                <th>Issue</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% reports.forEach(function(report) { %>
+                <tr>
+                  <td><%= report.reporter_email || 'N/A' %></td>
+                  <td><%= report.reported_email || 'N/A' %></td>
+                  <td><%= report.job_title || 'N/A' %></td>
+                  <td>
+                    <%= report.issue.length > 30 ? report.issue.substring(0, 30) + '...' : report.issue %>
+                  </td>
+                  <td>
+                    <span class="badge badge-<%= 
+                      report.status === 'pending' ? 'warning' :
+                      report.status === 'resolved' ? 'success' :
+                      report.status === 'rejected' ? 'danger' :
+                      'secondary'
+                    %>">
+                      <%= report.status.charAt(0).toUpperCase() + report.status.slice(1) %>
+                    </span>
+                  </td>
+                  <td><%= new Date(report.created_at).toLocaleDateString() %></td>
+                  <td>
+                    <a href="/admin/reports/<%= report.id %>" class="btn btn-sm btn-primary">Review</a>
+                  </td>
+                </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</div>

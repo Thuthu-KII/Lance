@@ -1,0 +1,43 @@
+<%- contentFor('body') %>
+
+<div class="auth-container">
+  <div class="auth-header">
+    <h1>Create Account</h1>
+    <p>Choose your account type</p>
+  </div>
+  
+  <div class="row mt-4">
+    <div class="col-6">
+      <a href="/auth/register/client" class="card p-4 text-center h-100" style="display: block; text-decoration: none; color: inherit;">
+        <h3 class="mb-3">Client</h3>
+        <p>I'm looking to hire freelancers for my projects</p>
+        <div class="mt-auto pt-3">
+          <span class="btn btn-primary">Register as Client</span>
+        </div>
+      </a>
+    </div>
+    
+    <div class="col-6">
+      <a href="/auth/register/freelancer" class="card p-4 text-center h-100" style="display: block; text-decoration: none; color: inherit;">
+        <h3 class="mb-3">Freelancer</h3>
+        <p>I'm looking for freelance work opportunities</p>
+        <div class="mt-auto pt-3">
+          <span class="btn btn-secondary">Register as Freelancer</span>
+        </div>
+      </a>
+    </div>
+  </div>
+  
+  <div class="auth-divider mt-4">
+    <span>OR</span>
+  </div>
+  
+  <a href="/auth/google" class="social-btn">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google Logo">
+    Continue with Google
+  </a>
+  
+  <div class="auth-links">
+    <p>Already have an account? <a href="/auth/login">Login</a></p>
+  </div>
+</div>

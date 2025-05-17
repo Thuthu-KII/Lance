@@ -1,0 +1,82 @@
+<%- contentFor('body') %>
+
+<div class="container">
+  <h1 class="mb-4">Pending Freelancer Approvals</h1>
+  
+  <% if (freelancers.length === 0) { %>
+    <div class="alert alert-info">
+      <p>No pending approvals at this time.</p>
+    </div>
+  <% } else { %>
+    <div class="row">
+      <% freelancers.forEach(function(freelancer) { %>
+        <div class="col-md-6 mb-4">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title"><%= freelancer.first_name %> <%= freelancer.last_name %></h3>
+            </div>
+            <div class="card-body">
+              <p><strong>Email:</strong> <%= freelancer.email %></p>
+              <p><strong>Phone:</strong> <%= freelancer.phone || 'Not provided' %></p>
+              <p><strong>Address:</strong> <%= freelancer.address || 'Not provided' %></p>
+              
+              <div class="mb-3">
+                <h4>Skills:</h4>
+                <div>
+                  <% if (freelancer.skills && freelancer.skills.length > 0) { %>
+                    <% freelancer.skills.forEach(function(skill) { %>
+                      <span class="badge badge-primary mr-2 mb-2"><%= skill %></span>
+                    <% }); %>
+                  <% } else { %>
+                    <p class="text-muted">No skills listed</p>
+                  <% } %>
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <h4>Experience:</h4>
+                <p><%= freelancer.experience || 'No experience listed' %></p>
+              </div>
+              
+              <div class="row mb-3">
+                <div class="col-6">
+                  <% if (freelancer.cv_path) { %>
+                    <a href="<%= freelancer.cv_path %>" target="_blank" class="btn btn-sm btn-light">
+                      View CV
+                    </a>
+                  <% } else { %>
+                    <p class="text-muted">No CV uploaded</p>
+                  <% } %>
+                </div>
+                <div class="col-6">
+                  <% if (freelancer.clearance_path) { %>
+                    <a href="<%= freelancer.clearance_path %>" target="_blank" class="btn btn-sm btn-light">
+                      View Police Clearance
+                    </a>
+                  <% } else { %>
+                    <p class="text-muted">No clearance uploaded</p>
+                  <% } %>
+                </div>
+              </div>
+              
+              <p class="text-muted">Registered on <%= new Date(freelancer.created_at).toLocaleString() %></p>
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+              <form action="/admin/freelancers/<%= freelancer.id %>/approve" method="POST">
+                <button type="submit" class="btn btn-success">Approve</button>
+              </form>
+              
+              <form action="/admin/freelancers/<%= freelancer.id %>/reject" method="POST" onsubmit="return confirm('Are you sure you want to reject and delete this freelancer account?');">
+                <button type="submit" class="btn btn-danger">Reject</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  <% } %>
+  
+  <div class="mt-4">
+    <a href="/admin/dashboard" class="btn btn-light">Back to Dashboard</a>
+  </div>
+</div>

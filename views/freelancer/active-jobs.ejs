@@ -1,0 +1,82 @@
+<%- contentFor('body') %>
+
+<div class="container">
+  <h1 class="mb-4">My Active Jobs</h1>
+  
+  <% if (jobs.length === 0) { %>
+    <div class="alert alert-info">
+      <p>You don't have any active jobs yet.</p>
+      <a href="/jobs/browse" class="btn btn-primary mt-2">Find Jobs</a>
+    </div>
+  <% } else { %>
+    <div class="row">
+      <% jobs.forEach(function(job) { %>
+        <div class="col-md-6 mb-4">
+          <div class="card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h2 class="card-title mb-0"><%= job.title %></h2>
+              <span class="status-badge status-<%= job.status.replace(' ', '-') %>">
+                <%= job.status.charAt(0).toUpperCase() + job.status.slice(1) %>
+              </span>
+            </div>
+            <div class="card-body">
+              <p><strong>Client:</strong> <%= job.client_first_name %> <%= job.client_last_name %></p>
+              <p><strong>Budget:</strong> $<%= parseFloat(job.budget).toFixed(2) %></p>
+              
+              <div class="mb-3">
+                <p><strong>Description:</strong></p>
+                <p><%= job.description.length > 150 ? job.description.substring(0, 150) + '...' : job.description %></p>
+              </div>
+              
+              <% if (job.status === 'in-progress' && job.completionStatus) { %>
+                <div class="mb-3">
+                  <p><strong>Completion Status:</strong></p>
+                  <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                      Client confirmed
+                      <% if (job.completionStatus.client_confirmed) { %>
+                        <span class="badge badge-success">Yes</span>
+                      <% } else { %>
+                        <span class="badge badge-warning">Pending</span>
+                      <% } %>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                      Freelancer confirmed
+                      <% if (job.completionStatus.freelancer_confirmed) { %>
+                        <span class="badge badge-success">Yes</span>
+                      <% } else { %>
+                        <span class="badge badge-warning">Pending</span>
+                      <% } %>
+                    </li>
+                  </ul>
+                </div>
+                
+                <% if (!job.completionStatus.freelancer_confirmed) { %>
+                  <form action="/freelancer/jobs/<%= job.id %>/complete" method="POST" class="mb-3">
+                    <button type="submit" class="btn btn-success">Mark as Complete</button>
+                  </form>
+                <% } %>
+              <% } %>
+              
+              <% if (job.status === 'completed') { %>
+                <div class="alert alert-success">
+                  <p>This job has been completed successfully!</p>
+                </div>
+                
+                <a href="/jobs/<%= job.id %>/invoice" class="btn btn-primary">Download Invoice</a>
+              <% } %>
+            </div>
+            <div class="card-footer">
+              <div class="d-flex justify-content-between align-items-center">
+                <small class="text-muted">
+                  Hired on <%= new Date(job.application_date).toLocaleDateString() %>
+                </small>
+                <a href="/freelancer/jobs/<%= job.id %>" class="btn btn-light">View Details</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  <% } %>
+</div>

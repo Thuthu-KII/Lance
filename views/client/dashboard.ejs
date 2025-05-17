@@ -1,0 +1,112 @@
+<%- contentFor('body') %>
+
+<h1 class="mb-4">Client Dashboard</h1>
+
+<div class="dashboard-stats">
+  <div class="stat-card">
+    <div class="stat-card-value"><%= jobCounts.total %></div>
+    <div class="stat-card-label">Total Jobs</div>
+  </div>
+  
+  <div class="stat-card">
+    <div class="stat-card-value"><%= jobCounts.open %></div>
+    <div class="stat-card-label">Open Jobs</div>
+  </div>
+  
+  <div class="stat-card">
+    <div class="stat-card-value"><%= jobCounts.inProgress %></div>
+    <div class="stat-card-label">In Progress</div>
+  </div>
+  
+  <div class="stat-card">
+    <div class="stat-card-value"><%= jobCounts.completed %></div>
+    <div class="stat-card-label">Completed</div>
+  </div>
+</div>
+
+<div class="quick-actions mb-4">
+  <a href="/jobs/create" class="btn btn-primary quick-action-btn">Post a Job</a>
+  <a href="/client/jobs" class="btn btn-secondary quick-action-btn">Manage Jobs</a>
+  <a href="/profile" class="btn btn-light quick-action-btn">Edit Profile</a>
+  <a href="/jobs/browse" class="btn btn-light quick-action-btn">Browse Jobs</a>
+</div>
+
+<div class="dashboard-container">
+  <div class="dashboard-card">
+    <div class="dashboard-card-header">
+      <h2 class="dashboard-card-title">Recent Jobs</h2>
+      <a href="/client/jobs" class="btn btn-sm btn-primary">View All</a>
+    </div>
+    <div class="dashboard-card-body">
+      <% if (jobs.length === 0) { %>
+        <p class="text-center text-muted">You haven't posted any jobs yet.</p>
+      <% } else { %>
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Budget</th>
+                <th>Status</th>
+                <th>Posted</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% jobs.forEach(function(job) { %>
+                <tr>
+                  <td><%= job.title %></td>
+                  <td>$<%= parseFloat(job.budget).toFixed(2) %></td>
+                  <td>
+                    <span class="status-badge status-<%= job.status.replace(' ', '-') %>">
+                      <%= job.status.charAt(0).toUpperCase() + job.status.slice(1) %>
+                    </span>
+                  </td>
+                  <td><%= new Date(job.created_at).toLocaleDateString() %></td>
+                  <td>
+                    <a href="/client/jobs/<%= job.id %>" class="btn btn-sm btn-light">View</a>
+                    <% if (job.status === 'open') { %>
+                      <a href="/client/jobs/<%= job.id %>/applications" class="btn btn-sm btn-primary">Applications</a>
+                    <% } %>
+                  </td>
+                </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      <% } %>
+    </div>
+  </div>
+  
+  <div class="dashboard-card">
+    <div class="dashboard-card-header">
+      <h2 class="dashboard-card-title">Recent Applications</h2>
+    </div>
+    <div class="dashboard-card-body">
+      <% if (applications.length === 0) { %>
+        <p class="text-center text-muted">No recent applications to your jobs.</p>
+      <% } else { %>
+        <div class="activity-list">
+          <% applications.forEach(function(application) { %>
+            <div class="activity-item">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <strong><%= application.first_name %> <%= application.last_name %></strong> applied to <strong><%= application.job_title %></strong>
+                </div>
+                <span class="status-badge status-<%= application.status %>">
+                  <%= application.status.charAt(0).toUpperCase() + application.status.slice(1) %>
+                </span>
+              </div>
+              <div class="activity-time">
+                <%= new Date(application.created_at).toLocaleString() %>
+              </div>
+            </div>
+          <% }); %>
+        </div>
+        <div class="text-center mt-3">
+          <a href="/client/jobs" class="btn btn-sm btn-light">View All Jobs</a>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</div>

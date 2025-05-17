@@ -1,0 +1,93 @@
+<%- contentFor('body') %>
+
+<div class="container">
+  <div class="mb-4">
+    <a href="/admin/reports" class="btn btn-light">← Back to Reports</a>
+  </div>
+
+  <div class="card mb-4">
+    <div class="card-header">
+      <h1 class="card-title">Report Details</h1>
+    </div>
+    <div class="card-body">
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <h3>Reported By</h3>
+          <p><strong>Email:</strong> <%= report.reporter_email || 'N/A' %></p>
+        </div>
+        <div class="col-md-6">
+          <h3>Reported User</h3>
+          <p><strong>Email:</strong> <%= report.reported_email || 'N/A' %></p>
+        </div>
+      </div>
+      
+      <div class="mb-4">
+        <h3>Status</h3>
+        <span class="badge badge-<%= 
+          report.status === 'pending' ? 'warning' :
+          report.status === 'resolved' ? 'success' :
+          report.status === 'rejected' ? 'danger' :
+          'secondary'
+        %>">
+          <%= report.status.charAt(0).toUpperCase() + report.status.slice(1) %>
+        </span>
+      </div>
+      
+      <div class="mb-4">
+        <h3>Job Information</h3>
+        <% if (report.job_id && report.job_title) { %>
+          <p><strong>Job:</strong> <%= report.job_title %></p>
+          <p><a href="/admin/jobs/<%= report.job_id %>" class="btn btn-sm btn-light">View Job</a></p>
+        <% } else { %>
+          <p>No job associated with this report.</p>
+        <% } %>
+      </div>
+      
+      <div class="mb-4">
+        <h3>Issue Description</h3>
+        <div class="p-3 bg-light rounded">
+          <p><%= report.issue %></p>
+        </div>
+      </div>
+      
+      <% if (report.admin_notes) { %>
+        <div class="mb-4">
+          <h3>Admin Notes</h3>
+          <div class="p-3 bg-light rounded">
+            <p><%= report.admin_notes %></p>
+          </div>
+        </div>
+      <% } %>
+      
+      <div class="mb-4">
+        <h3>Report Date</h3>
+        <p><%= new Date(report.created_at).toLocaleString() %></p>
+      </div>
+      
+      <% if (report.status === 'pending') { %>
+        <div class="card bg-light">
+          <div class="card-body">
+            <h3>Process Report</h3>
+            <form action="/admin/reports/<%= report.id %>/process" method="POST">
+              <div class="form-group">
+                <label for="action" class="form-label">Action</label>
+                <select id="action" name="action" class="form-control" required>
+                  <option value="">Select action...</option>
+                  <option value="resolved">Mark as Resolved</option>
+                  <option value="rejected">Reject Report</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="notes" class="form-label">Admin Notes</label>
+                <textarea id="notes" name="notes" class="form-control" rows="4" required></textarea>
+              </div>
+              
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</div>

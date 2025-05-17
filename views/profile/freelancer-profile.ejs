@@ -1,0 +1,172 @@
+<%- contentFor('body') %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Profile</h2>
+        </div>
+        <div class="card-body">
+          <div class="text-center mb-4">
+            <div class="profile-image mb-3">
+              <span class="profile-initial">
+                <%= user.profile.first_name.charAt(0) + user.profile.last_name.charAt(0) %>
+              </span>
+            </div>
+            <h3><%= user.profile.first_name %> <%= user.profile.last_name %></h3>
+            <p class="text-muted"><%= user.email %></p>
+            
+            <p class="badge badge-primary">Freelancer</p>
+            <p class="badge badge-<%= user.profile.is_approved ? 'success' : 'warning' %>">
+              <%= user.profile.is_approved ? 'Approved' : 'Pending Approval' %>
+            </p>
+          </div>
+          
+          <div class="mb-3">
+            <h4>Skills</h4>
+            <div>
+              <% if (user.profile.skills && user.profile.skills.length > 0) { %>
+                <% user.profile.skills.forEach(function(skill) { %>
+                  <span class="badge badge-primary mr-2 mb-2"><%= skill %></span>
+                <% }); %>
+              <% } else { %>
+                <p class="text-muted">No skills listed</p>
+              <% } %>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <h4>Contact</h4>
+            <p><strong>Email:</strong> <%= user.email %></p>
+            <p><strong>Phone:</strong> <%= user.profile.phone || 'Not provided' %></p>
+          </div>
+          
+          <div>
+            <h4>Documents</h4>
+            <% if (user.profile.cv_path) { %>
+              <a href="<%= user.profile.cv_path %>" target="_blank" class="btn btn-sm btn-light mb-2">
+                View CV
+              </a>
+            <% } else { %>
+              <p class="text-muted">No CV uploaded</p>
+            <% } %>
+            
+            <% if (user.profile.clearance_path) { %>
+              <a href="<%= user.profile.clearance_path %>" target="_blank" class="btn btn-sm btn-light">
+                View Police Clearance
+              </a>
+            <% } else { %>
+              <p class="text-muted">No clearance certificate uploaded</p>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-8">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h2 class="card-title">Edit Profile</h2>
+        </div>
+        <div class="card-body">
+          <form action="/profile/freelancer?_method=PUT" method="POST" enctype="multipart/form-data">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="firstName" class="form-label">First Name*</label>
+                  <input type="text" id="firstName" name="firstName" class="form-control" value="<%= user.profile.first_name %>" required>
+                </div>
+              </div>
+              
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="lastName" class="form-label">Last Name*</label>
+                  <input type="text" id="lastName" name="lastName" class="form-control" value="<%= user.profile.last_name %>" required>
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="phone" class="form-label">Phone Number</label>
+              <input type="tel" id="phone" name="phone" class="form-control" value="<%= user.profile.phone || '' %>">
+            </div>
+            
+            <div class="form-group">
+              <label for="address" class="form-label">Address</label>
+              <textarea id="address" name="address" class="form-control" rows="2"><%= user.profile.address || '' %></textarea>
+            </div>
+            
+            <div class="form-group">
+              <label for="skills" class="form-label">Skills*</label>
+              <input type="text" id="skills" name="skills" class="form-control" value="<%= user.profile.skills ? user.profile.skills.join(', ') : '' %>" required>
+              <small class="form-text">Separate skills with commas</small>
+            </div>
+            
+            <div class="form-group">
+              <label for="experience" class="form-label">Experience*</label>
+              <textarea id="experience" name="experience" class="form-control" rows="4" required><%= user.profile.experience || '' %></textarea>
+            </div>
+            
+            <div class="form-group">
+              <label for="cv" class="form-label">Update Resume/CV</label>
+              <input type="file" id="cv" name="cv" class="form-control">
+              <small class="form-text">Upload PDF, DOC, or DOCX file (max 5MB). Leave empty to keep current CV.</small>
+            </div>
+            
+            <div class="form-group">
+              <label for="clearance" class="form-label">Update Police Clearance Certificate</label>
+              <input type="file" id="clearance" name="clearance" class="form-control">
+              <small class="form-text">Upload PDF, JPG, or PNG file (max 5MB). Leave empty to keep current certificate.</small>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Update Profile</button>
+          </form>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Change Password</h2>
+        </div>
+        <div class="card-body">
+          <form action="/profile/change-password" method="POST">
+            <div class="form-group">
+              <label for="currentPassword" class="form-label">Current Password*</label>
+              <input type="password" id="currentPassword" name="currentPassword" class="form-control" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="newPassword" class="form-label">New Password*</label>
+              <input type="password" id="newPassword" name="newPassword" class="form-control" required>
+              <small class="form-text">Minimum 6 characters</small>
+            </div>
+            
+            <div class="form-group">
+              <label for="confirmPassword" class="form-label">Confirm New Password*</label>
+              <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Change Password</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin: 0 auto;
+  }
+</style>
