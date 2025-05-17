@@ -1,50 +1,22 @@
-const db = require('../config/database');
+const db = require("better-sqlite3")("LANCE.db");
 
-module.exports = {
-  createUser: async (userData) => {
-    const { googleId, email, displayName, role, phone, location, yearsExperience, industry } = userData;
-    
-    const result = await db.query(
-      `INSERT INTO users 
-       (google_id, email, display_name, role, phone, location, years_experience, industry) 
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8) 
-       RETURNING *`,
-      [googleId, email, displayName, role, phone, location, yearsExperience, industry]
-    );
-    
-    return result.rows[0];
-  },
+db.pragma("journal_mode=WAL"); // Enable Write-Ahead Logging for better concurrency
+const createTables = db.prepare(`
+    CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        googleId TEXT NOT NULL UNIQUE,
+        role TEXT NOT NULL
+    )
+`).run();
+const addUser = db.prepare(`
+    INSERT OR IGNORE INTO users (googleId, role) 
+    VALUES (@googleId, @role)
+`); // Insert user or ignore if already exists
 
-  findById: async (id) => {
-    const result = await db.query('SELECT * FROM users WHERE id = $1', [id]);
-    return result.rows[0];
-  },
+const findUserByGoogleId = db.prepare(`
+    SELECT * FROM users WHERE googleId = ? AND role = ?
+`); // Find user by Google ID
 
-  updateProfile: async (userId, updateData) => {
-    const { phone, location, yearsExperience, industry, cvUrl } = updateData;
-    
-    const result = await db.query(
-      `UPDATE users 
-       SET phone = $1, location = $2, years_experience = $3, industry = $4, cv_url = $5 
-       WHERE id = $6 
-       RETURNING *`,
-      [phone, location, yearsExperience, industry, cvUrl, userId]
-    );
-    
-    return result.rows[0];
-  },
 
-  // Admin functions
-  getAllUsers: async () => {
-    const result = await db.query('SELECT * FROM users');
-    return result.rows;
-  },
-
-  updateUserRole: async (userId, role) => {
-    const result = await db.query(
-      'UPDATE users SET role = $1 WHERE id = $2 RETURNING *',
-      [role, userId]
-    );
-    return result.rows[0];
-  }
-};
+const findUserById = db.prepare('SELECT * FROM users WHERE id = ?');
+module.exports = { addUser, findUserByGoogleId, findUserById};

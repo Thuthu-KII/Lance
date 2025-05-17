@@ -1,63 +1,77 @@
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const db = require('./database');
-require('dotenv').config();
+const GoogleStrategy = require('passport-google-oauth2').Strategy;
+//require('dotenv').config();
 
+const path = require('path');
+//const { addClient } = require('../models/clientModel.js');
+
+const envFile = process.env.NODE_ENV === 'test' ? '.env.test' : '.env';
+require('dotenv').config({
+  path: path.resolve(__dirname, '..', envFile)
+});  
+
+let userName="";
+let role="";
+
+//
+//console.log(process.env.GOOGLE_CLIENT_ID):
+let the_user;
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: `${process.env.BASE_URL}/auth/google/callback`,
+    callbackURL: "https://lance-gx1d.onrender.com/google/callback", // when we enter google/auth redirect them using this url
     passReqToCallback: true
   },
-  async (req, accessToken, refreshToken, profile, done) => {
+  // someone succesfully logs in
+  async function(req,accessToken, refreshToken, profile/* this profile is the one you tap when you sign in, has all profile info */, cb) {
+     role= req.query.state;
     try {
-      // Check if user exists
-      const existingUser = await db.query(
-        'SELECT * FROM users WHERE google_id = $1',
-        [profile.id]
-      );
+        const { addUser, findUserByGoogleId } = require('../models/userModel.js'); // Import here to break circular dependency // import index
+        //const {addClient, getProfile} = require('../models/clientModel.js');
+        
+        the_user = {
+          googleId: profile.id,
+          displayName: profile.displayName,
+          email: profile.emails[0].value
+        };
+        let user = findUserByGoogleId.get(profile.id,role);
 
-      if (existingUser.rows.length > 0) {
-        return done(null, existingUser.rows[0]);
-      }
-
-      // Create new user
-      const role = req.query.state || 'freelancer';
-      const newUser = {
-        google_id: profile.id,
-        email: profile.emails[0].value,
-        display_name: profile.displayName,
-        role: role
-      };
-
-      const result = await db.query(
-        `INSERT INTO users (google_id, email, display_name, role) 
-         VALUES ($1, $2, $3, $4) 
-         RETURNING *`,
-        [newUser.google_id, newUser.email, newUser.display_name, newUser.role]
-      );
-
-      done(null, result.rows[0]);
-    } catch (err) {
-      done(err, null);
+        if (!user) {
+            const newUser = {
+                googleId: profile.id,
+                role:req.query.state
+              //  email: profile.emails[0].value,
+              //  displayName: profile.displayName
+            };
+            addUser.run(newUser); // added our new user 
+            user = findUserByGoogleId.get(profile.id,role);  // return a google id&role only
+          }
+       // console.log(the_user);
+        cb(null, the_user); 
+    } catch (error) {
+        cb(error);
     }
-  }
+}
+
 ));
+const Username = userName;
 
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
+passport.serializeUser((user, cb) => {
+    cb(null, user.googleId);
+  });
+  
+  passport.deserializeUser(async (id, cb) => {
+    const { findUserByGoogleId } = require("../models/userModel");
+    // /console.log(role, "   ", id);
 
-passport.deserializeUser(async (id, done) => {
-  try {
-    const result = await db.query(
-      'SELECT id, email, display_name, role, is_admin FROM users WHERE id = $1',
-      [id]
-    );
-    done(null, result.rows[0]);
-  } catch (err) {
-    done(err, null);
-  }
-});
+    const user = findUserByGoogleId.get(id,role); // this must not be undefined if undefined the user doe
+//    console.log(user);
+    if (!user)  return cb(null, { message: "User already has an account", user });
+    cb(null, [the_user,user,role]);
+  });
 
-module.exports = passport;
+  module.exports = {
+    Username,
+    passport
+  };
+  

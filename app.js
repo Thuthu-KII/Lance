@@ -1,75 +1,43 @@
-require('dotenv').config();
 const express = require('express');
+const app = express();
 const session = require('express-session');
 const passport = require('passport');
-const pgSession = require('connect-pg-simple')(session);
-const path = require('path');
-const db = require('./config/database');
-const logger = require('./config/logger');
 
-// Import routes
+// Import Routes
 const authRoutes = require('./routes/authRoutes');
+const pageRoutes = require('./routes/pageRoutes');
 const userRoutes = require('./routes/userRoutes');
-const adminRoutes = require('./routes/adminRoutes');
-const jobRoutes = require('./routes/jobRoutes');
-const paymentRoutes = require('./routes/paymentRoutes');
 
-// Import middleware
-const { notFound, errorHandler } = require('./middleware/errorMiddleware');
-
-// Initialize app
-const app = express();
-
-// Session configuration
+// Middleware for session,passport.
 app.use(session({
-  store: new pgSession({
-    pool: db.pool,
-    tableName: 'user_sessions'
-  }),
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-    secure: process.env.NODE_ENV === 'production',
-    httpOnly: true,
-    sameSite: 'lax'
-  }
+    secret: "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",
+    resave: false,
+    saveUninitialized: true
 }));
-
-// Passport initialization
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Middleware
-app.use(express.json());
+// Set View Engine
+app.set("view engine", "ejs");
+
+// Body Parser
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());
+app.use(express.static("public"));
 
-// View engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+// Use routes
+app.use(authRoutes);
+app.use(pageRoutes);
+app.use('/client',userRoutes);
 
-// Routes
-app.use('/auth', authRoutes);
-app.use('/user', userRoutes);
-app.use('/admin', adminRoutes);
-app.use('/jobs', jobRoutes);
-app.use('/payments', paymentRoutes);
 
-// Home route
-app.get('/', (req, res) => {
-  res.render('index', { user: req.user });
+// Server Listening
+// const PORT = 3000  || process.env.PORT;
+// app.listen(PORT, () => {
+//     console.log(`Server is running on port ${PORT}`);
+// });
+const port = process.env.PORT || 3000;
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Server running on port ${port}`);
 });
-
-// Error handling
-app.use(notFound);
-app.use(errorHandler);
-
-// Server start
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  logger.info(`Server running on port ${PORT}`);
-});
-
-module.exports = app;
+console.log("App started successfully");
