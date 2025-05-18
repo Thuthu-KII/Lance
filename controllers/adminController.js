@@ -129,15 +129,43 @@ exports.getUserDetails = async (req, res) => {
                 ORDER BY p.created_at DESC
                 LIMIT 10
               `, [user.id]).then(res => res.rows);
+    
+    const appStats = await db.query(`
+                    SELECT 
+                      COUNT(*) AS total,
+                      COUNT(CASE WHEN status = 'pending' THEN 1 END) AS pending,
+                      COUNT(CASE WHEN status = 'hired' THEN 1 END) AS hired,
+                      COUNT(CASE WHEN status = 'rejected' THEN 1 END) AS rejected
+                    FROM job_applications 
+                    WHERE freelancer_id = $1
+                  `, [profile.id]).then(res => res.rows[0]);
+    // res.render('admin/user-details', {
+    //   layout:'common/layout',
+    //   async:true,
+    //   userData: user,
+    //   profile,
+    //   user: req.user,
+    //   jobs,
+    //   jobStats,
+    //   applications,
+    //   payments
+    // });
     res.render('admin/user-details', {
+      userData:user,
       async:true,
-      userData: user,
       profile,
       user: req.user,
       jobs,
       jobStats,
       applications,
-      payments
+      payments,
+      appStats
+    }, (err, html) => {
+      if (err) {
+        console.error('Render error:', err);
+        return res.status(500).send('Error rendering template');
+      }
+      res.type('html').send(html);
     });
   } catch (error) {
     console.error('Error fetching user details:', error);
