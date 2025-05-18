@@ -1,0 +1,114 @@
+<%- contentFor('body') %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Profile</h2>
+        </div>
+        <div class="card-body">
+          <div class="text-center mb-4">
+            <div class="profile-image mb-3" style="background-color: #e74c3c;">
+              <span class="profile-initial">
+                <%= user.profile.first_name.charAt(0) + user.profile.last_name.charAt(0) %>
+              </span>
+            </div>
+            <h3><%= user.profile.first_name %> <%= user.profile.last_name %></h3>
+            <p class="text-muted"><%= user.email %></p>
+            
+            <p class="badge badge-danger">Administrator</p>
+          </div>
+          
+          <div class="mb-3">
+            <h4>Contact</h4>
+            <p><strong>Email:</strong> <%= user.email %></p>
+          </div>
+          
+          <div>
+            <h4>Quick Links</h4>
+            <div class="list-group">
+              <a href="/admin/dashboard" class="list-group-item list-group-item-action">Dashboard</a>
+              <a href="/admin/users" class="list-group-item list-group-item-action">User Management</a>
+              <a href="/admin/approvals" class="list-group-item list-group-item-action">Freelancer Approvals</a>
+              <a href="/admin/reports" class="list-group-item list-group-item-action">Issue Reports</a>
+              <a href="/admin/stats" class="list-group-item list-group-item-action">System Statistics</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-8">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h2 class="card-title">Edit Profile</h2>
+        </div>
+        <div class="card-body">
+          <form action="/profile/admin?_method=PUT" method="POST">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="firstName" class="form-label">First Name*</label>
+                  <input type="text" id="firstName" name="firstName" class="form-control" value="<%= user.profile.first_name %>" required>
+                </div>
+              </div>
+              
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="lastName" class="form-label">Last Name*</label>
+                  <input type="text" id="lastName" name="lastName" class="form-control" value="<%= user.profile.last_name %>" required>
+                </div>
+              </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Update Profile</button>
+          </form>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Change Password</h2>
+        </div>
+        <div class="card-body">
+          <form action="/profile/change-password" method="POST">
+            <div class="form-group">
+              <label for="currentPassword" class="form-label">Current Password*</label>
+              <input type="password" id="currentPassword" name="currentPassword" class="form-control" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="newPassword" class="form-label">New Password*</label>
+              <input type="password" id="newPassword" name="newPassword" class="form-control" required>
+              <small class="form-text">Minimum 6 characters</small>
+            </div>
+            
+            <div class="form-group">
+              <label for="confirmPassword" class="form-label">Confirm New Password*</label>
+              <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Change Password</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: var(--danger-color);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin: 0 auto;
+  }
+</style>

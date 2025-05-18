@@ -1,0 +1,161 @@
+<%- contentFor('body') %>
+
+<div class="container">
+  <h1 class="mb-4">System Statistics</h1>
+  
+  <div class="row mb-4">
+    <div class="col-md-3 mb-3">
+      <div class="card">
+        <div class="card-body text-center">
+          <h4 class="card-title">Total Users</h4>
+          <p class="display-4"><%= counts.users %></p>
+          <p class="text-muted">
+            <span class="badge badge-primary"><%= counts.clients %> Clients</span>
+            <span class="badge badge-secondary"><%= counts.freelancers %> Freelancers</span>
+            <span class="badge badge-danger"><%= counts.admins %> Admins</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+      <div class="card">
+        <div class="card-body text-center">
+          <h4 class="card-title">Total Jobs</h4>
+          <p class="display-4"><%= counts.jobs %></p>
+          <p class="text-muted">
+            <span class="badge badge-primary"><%= counts.openJobs %> Open</span>
+            <span class="badge badge-warning"><%= counts.inProgressJobs %> In Progress</span>
+            <span class="badge badge-success"><%= counts.completedJobs %> Completed</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+      <div class="card">
+        <div class="card-body text-center">
+          <h4 class="card-title">Applications</h4>
+          <p class="display-4"><%= counts.applications %></p>
+          <p class="text-muted">
+            Avg <%= (counts.applications / counts.jobs).toFixed(1) %> per job
+          </p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+      <div class="card">
+        <div class="card-body text-center">
+          <h4 class="card-title">Reports</h4>
+          <p class="display-4"><%= counts.reports %></p>
+          <p class="text-muted">
+            <span class="badge badge-warning"><%= counts.pendingReports %> Pending</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Financial Overview</h2>
+        </div>
+        <div class="card-body">
+          <div class="row mb-4">
+            <div class="col-6">
+              <h5>Total Payments</h5>
+              <p class="h3">$<%= parseFloat(financialStats.totalPayments).toFixed(2) %></p>
+            </div>
+            <div class="col-6">
+              <h5>Pending Payments</h5>
+              <p class="h3">$<%= parseFloat(financialStats.pendingPayments).toFixed(2) %></p>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-6">
+              <h5>Client Payments</h5>
+              <p class="h4">$<%= parseFloat(financialStats.clientPayments).toFixed(2) %></p>
+            </div>
+            <div class="col-6">
+              <h5>Freelancer Payments</h5>
+              <p class="h4">$<%= parseFloat(financialStats.freelancerPayments).toFixed(2) %></p>
+            </div>
+          </div>
+          
+          <div class="mt-4">
+            <canvas id="paymentStatisticsChart" 
+                   data-chart-data="<%= JSON.stringify(financialStats) %>"
+                   style="height: 250px;"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Monthly Jobs</h2>
+        </div>
+        <div class="card-body">
+          <canvas id="jobStatisticsChart" 
+                 data-chart-data="<%= JSON.stringify(monthlyJobs) %>"
+                 style="height: 300px;"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h2 class="card-title">System Performance</h2>
+          <div>
+            <form id="dateRangeForm" class="form-inline">
+              <input type="date" id="startDate" name="startDate" class="form-control form-control-sm mr-2">
+              <input type="date" id="endDate" name="endDate" class="form-control form-control-sm mr-2">
+              <button type="submit" class="btn btn-sm btn-primary">Filter</button>
+            </form>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4">
+              <h5>System Health</h5>
+              <div class="progress mb-2">
+                <div class="progress-bar bg-success" style="width: 98%">98%</div>
+              </div>
+              <p class="text-muted small">System uptime in the last 30 days</p>
+              
+              <h5 class="mt-4">Database Status</h5>
+              <div class="progress mb-2">
+                <div class="progress-bar bg-info" style="width: 45%">45%</div>
+              </div>
+              <p class="text-muted small">Database usage</p>
+              
+              <h5 class="mt-4">API Performance</h5>
+              <div class="progress mb-2">
+                <div class="progress-bar bg-success" style="width: 92%">92%</div>
+              </div>
+              <p class="text-muted small">Average response time: 120ms</p>
+            </div>
+            
+            <div class="col-md-8">
+              <h5>User Growth</h5>
+              <canvas id="userRegistrationChart" 
+                     data-chart-data="<%= JSON.stringify(monthlyJobs) %>"
+                     style="height: 250px;"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/js/admin.js"></script>

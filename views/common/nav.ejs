@@ -1,0 +1,38 @@
+<ul class="nav-links">
+  <li><a href="/jobs/browse">Find Jobs</a></li>
+  
+  <% if (user) { %>
+    <% if (user.role === 'client') { %>
+      <li><a href="/client/dashboard">Dashboard</a></li>
+      <li><a href="/client/jobs">My Jobs</a></li>
+      <li><a href="/jobs/create">Post a Job</a></li>
+    <% } else if (user.role === 'freelancer') { %>
+      <li><a href="/freelancer/dashboard">Dashboard</a></li>
+      <li><a href="/freelancer/applications">My Applications</a></li>
+      <li><a href="/freelancer/jobs">Active Jobs</a></li>
+    <% } else if (user.role === 'admin') { %>
+      <li><a href="/admin/dashboard">Dashboard</a></li>
+      <li><a href="/admin/users">Users</a></li>
+      <li><a href="/admin/approvals">Approvals</a></li>
+      <li><a href="/admin/reports">Reports</a></li>
+    <% } %>
+    
+    <li class="user-dropdown">
+      <a href="#"><%= user.profile ? (user.profile.first_name + ' ' + user.profile.last_name) : user.email %> ▼</a>
+      <div class="dropdown-content">
+        <a href="/profile">My Profile</a>
+        <% if (user.role === 'client') { %>
+          <a href="/client/jobs">My Jobs</a>
+        <% } else if (user.role === 'freelancer') { %>
+          <a href="/freelancer/applications">My Applications</a>
+        <% } else if (user.role === 'admin') { %>
+          <a href="/admin/stats">System Stats</a>
+        <% } %>
+        <a href="/auth/logout">Logout</a>
+      </div>
+    </li>
+  <% } else { %>
+    <li><a href="/auth/login">Login</a></li>
+    <li><a href="/auth/register" class="btn btn-primary">Sign Up</a></li>
+  <% } %>
+</ul>
