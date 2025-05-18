@@ -73,13 +73,20 @@ passport.use(new GoogleStrategy({
 
     // Redirect to role selection for new users
     // We'll handle the actual creation in the auth controller
-    return done(null, {
-      tempUser: true,
-      google_id: profile.id,
-      email: profile.emails[0].value,
-      first_name: profile.name.givenName,
-      last_name: profile.name.familyName
-    });
+    const insertResult = await db.query(
+  `INSERT INTO users (google_id, email, role)
+   VALUES ($1, $2, $3)
+   RETURNING *`,
+  [profile.id, profile.emails[0].value, 'client'] // default role can be changed
+);
+
+const newUser = insertResult.rows[0];
+
+// Optionally, insert into clients table
+await db.query(`INSERT INTO clients (user_id,first_name,last_name) VALUES ($1)`, [profile.id, profile.name.givenName, profile.name.familyName, 'client']);
+
+return done(null, newUser);
+
   } catch (error) {
     return done(error);
   }
@@ -87,6 +94,9 @@ passport.use(new GoogleStrategy({
 
 // Serialize and Deserialize User
 passport.serializeUser((user, done) => {
+   if (!user.id) {
+    return done(new Error('Cannot serialize user without id'));
+  }
   done(null, user.id);
 });
 
