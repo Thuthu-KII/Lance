@@ -1,0 +1,446 @@
+<%- contentFor('body') %>
+
+<div class="container">
+  <div class="mb-4">
+    <a href="/admin/users" class="btn btn-light">← Back to Users</a>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h2 class="card-title mb-0">User Information</h2>
+          <span class="badge badge-<%= 
+            userData.role === 'admin' ? 'danger' : 
+            userData.role === 'client' ? 'primary' : 'secondary' 
+          %>">
+            <%= userData.role.charAt(0).toUpperCase() + userData.role.slice(1) %>
+          </span>
+        </div>
+        <div class="card-body">
+          <div class="text-center mb-4">
+            <div class="profile-image mb-3" style="background-color: <%= 
+              userData.role === 'admin' ? '#e74c3c' : 
+              userData.role === 'client' ? '#3498db' : '#2ecc71' 
+            %>;">
+              <span class="profile-initial">
+                <%= profile ? (profile.first_name.charAt(0) + profile.last_name.charAt(0)) : userData.email.charAt(0).toUpperCase() %>
+              </span>
+            </div>
+            
+            <h3><%= profile ? `${profile.first_name} ${profile.last_name}` : 'No profile data' %></h3>
+            <p class="text-muted"><%= userData.email %></p>
+            
+            <% if (userData.role === 'freelancer') { %>
+              <p class="badge badge-<%= profile && profile.is_approved ? 'success' : 'warning' %>">
+                <%= profile && profile.is_approved ? 'Approved' : 'Pending Approval' %>
+              </p>
+            <% } %>
+          </div>
+          
+          <div class="mb-3">
+            <h4>Account Details</h4>
+            <p><strong>User ID:</strong> <%= userData.id %></p>
+            <p><strong>Email:</strong> <%= userData.email %></p>
+            <p><strong>Role:</strong> <%= userData.role.charAt(0).toUpperCase() + userData.role.slice(1) %></p>
+            <p><strong>Registered:</strong> <%= new Date(userData.created_at).toLocaleString() %></p>
+            <% if (userData.last_login) { %>
+              <p><strong>Last Login:</strong> <%= new Date(userData.last_login).toLocaleString() %></p>
+            <% } %>
+            <p><strong>Google Account:</strong> <%= userData.google_id ? 'Yes' : 'No' %></p>
+          </div>
+          
+          <% if (userData.id !== user.id) { %>
+            <div class="mt-4">
+              <form action="/admin/users/<%= userData.id %>?_method=DELETE" method="POST" onsubmit="return confirm('Are you sure you want to delete this user? This action cannot be undone.');">
+                <button type="submit" class="btn btn-danger btn-block">Delete User</button>
+              </form>
+            </div>
+          <% } else { %>
+            <div class="alert alert-info">
+              <p class="mb-0">You cannot delete your own account.</p>
+            </div>
+          <% } %>
+        </div>
+      </div>
+      
+      <% if (userData.role === 'freelancer' && profile && !profile.is_approved) { %>
+        <div class="card mb-4">
+          <div class="card-header">
+            <h2 class="card-title">Approve Freelancer</h2>
+          </div>
+          <div class="card-body">
+            <div class="alert alert-warning">
+              <p>This freelancer is waiting for approval to access the platform.</p>
+            </div>
+            
+            <div class="d-flex justify-content-between">
+              <form action="/admin/freelancers/<%= profile.id %>/approve" method="POST">
+                <button type="submit" class="btn btn-success">Approve</button>
+              </form>
+              
+              <form action="/admin/freelancers/<%= profile.id %>/reject" method="POST" onsubmit="return confirm('Are you sure you want to reject this freelancer? Their account will be deleted.');">
+                <button type="submit" class="btn btn-danger">Reject</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      <% } %>
+    </div>
+    
+    <div class="col-md-8">
+      <% if (profile) { %>
+        <div class="card mb-4">
+          <div class="card-header">
+            <h2 class="card-title">Profile Details</h2>
+          </div>
+          <div class="card-body">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <p><strong>First Name:</strong> <%= profile.first_name %></p>
+              </div>
+              <div class="col-md-6">
+                <p><strong>Last Name:</strong> <%= profile.last_name %></p>
+              </div>
+            </div>
+            
+            <% if (userData.role === 'client' && profile.company_name) { %>
+              <div class="mb-3">
+                <p><strong>Company:</strong> <%= profile.company_name %></p>
+              </div>
+            <% } %>
+            
+            <% if (profile.phone) { %>
+              <div class="mb-3">
+                <p><strong>Phone:</strong> <%= profile.phone %></p>
+              </div>
+            <% } %>
+            
+            <% if (profile.address) { %>
+              <div class="mb-3">
+                <p><strong>Address:</strong> <%= profile.address %></p>
+              </div>
+            <% } %>
+            
+            <% if (profile.skills && profile.skills.length > 0) { %>
+              <div class="mb-3">
+                <h4>Skills</h4>
+                <div>
+                  <% profile.skills.forEach(function(skill) { %>
+                    <span class="badge badge-primary mr-2 mb-2"><%= skill %></span>
+                  <% }); %>
+                </div>
+              </div>
+            <% } %>
+            
+            <% if (profile.experience) { %>
+              <div class="mb-3">
+                <h4>Experience</h4>
+                <p><%= profile.experience %></p>
+              </div>
+            <% } %>
+            
+            <div class="mb-3">
+              <h4>Documents</h4>
+              <div class="row">
+                <% if (profile.cv_path) { %>
+                  <div class="col-md-6 mb-2">
+                    <a href="<%= profile.cv_path %>" target="_blank" class="btn btn-sm btn-light">
+                      View CV/Resume
+                    </a>
+                  </div>
+                <% } %>
+                
+                <% if (userData.role === 'freelancer' && profile.clearance_path) { %>
+                  <div class="col-md-6 mb-2">
+                    <a href="<%= profile.clearance_path %>" target="_blank" class="btn btn-sm btn-light">
+                      View Police Clearance
+                    </a>
+                  </div>
+                <% } %>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <% if (userData.role === 'client' || userData.role === 'freelancer') { %>
+          <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h2 class="card-title">Activity Summary</h2>
+              <% if (userData.role === 'client') { %>
+                <a href="/admin/users/<%= userData.id %>/jobs" class="btn btn-sm btn-primary">View All Jobs</a>
+              <% } else if (userData.role === 'freelancer') { %>
+                <a href="/admin/users/<%= userData.id %>/applications" class="btn btn-sm btn-primary">View All Applications</a>
+              <% } %>
+            </div>
+            <div class="card-body">
+              <% if (userData.role === 'client') { %>
+                <% 
+                  // Get client jobs
+                //   const jobs = await db.query(`
+                //     SELECT * FROM jobs WHERE client_id = $1 ORDER BY created_at DESC LIMIT 5
+                //   `, [profile.id]).then(res => res.rows);
+                %>
+                
+                <h4>Recent Jobs</h4>
+                <% if (jobs && jobs.length > 0) { %>
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>Title</th>
+                          <th>Budget</th>
+                          <th>Status</th>
+                          <th>Created</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% jobs.forEach(function(job) { %>
+                          <tr>
+                            <td><%= job.title %></td>
+                            <td>$<%= parseFloat(job.budget).toFixed(2) %></td>
+                            <td>
+                              <span class="status-badge status-<%= job.status.replace(' ', '-') %>">
+                                <%= job.status.charAt(0).toUpperCase() + job.status.slice(1) %>
+                              </span>
+                            </td>
+                            <td><%= new Date(job.created_at).toLocaleDateString() %></td>
+                            <td>
+                              <a href="/admin/jobs/<%= job.id %>" class="btn btn-sm btn-light">View</a>
+                            </td>
+                          </tr>
+                        <% }); %>
+                      </tbody>
+                    </table>
+                  </div>
+                <% } else { %>
+                  <p class="text-muted">No jobs posted yet.</p>
+                <% } %>
+                
+                <hr class="my-4">
+                
+                <!-- <% 
+                  // Get client job stats
+                //   const jobStats = await db.query(`
+                //     SELECT 
+                //       COUNT(*) AS total,
+                //       COUNT(CASE WHEN status = 'open' THEN 1 END) AS open,
+                //       COUNT(CASE WHEN status = 'in-progress' THEN 1 END) AS in_progress,
+                //       COUNT(CASE WHEN status = 'completed' THEN 1 END) AS completed
+                //     FROM jobs 
+                //     WHERE client_id = $1
+                //   `, [profile.id]).then(res => res.rows[0]);
+                %> -->
+                
+                <div class="row">
+                  <div class="col-md-3 col-6">
+                    <div class="text-center mb-3">
+                      <h5>Total Jobs</h5>
+                      <p class="h3"><%= jobStats.total || 0 %></p>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-6">
+                    <div class="text-center mb-3">
+                      <h5>Open</h5>
+                      <p class="h3 text-primary"><%= jobStats.open || 0 %></p>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-6">
+                    <div class="text-center mb-3">
+                      <h5>In Progress</h5>
+                      <p class="h3 text-warning"><%= jobStats.in_progress || 0 %></p>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-6">
+                    <div class="text-center mb-3">
+                      <h5>Completed</h5>
+                      <p class="h3 text-success"><%= jobStats.completed || 0 %></p>
+                    </div>
+                  </div>
+                </div>
+              <% } else if (userData.role === 'freelancer') { %>
+                <!-- <% 
+                  // Get freelancer applications
+                //   const applications = await db.query(`
+                //     SELECT ja.*, j.title, j.status AS job_status
+                //     FROM job_applications ja
+                //     INNER JOIN jobs j ON ja.job_id = j.id
+                //     WHERE ja.freelancer_id = $1
+                //     ORDER BY ja.created_at DESC LIMIT 5
+                //   `, [profile.id]).then(res => res.rows);
+                %> -->
+                
+                <h4>Recent Applications</h4>
+                <% if (applications && applications.length > 0) { %>
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>Job</th>
+                          <th>Status</th>
+                          <th>Job Status</th>
+                          <th>Applied</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% applications.forEach(function(application) { %>
+                          <tr>
+                            <td><%= application.title %></td>
+                            <td>
+                              <span class="status-badge status-<%= application.status %>">
+                                <%= application.status.charAt(0).toUpperCase() + application.status.slice(1) %>
+                              </span>
+                            </td>
+                            <td>
+                              <span class="status-badge status-<%= application.job_status.replace(' ', '-') %>">
+                                <%= application.job_status.charAt(0).toUpperCase() + application.job_status.slice(1) %>
+                              </span>
+                            </td>
+                            <td><%= new Date(application.created_at).toLocaleDateString() %></td>
+                            <td>
+                              <a href="/admin/jobs/<%= application.job_id %>" class="btn btn-sm btn-light">View Job</a>
+                            </td>
+                          </tr>
+                        <% }); %>
+                      </tbody>
+                    </table>
+                  </div>
+                <% } else { %>
+                  <p class="text-muted">No applications submitted yet.</p>
+                <% } %>
+                
+                <hr class="my-4">
+                
+                <% 
+                  // Get freelancer application stats
+                  const appStats = await db.query(`
+                    SELECT 
+                      COUNT(*) AS total,
+                      COUNT(CASE WHEN status = 'pending' THEN 1 END) AS pending,
+                      COUNT(CASE WHEN status = 'hired' THEN 1 END) AS hired,
+                      COUNT(CASE WHEN status = 'rejected' THEN 1 END) AS rejected
+                    FROM job_applications 
+                    WHERE freelancer_id = $1
+                  `, [profile.id]).then(res => res.rows[0]);
+                %>
+                
+                <div class="row">
+                  <div class="col-md-3 col-6">
+                    <div class="text-center mb-3">
+                      <h5>Total Apps</h5>
+                      <p class="h3"><%= appStats.total || 0 %></p>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-6">
+                    <div class="text-center mb-3">
+                      <h5>Pending</h5>
+                      <p class="h3 text-warning"><%= appStats.pending || 0 %></p>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-6">
+                    <div class="text-center mb-3">
+                      <h5>Hired</h5>
+                      <p class="h3 text-success"><%= appStats.hired || 0 %></p>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-6">
+                    <div class="text-center mb-3">
+                      <h5>Rejected</h5>
+                      <p class="h3 text-danger"><%= appStats.rejected || 0 %></p>
+                    </div>
+                  </div>
+                </div>
+              <% } %>
+            </div>
+          </div>
+        <% } %>
+        
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Payment History</h2>
+          </div>
+          <div class="card-body">
+            <!-- <% 
+              // Get user payment history
+            //   const payments = await db.query(`
+            //     SELECT p.*, j.title AS job_title
+            //     FROM payments p
+            //     LEFT JOIN jobs j ON p.job_id = j.id
+            //     WHERE p.paid_by = $1 OR p.paid_to = $1
+            //     ORDER BY p.created_at DESC
+            //     LIMIT 10
+            //   `, [userData.id]).then(res => res.rows);
+            %> -->
+            
+            <% if (payments && payments.length > 0) { %>
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Job</th>
+                      <th>Type</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% payments.forEach(function(payment) { %>
+                      <tr>
+                        <td><%= payment.job_title || 'N/A' %></td>
+                        <td>
+                          <% if (payment.paid_by === userData.id) { %>
+                            <span class="text-danger">Payment Out</span>
+                          <% } else if (payment.paid_to === userData.id) { %>
+                            <span class="text-success">Payment In</span>
+                          <% } else { %>
+                            <%= payment.payment_type %>
+                          <% } %>
+                        </td>
+                        <td>$<%= parseFloat(payment.amount).toFixed(2) %></td>
+                        <td>
+                          <span class="badge badge-<%= payment.status === 'completed' ? 'success' : payment.status === 'pending' ? 'warning' : 'danger' %>">
+                            <%= payment.status.charAt(0).toUpperCase() + payment.status.slice(1) %>
+                          </span>
+                        </td>
+                        <td><%= new Date(payment.created_at).toLocaleDateString() %></td>
+                      </tr>
+                    <% }); %>
+                  </tbody>
+                </table>
+              </div>
+            <% } else { %>
+              <p class="text-muted">No payment history found.</p>
+            <% } %>
+          </div>
+        </div>
+      <% } else { %>
+        <div class="card">
+          <div class="card-body">
+            <div class="alert alert-warning">
+              <p>No profile information found for this user.</p>
+            </div>
+          </div>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+
+<style>
+  .profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin: 0 auto;
+  }
+</style>

@@ -1,0 +1,227 @@
+<%- contentFor('body') %>
+
+<div class="container">
+  <div class="mb-4">
+    <a href="/client/jobs" class="btn btn-light">← Back to Jobs</a>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h1 class="card-title mb-0"><%= job.title %></h1>
+          <span class="status-badge status-<%= job.status.replace(' ', '-') %>">
+            <%= job.status.charAt(0).toUpperCase() + job.status.slice(1) %>
+          </span>
+        </div>
+        
+        <div class="card-body">
+          <div class="job-details mb-4">
+            <div class="job-budget">
+              <strong>Budget:</strong> $<%= parseFloat(job.budget).toFixed(2) %>
+            </div>
+            
+            <% if (job.deadline) { %>
+              <div class="job-deadline">
+                <strong>Deadline:</strong> <%= new Date(job.deadline).toLocaleDateString() %>
+              </div>
+            <% } %>
+            
+            <div>
+              <strong>Posted:</strong> <%= new Date(job.created_at).toLocaleDateString() %>
+            </div>
+            
+            <div>
+              <strong>Payment Status:</strong> 
+              <span class="badge badge-<%= job.payment_status === 'paid' ? 'success' : 'warning' %>">
+                <%= job.payment_status.charAt(0).toUpperCase() + job.payment_status.slice(1) %>
+              </span>
+            </div>
+          </div>
+          
+          <div class="mb-4">
+            <h3>Description</h3>
+            <p><%= job.description %></p>
+          </div>
+          
+          <% if (job.requirements) { %>
+            <div class="mb-4">
+              <h3>Requirements</h3>
+              <p><%= job.requirements %></p>
+            </div>
+          <% } %>
+          
+          <% if (job.status === 'in-progress' && hiredFreelancer) { %>
+            <div class="mt-4 p-3 bg-light rounded">
+              <h3 class="mb-3">Hired Freelancer</h3>
+              <p><strong>Name:</strong> <%= hiredFreelancer.first_name %> <%= hiredFreelancer.last_name %></p>
+              
+              <% if (hiredFreelancer.skills && hiredFreelancer.skills.length > 0) { %>
+                <div class="mb-2">
+                  <strong>Skills:</strong>
+                  <div>
+                    <% hiredFreelancer.skills.forEach(function(skill) { %>
+                      <span class="badge badge-primary mr-2 mb-2"><%= skill %></span>
+                    <% }); %>
+                  </div>
+                </div>
+              <% } %>
+              
+              <% if (hiredFreelancer.cv_path) { %>
+                <p>
+                  <a href="<%= hiredFreelancer.cv_path %>" target="_blank" class="btn btn-sm btn-light">
+                    View CV/Resume
+                  </a>
+                </p>
+              <% } %>
+              
+              <p class="text-muted mt-2">
+                Hired on <%= new Date(hiredFreelancer.hired_at).toLocaleDateString() %>
+              </p>
+            </div>
+          <% } %>
+        </div>
+      </div>
+      
+      <% if (job.status === 'in-progress' && completionStatus) { %>
+        <div class="card mb-4">
+          <div class="card-header">
+            <h3 class="card-title">Job Progress</h3>
+          </div>
+          <div class="card-body">
+            <p><strong>Status:</strong> In Progress</p>
+            
+            <div class="mb-3">
+              <p><strong>Client confirmed:</strong> 
+                <% if (completionStatus.client_confirmed) { %>
+                  <span class="text-success">Yes</span>
+                <% } else { %>
+                  <span class="text-warning">Waiting</span>
+                <% } %>
+              </p>
+              
+              <p><strong>Freelancer confirmed:</strong> 
+                <% if (completionStatus.freelancer_confirmed) { %>
+                  <span class="text-success">Yes</span>
+                <% } else { %>
+                  <span class="text-warning">Waiting</span>
+                <% } %>
+              </p>
+            </div>
+            
+            <% if (!completionStatus.client_confirmed) { %>
+              <form action="/client/jobs/<%= job.id %>/complete" method="POST">
+                <div class="alert alert-info mb-3">
+                  <p>By marking this job as complete, you confirm that the work has been done satisfactorily and the freelancer should be paid.</p>
+                </div>
+                <button type="submit" class="btn btn-success">Mark as Complete</button>
+              </form>
+            <% } else { %>
+              <div class="alert alert-info">
+                <p>You have marked this job as complete. Waiting for the freelancer to confirm.</p>
+              </div>
+            <% } %>
+          </div>
+        </div>
+        
+        <div class="card mb-4">
+          <div class="card-header">
+            <h3 class="card-title">Report an Issue</h3>
+          </div>
+          <div class="card-body">
+            <form action="/client/jobs/<%= job.id %>/report" method="POST">
+              <input type="hidden" name="reportedUser" value="<%= hiredFreelancer ? hiredFreelancer.user_id : '' %>">
+              
+              <div class="form-group">
+                <label for="issue" class="form-label">Describe the issue:</label>
+                <textarea id="issue" name="issue" class="form-control" rows="3" required></textarea>
+              </div>
+              
+              <button type="submit" class="btn btn-warning">Report Issue</button>
+            </form>
+          </div>
+        </div>
+      <% } %>
+      
+      <% if (job.status === 'completed') { %>
+        <div class="card mb-4">
+          <div class="card-header">
+            <h3 class="card-title">Job Completion</h3>
+          </div>
+          <div class="card-body">
+            <div class="alert alert-success">
+              <p>This job has been completed successfully!</p>
+              <% if (completionStatus && completionStatus.completed_at) { %>
+                <p>Completed on: <%= new Date(completionStatus.completed_at).toLocaleString() %></p>
+              <% } %>
+            </div>
+            
+            <a href="/jobs/<%= job.id %>/invoice" class="btn btn-primary">Download Invoice</a>
+          </div>
+        </div>
+      <% } %>
+    </div>
+    
+    <div class="col-md-4">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h3 class="card-title">Job Actions</h3>
+        </div>
+        <div class="card-body">
+          <% if (job.status === 'pending' && job.payment_status === 'unpaid') { %>
+            <a href="/payments/job/<%= job.id %>" class="btn btn-success btn-block mb-2">Pay for Job Posting</a>
+            <p class="text-muted small">Your job will be visible to freelancers after payment.</p>
+          <% } %>
+          
+          <% if (job.status === 'open' && job.payment_status === 'paid') { %>
+            <a href="/client/jobs/<%= job.id %>/applications" class="btn btn-primary btn-block mb-2">View Applications</a>
+            <a href="/jobs/<%= job.id %>/edit" class="btn btn-secondary btn-block mb-2">Edit Job</a>
+            <form action="/jobs/<%= job.id %>?_method=DELETE" method="POST" onsubmit="return confirm('Are you sure you want to delete this job?');">
+              <button type="submit" class="btn btn-danger btn-block">Delete Job</button>
+            </form>
+          <% } %>
+          
+          <% if (job.status === 'in-progress' || job.status === 'completed') { %>
+            <a href="/jobs/<%= job.id %>/invoice" class="btn btn-info btn-block mb-2">Generate Invoice</a>
+          <% } %>
+        </div>
+      </div>
+      
+      <div class="card mb-4">
+        <div class="card-header">
+          <h3 class="card-title">Application Status</h3>
+        </div>
+        <div class="card-body">
+          <% if (job.status === 'open' && job.payment_status === 'paid') { %>
+            <p>
+              <strong>Applications:</strong> 
+              <% if (applicationsCount && applicationsCount > 0) { %>
+                <span class="badge badge-primary"><%= applicationsCount %></span>
+              <% } else { %>
+                <span class="badge badge-secondary">0</span>
+              <% } %>
+            </p>
+            
+            <% if (applicationsCount && applicationsCount > 0) { %>
+              <a href="/client/jobs/<%= job.id %>/applications" class="btn btn-primary btn-block">View Applications</a>
+            <% } else { %>
+              <p class="text-muted">No applications received yet.</p>
+            <% } %>
+          <% } else if (job.status === 'in-progress') { %>
+            <p class="text-success">
+              <i class="fa fa-check-circle"></i> Freelancer hired and working on the job
+            </p>
+          <% } else if (job.status === 'completed') { %>
+            <p class="text-success">
+              <i class="fa fa-check-circle"></i> Job has been completed
+            </p>
+          <% } else if (job.status === 'pending') { %>
+            <p class="text-warning">
+              <i class="fa fa-clock-o"></i> Payment required to post job
+            </p>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -58,7 +58,7 @@ exports.generateCsv = (job, freelancer) => {
   csvContent += `Total,${formatCurrency(job.budget)}\n\n`;
   
   csvContent += 'Thank you for using our platform!\n';
-  csvContent += 'FreelanceHub - Connecting clients with professional freelancers\n';
+  csvContent += 'lance - Connecting clients with professional freelancers\n';
   
   return csvContent;
 };

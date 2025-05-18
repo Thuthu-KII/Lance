@@ -1,4 +1,4 @@
--- Database schema for FreelanceHub platform
+-- Database schema for lance platform
 
 -- Clear tables if they exist (for development purposes)
 DROP TABLE IF EXISTS reports CASCADE;

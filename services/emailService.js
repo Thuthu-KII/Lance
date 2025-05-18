@@ -54,7 +54,7 @@ const sendEmail = async (options) => {
     
     // Email options
     const mailOptions = {
-      from: `"FreelanceHub" <${process.env.EMAIL_FROM || 'noreply@freelancehub.com'}>`,
+      from: `"lance" <${process.env.EMAIL_FROM || 'noreply@lance.com'}>`,
       to: options.email,
       subject: options.subject,
       text: options.message,
@@ -78,11 +78,11 @@ const sendEmail = async (options) => {
 
 // Welcome email for new users
 exports.sendWelcomeEmail = async (user) => {
-  const subject = 'Welcome to FreelanceHub!';
+  const subject = 'Welcome to lance!';
   const message = `
     Hi ${user.firstName},
     
-    Welcome to FreelanceHub! We're excited to have you on board.
+    Welcome to lance! We're excited to have you on board.
     
     ${user.role === 'freelancer' 
       ? 'Your account is currently under review. We\'ll notify you once it\'s approved.' 
@@ -91,26 +91,26 @@ exports.sendWelcomeEmail = async (user) => {
     If you have any questions, feel free to contact our support team.
     
     Best regards,
-    The FreelanceHub Team
+    The lance Team
   `;
   
   // HTML version of the email
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
       <div style="background-color: #3498db; padding: 20px; text-align: center; color: white;">
-        <h1>Welcome to FreelanceHub!</h1>
+        <h1>Welcome to lance!</h1>
       </div>
       <div style="padding: 20px; border: 1px solid #eee;">
         <p>Hi ${user.firstName},</p>
-        <p>Welcome to FreelanceHub! We're excited to have you on board.</p>
+        <p>Welcome to lance! We're excited to have you on board.</p>
         <p>${user.role === 'freelancer' 
             ? 'Your account is currently under review. We\'ll notify you once it\'s approved.' 
             : 'You can now start using our platform to post jobs and find talented freelancers.'}</p>
         <p>If you have any questions, feel free to contact our support team.</p>
-        <p>Best regards,<br>The FreelanceHub Team</p>
+        <p>Best regards,<br>The lance Team</p>
       </div>
       <div style="background-color: #f8f9fa; padding: 15px; text-align: center; font-size: 12px; color: #666;">
-        <p>&copy; ${new Date().getFullYear()} FreelanceHub. All rights reserved.</p>
+        <p>&copy; ${new Date().getFullYear()} lance. All rights reserved.</p>
       </div>
     </div>
   `;
@@ -125,16 +125,16 @@ exports.sendWelcomeEmail = async (user) => {
 
 // Freelancer approval notification
 exports.sendFreelancerApprovalEmail = async (user) => {
-  const subject = 'Your FreelanceHub Account has been Approved!';
+  const subject = 'Your lance Account has been Approved!';
   const message = `
     Hi ${user.firstName},
     
-    Great news! Your FreelanceHub account has been approved.
+    Great news! Your lance account has been approved.
     
     You can now log in to your account and start applying for jobs.
     
     Best regards,
-    The FreelanceHub Team
+    The lance Team
   `;
   
   const html = `
@@ -144,12 +144,12 @@ exports.sendFreelancerApprovalEmail = async (user) => {
       </div>
       <div style="padding: 20px; border: 1px solid #eee;">
         <p>Hi ${user.firstName},</p>
-        <p>Great news! Your FreelanceHub account has been approved.</p>
+        <p>Great news! Your lance account has been approved.</p>
         <p>You can now <a href="${process.env.APP_URL || 'http://localhost:3000'}/auth/login" style="color: #3498db;">log in to your account</a> and start applying for jobs.</p>
-        <p>Best regards,<br>The FreelanceHub Team</p>
+        <p>Best regards,<br>The lance Team</p>
       </div>
       <div style="background-color: #f8f9fa; padding: 15px; text-align: center; font-size: 12px; color: #666;">
-        <p>&copy; ${new Date().getFullYear()} FreelanceHub. All rights reserved.</p>
+        <p>&copy; ${new Date().getFullYear()} lance. All rights reserved.</p>
       </div>
     </div>
   `;
@@ -175,7 +175,7 @@ exports.sendJobApplicationNotificationToClient = async (application, job, client
     Log in to view the application and the freelancer's details.
     
     Best regards,
-    The FreelanceHub Team
+    The lance Team
   `;
   
   const html = `
@@ -188,10 +188,10 @@ exports.sendJobApplicationNotificationToClient = async (application, job, client
         <p>You have received a new application for your job "<strong>${job.title}</strong>".</p>
         <p><strong>Freelancer:</strong> ${freelancer.firstName} ${freelancer.lastName}</p>
         <p><a href="${process.env.APP_URL || 'http://localhost:3000'}/client/jobs/${job.id}/applications" style="display: inline-block; background-color: #3498db; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px;">View Application</a></p>
-        <p>Best regards,<br>The FreelanceHub Team</p>
+        <p>Best regards,<br>The lance Team</p>
       </div>
       <div style="background-color: #f8f9fa; padding: 15px; text-align: center; font-size: 12px; color: #666;">
-        <p>&copy; ${new Date().getFullYear()} FreelanceHub. All rights reserved.</p>
+        <p>&copy; ${new Date().getFullYear()} lance. All rights reserved.</p>
       </div>
     </div>
   `;
@@ -215,7 +215,7 @@ exports.sendHiringNotificationToFreelancer = async (job, freelancer, client) => 
     Please log in to view the job details and get started.
     
     Best regards,
-    The FreelanceHub Team
+    The lance Team
   `;
   
   const html = `
@@ -227,10 +227,10 @@ exports.sendHiringNotificationToFreelancer = async (job, freelancer, client) => 
         <p>Hi ${freelancer.firstName},</p>
         <p>Congratulations! You have been hired for the job "<strong>${job.title}</strong>" by ${client.firstName} ${client.lastName}.</p>
         <p><a href="${process.env.APP_URL || 'http://localhost:3000'}/freelancer/jobs/${job.id}" style="display: inline-block; background-color: #2ecc71; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px;">View Job Details</a></p>
-        <p>Best regards,<br>The FreelanceHub Team</p>
+        <p>Best regards,<br>The lance Team</p>
       </div>
       <div style="background-color: #f8f9fa; padding: 15px; text-align: center; font-size: 12px; color: #666;">
-        <p>&copy; ${new Date().getFullYear()} FreelanceHub. All rights reserved.</p>
+        <p>&copy; ${new Date().getFullYear()} lance. All rights reserved.</p>
       </div>
     </div>
   `;
@@ -256,7 +256,7 @@ exports.sendJobCompletionNotification = async (job, recipient, recipientRole) =>
     Please log in to confirm completion and ${isClient ? 'finalize payment.' : 'receive your payment.'}
     
     Best regards,
-    The FreelanceHub Team
+    The lance Team
   `;
   
   const html = `
@@ -269,10 +269,10 @@ exports.sendJobCompletionNotification = async (job, recipient, recipientRole) =>
         <p>The job "<strong>${job.title}</strong>" has been marked as complete by ${isClient ? 'the freelancer' : 'the client'}.</p>
         <p>Please log in to confirm completion and ${isClient ? 'finalize payment.' : 'receive your payment.'}</p>
         <p><a href="${process.env.APP_URL || 'http://localhost:3000'}/${recipientRole}/jobs/${job.id}" style="display: inline-block; background-color: #3498db; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px;">View Job</a></p>
-        <p>Best regards,<br>The FreelanceHub Team</p>
+        <p>Best regards,<br>The lance Team</p>
       </div>
       <div style="background-color: #f8f9fa; padding: 15px; text-align: center; font-size: 12px; color: #666;">
-        <p>&copy; ${new Date().getFullYear()} FreelanceHub. All rights reserved.</p>
+        <p>&copy; ${new Date().getFullYear()} lance. All rights reserved.</p>
       </div>
     </div>
   `;
@@ -293,10 +293,10 @@ exports.sendPaymentNotificationToFreelancer = async (payment, job, freelancer) =
     
     Good news! You have received a payment of $${parseFloat(payment.amount).toFixed(2)} for the job "${job.title}".
     
-    Thank you for your work on the FreelanceHub platform.
+    Thank you for your work on the lance platform.
     
     Best regards,
-    The FreelanceHub Team
+    The lance Team
   `;
   
   const html = `
@@ -307,12 +307,12 @@ exports.sendPaymentNotificationToFreelancer = async (payment, job, freelancer) =
       <div style="padding: 20px; border: 1px solid #eee;">
         <p>Hi ${freelancer.firstName},</p>
         <p>Good news! You have received a payment of <strong>$${parseFloat(payment.amount).toFixed(2)}</strong> for the job "${job.title}".</p>
-        <p>Thank you for your work on the FreelanceHub platform.</p>
+        <p>Thank you for your work on the lance platform.</p>
         <p><a href="${process.env.APP_URL || 'http://localhost:3000'}/freelancer/dashboard" style="display: inline-block; background-color: #2ecc71; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px;">View Dashboard</a></p>
-        <p>Best regards,<br>The FreelanceHub Team</p>
+        <p>Best regards,<br>The lance Team</p>
       </div>
       <div style="background-color: #f8f9fa; padding: 15px; text-align: center; font-size: 12px; color: #666;">
-        <p>&copy; ${new Date().getFullYear()} FreelanceHub. All rights reserved.</p>
+        <p>&copy; ${new Date().getFullYear()} lance. All rights reserved.</p>
       </div>
     </div>
   `;
@@ -327,11 +327,11 @@ exports.sendPaymentNotificationToFreelancer = async (payment, job, freelancer) =
 
 // Report notification to admin
 exports.sendReportNotificationToAdmin = async (report, adminEmail) => {
-  const subject = `New Issue Report on FreelanceHub`;
+  const subject = `New Issue Report on lance`;
   const message = `
     Hello Admin,
     
-    A new issue has been reported on the FreelanceHub platform.
+    A new issue has been reported on the lance platform.
     
     Report ID: ${report.id}
     Reported by: ${report.reporter_email || 'Anonymous'}
@@ -340,7 +340,7 @@ exports.sendReportNotificationToAdmin = async (report, adminEmail) => {
     Please log in to the admin panel to review this report.
     
     Regards,
-    FreelanceHub System
+    lance System
   `;
   
   const html = `
@@ -350,17 +350,17 @@ exports.sendReportNotificationToAdmin = async (report, adminEmail) => {
       </div>
       <div style="padding: 20px; border: 1px solid #eee;">
         <p>Hello Admin,</p>
-        <p>A new issue has been reported on the FreelanceHub platform.</p>
+        <p>A new issue has been reported on the lance platform.</p>
         <div style="background-color: #f8f9fa; padding: 15px; margin: 15px 0; border-left: 4px solid #e74c3c;">
           <p><strong>Report ID:</strong> ${report.id}</p>
           <p><strong>Reported by:</strong> ${report.reporter_email || 'Anonymous'}</p>
           <p><strong>Issue:</strong> ${report.issue.substring(0, 100)}${report.issue.length > 100 ? '...' : ''}</p>
         </div>
         <p><a href="${process.env.APP_URL || 'http://localhost:3000'}/admin/reports/${report.id}" style="display: inline-block; background-color: #e74c3c; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px;">Review Report</a></p>
-        <p>Regards,<br>FreelanceHub System</p>
+        <p>Regards,<br>lance System</p>
       </div>
       <div style="background-color: #f8f9fa; padding: 15px; text-align: center; font-size: 12px; color: #666;">
-        <p>&copy; ${new Date().getFullYear()} FreelanceHub. All rights reserved.</p>
+        <p>&copy; ${new Date().getFullYear()} lance. All rights reserved.</p>
       </div>
     </div>
   `;

@@ -175,7 +175,7 @@ exports.getJobDetails = async (req, res) => {
       [id, freelancerId]
     );
     
-    let application = null;
+    let application = 0;
     if (applicationResult.rows.length > 0) {
       application = applicationResult.rows[0];
     }

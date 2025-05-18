@@ -60,7 +60,7 @@ exports.getUsers = async (req, res) => {
     
     res.render('admin/users', {
       users: usersResult.rows,
-      user: req.user
+      currentUser: req.user
     });
   } catch (error) {
     console.error('Error fetching users:', error);
@@ -102,11 +102,42 @@ exports.getUserDetails = async (req, res) => {
         profile = profileResult.rows[0];
       }
     }
-    
+    const jobStats = await db.query(`
+                    SELECT 
+                      COUNT(*) AS total,
+                      COUNT(CASE WHEN status = 'open' THEN 1 END) AS open,
+                      COUNT(CASE WHEN status = 'in-progress' THEN 1 END) AS in_progress,
+                      COUNT(CASE WHEN status = 'completed' THEN 1 END) AS completed
+                    FROM jobs 
+                    WHERE client_id = $1
+                  `, [profile.id]).then(res => res.rows[0]);
+    const jobs = await db.query(`
+                    SELECT * FROM jobs WHERE client_id = $1 ORDER BY created_at DESC LIMIT 5
+                  `, [profile.id]).then(res => res.rows);
+    const applications = await db.query(`
+                    SELECT ja.*, j.title, j.status AS job_status
+                    FROM job_applications ja
+                    INNER JOIN jobs j ON ja.job_id = j.id
+                    WHERE ja.freelancer_id = $1
+                    ORDER BY ja.created_at DESC LIMIT 5
+                  `, [profile.id]).then(res => res.rows);
+    const payments = await db.query(`
+                SELECT p.*, j.title AS job_title
+                FROM payments p
+                LEFT JOIN jobs j ON p.job_id = j.id
+                WHERE p.paid_by = $1 OR p.paid_to = $1
+                ORDER BY p.created_at DESC
+                LIMIT 10
+              `, [user.id]).then(res => res.rows);
     res.render('admin/user-details', {
+      async:true,
       userData: user,
       profile,
-      user: req.user
+      user: req.user,
+      jobs,
+      jobStats,
+      applications,
+      payments
     });
   } catch (error) {
     console.error('Error fetching user details:', error);

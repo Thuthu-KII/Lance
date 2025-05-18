@@ -76,7 +76,7 @@ SMTP_PORT=587
 SMTP_USER=your_smtp_username
 SMTP_PASS=your_smtp_password
 SMTP_SECURE=false
-EMAIL_FROM=noreply@freelancehub.com
+EMAIL_FROM=noreply@lance.com
 ```
 
 Notes:

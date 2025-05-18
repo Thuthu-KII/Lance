@@ -26,7 +26,7 @@ router.use('/profile', profileRoutes);
 // Home route
 router.get('/', (req, res) => {
   res.render('index', { 
-    title: 'FreelanceHub - Connect with Clients and Freelancers',
+    title: 'lance - Connect with Clients and Freelancers',
     user: req.user
   });
 });
