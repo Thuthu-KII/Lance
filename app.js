@@ -27,7 +27,12 @@ const app = express();
 
 // Set view engine
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+const expressLayouts = require('express-ejs-layouts');
+
+app.use(expressLayouts);
+
+// Set layout file (optional, defaults to views/layout.ejs)
+app.set('layout', 'common/layout');
 
 // Middlewares
 app.use(helmet({
