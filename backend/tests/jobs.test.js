@@ -11,7 +11,7 @@ jest.mock('../scripts/jobs', () => {
     return {
       ...original,
       getJobs: jest.fn(),
-      renderJobs: jest.fn(),
+      renderJobs: jest.fn(original.renderJobs),
     };
   });
 
@@ -106,27 +106,66 @@ beforeEach(() => {
   });
 
 describe('fetchJobs', () => {
-    test('fetches and renders jobs from the database', async () => {
-        const jobs = [{ jobId: 1, jobTitle: 'Test Job', category: 'plumbing', wage: 500, duration: '2h', description: 'Fix sink', location: 'Joburg', createdAt: new Date().toISOString() }];
-        getJobs.mockResolvedValueOnce(jobs);
+    beforeEach(() => {
+        // Clear all mocks and reset DOM
+        jest.clearAllMocks();
+        document.body.innerHTML = `
+            <div id="loadingState"></div>
+            <div id="jobsList"></div>
+            <div id="emptyState">
+                <h3></h3>
+                <p></p>
+            </div>
+            <div id="pagination"></div>
+        `;
+    });
 
+    test('successfully fetches and renders jobs', async () => {
+        const mockJobs = [
+            { 
+                jobId: 1, 
+                jobTitle: 'Test Job', 
+                category: 'plumbing', 
+                wage: 500, 
+                duration: '2h', 
+                description: 'Fix sink', 
+                location: 'Joburg', 
+                createdAt: new Date().toISOString() 
+            }
+        ];
+        
+        // Mock getJobs to resolve with mock data
+        getJobs.mockResolvedValue(mockJobs);
+        
         await fetchJobs();
-
+        
+        // Verify loading states
         expect(document.getElementById('loadingState').classList.contains('hidden')).toBe(true);
         expect(document.getElementById('jobsList').classList.contains('hidden')).toBe(false);
         expect(document.getElementById('emptyState').classList.contains('hidden')).toBe(true);
-
-        expect(renderJobs).toHaveBeenCalledWith(jobs);
+        
+        // Verify renderJobs was called with correct data
+        expect(renderJobs).toHaveBeenCalledWith(mockJobs);
+        expect(renderJobs).toHaveBeenCalledTimes(1);
     });
 
-    test('fetchJobs shows emptyState on error', async () => {
-        getJobs.mockRejectedValueOnce(new Error('Network error'));
-      
+    test('handles empty jobs array', async () => {
+        getJobs.mockResolvedValue([]);
+        
         await fetchJobs();
-      
-        expect(document.getElementById('loadingState').classList.contains('hidden')).toBe(true);
+        
+        expect(document.getElementById('emptyState').classList.contains('hidden')).toBe(false);
+        expect(document.getElementById('jobsList').classList.contains('hidden')).toBe(true);
+    });
+
+    test('handles fetch error', async () => {
+        getJobs.mockRejectedValue(new Error('Network error'));
+        
+        await fetchJobs();
+        
         expect(document.getElementById('emptyState').classList.contains('hidden')).toBe(false);
         expect(document.getElementById('emptyState').querySelector('h3').textContent).toBe("Error loading jobs");
+        expect(document.getElementById('emptyState').querySelector('p').textContent).toBe("Please try again later");
     });
 });
 
@@ -134,7 +173,7 @@ describe('formatDate', () => {
     const now = new Date();
 
     test('returns "today" for current date', async () => {
-        const today = now.toISOString;
+        const today = now.toISOString();
         expect(formatDate(today)).toBe('today')
     });
 
