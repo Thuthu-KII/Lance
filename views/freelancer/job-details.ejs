@@ -109,7 +109,7 @@
           </div>
           <div class="card-body">
             <form action="/freelancer/jobs/<%= job.id %>/report" method="POST">
-              <input type="hidden" name="reportedUser" value="<%= job.client_user_id %>">
+              <input type="hidden" name="reportedUser" value="<%= job.client_id %>">
               
               <div class="form-group">
                 <label for="issue" class="form-label">Describe the issue:</label>

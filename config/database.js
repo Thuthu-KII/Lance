@@ -143,6 +143,7 @@ const initializeDatabase = async () => {
         reported_user INTEGER REFERENCES users(id),
         job_id INTEGER REFERENCES jobs(id) ON DELETE SET NULL,
         issue TEXT NOT NULL,
+        admin_notes TEXT,
         status VARCHAR(20) DEFAULT 'pending',
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
