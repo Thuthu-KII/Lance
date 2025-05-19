@@ -390,10 +390,3 @@ class Job {
 }
 
 module.exports = Job;
-module.exports = {
-  query: jest.fn(),
-  getClient: jest.fn(() => ({
-    query: jest.fn(),
-    release: jest.fn()
-  }))
-};
