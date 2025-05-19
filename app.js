@@ -22,7 +22,7 @@ const profileRoutes = require('./routes/profileRoutes');
 // Import passport config
 require('./config/passport');
 
-// Create Express app
+// Create Express app 
 const app = express();
 
 // Set view engine
