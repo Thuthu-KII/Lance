@@ -1,6 +1,6 @@
 const url = 'https://lance-api-ftcehba3hhheg9hu.southafricanorth-01.azurewebsites.net'; //await
 
-async function createJob(jobData) {
+export async function createJob(jobData) {
     const res = await fetch(`${url}/jobs`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -15,14 +15,15 @@ async function createJob(jobData) {
     return await res.json();
   }
   
-async function getJobs() {
+  export async function getJobs() {
     const res = await fetch(`${url}/jobs`);
     if (!res.ok) throw new Error('Failed to fetch jobs');
     return await res.json();
   }
 
 
- async function updateStatus(info){
+
+  export async function updateStatus(info){
     const res = await fetch(`${url}/jobs/updateStatus`,{
       method : 'POST',
       headers: {'Content-Type' : 'application/json'},
@@ -36,22 +37,25 @@ async function getJobs() {
     return await res.json();
   }
 
- // Function to fetch jobs from the server
- async function fetchJobs(page = 1, filters = {}) {
+ // Function to fetch jobs from the server 
+async function fetchJobs(page = 1, filters = {}) {
     try {
         document.getElementById('loadingState').classList.remove('hidden');
         document.getElementById('jobsList').classList.add('hidden');
         document.getElementById('emptyState').classList.add('hidden');
         document.getElementById('pagination').classList.add('hidden');
 
-        const jobs = await getJobs(); // jobs is an array
-        console.log("Fetched jobs:", jobs); // for debugging
-
-        renderJobs(jobs);
-
+        const response = await getJobs();
+        
+        // Ensure we have an array, even if the response is an object
+        const jobs = Array.isArray(response) ? response : [];
+        
         if (jobs.length === 0) {
             document.getElementById('emptyState').classList.remove('hidden');
+            document.getElementById('emptyState').querySelector('h3').textContent = "No jobs found";
+            document.getElementById('emptyState').querySelector('p').textContent = "Try adjusting your filters";
         } else {
+            renderJobs(jobs);
             document.getElementById('jobsList').classList.remove('hidden');
         }
 
@@ -181,5 +185,3 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 });
-
-module.exports = {createJob, getJobs, updateStatus, fetchJobs, renderJobs, formatDate, updatePagination, getCurrentFilters, applyForJob};
