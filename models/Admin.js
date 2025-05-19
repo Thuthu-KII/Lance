@@ -92,4 +92,6 @@ class Admin {
   }
 }
 
+//Test invoice, approvals for admins, delete user by admin, assign credentials 
+
 module.exports = Admin;

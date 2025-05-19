@@ -156,3 +156,5 @@ async function createDefaultUsers() {
 }
 
 createDefaultUsers();
+
+module.exports = {createDefaultUsers};
