@@ -208,8 +208,9 @@ exports.getJobDetails = async (req, res) => {
 
 // Report a problem with a job
 exports.reportJobIssue = async (req, res) => {
+  const { id } = req.params;
   try {
-    const { id } = req.params;
+    
     const { issue, reportedUser } = req.body;
     const userId = req.user.id;
     
@@ -217,11 +218,11 @@ exports.reportJobIssue = async (req, res) => {
       req.flash('error_msg', 'Please provide a detailed description of the issue (at least 10 characters)');
       return res.redirect(`/freelancer/jobs/${id}`);
     }
-    
+    console.log(">>>>>>>>>>>>> ",id);
     // Create report
     await db.query(
       'INSERT INTO reports (reported_by, reported_user, job_id, issue, status) VALUES ($1, $2, $3, $4, $5)',
-      [userId, reportedUser, id, issue, 'pending']
+      [userId, parseInt(reportedUser), id, issue, 'pending']
     );
     
     req.flash('success_msg', 'Issue reported successfully. An admin will review it shortly.');
