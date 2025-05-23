@@ -83,7 +83,8 @@ passport.use(new GoogleStrategy({
 const newUser = insertResult.rows[0];
 
 // Optionally, insert into clients table
-await db.query(`INSERT INTO clients (user_id,first_name,last_name) VALUES ($1)`, [profile.id, profile.name.givenName, profile.name.familyName, 'client']);
+await db.query(`INSERT INTO clients (user_id,first_name,last_name) VALUES ($1,$2,$3)`, [profile.id, profile.name.givenName, profile.name.familyName]);
+//console.log("Client has been addded to db");
 
 return done(null, newUser);
 

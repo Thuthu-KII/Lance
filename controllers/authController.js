@@ -21,9 +21,10 @@ exports.postLogin = (req, res, next) => {
     
     req.logIn(user, (err) => {
       if (err) return next(err);
-      
       if (user.role === 'client') {
+        
         return res.redirect('/client/dashboard');
+       
       } else if (user.role === 'freelancer') {
         return res.redirect('/freelancer/dashboard');
       } else if (user.role === 'admin') {
