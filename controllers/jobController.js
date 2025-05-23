@@ -54,8 +54,13 @@ exports.getJobDetails = async (req, res) => {
       
       hasApplied = applicationResult.rows.length > 0;
     }
-    
+        let application = 0;
+    if (applicationResult.rows.length > 0) {
+      application = applicationResult.rows[0];
+    }
+
     res.render('freelancer/job-details', {
+      application,
       job,
       hasApplied,
       user: req.user
@@ -625,7 +630,7 @@ exports.adminGetJobDetails = async (req, res) => {
       req.flash('error_msg', 'Job not found');
       return res.redirect('/admin/jobs');
     }
-    
+    const job = jobResult.rows[0];
     // Get applications with freelancer details
     const applicationsResult = await db.query(`
       SELECT ja.*, f.first_name, f.last_name, f.skills, f.experience, f.cv_path
@@ -640,8 +645,20 @@ exports.adminGetJobDetails = async (req, res) => {
       'SELECT * FROM payments WHERE job_id = $1 ORDER BY created_at DESC',
       [id]
     );
-    
+    const completionStatus = job.status === 'in-progress' || job.status === 'completed' ? await db.query('SELECT * FROM job_completions WHERE job_id = $1', [job.id]).then(res => res.rows[0]) : null;
+// Get any reports for this job
+    const reports = await db.query(`
+      SELECT r.*, u.email as reporter_email 
+      FROM reports r 
+      JOIN users u ON r.reported_by = u.id 
+      WHERE r.job_id = $1
+    `, [job.id]).then(res => res.rows);
+    const query1 = await db.query('SELECT user_id FROM freelancers WHERE id = $1', [hiredApplication.freelancer_id])
+                  .then(res => res.rows[0]?.user_id);
     res.render('admin/job-details', {
+      query1,
+      reports,
+      completionStatus,
       job: jobResult.rows[0],
       applications: applicationsResult.rows,
       payments: paymentResult.rows,

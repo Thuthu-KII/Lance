@@ -169,8 +169,8 @@
           <div class="card-body">
             <% 
               // Find the completion status in the database
-              const completionStatus = job.status === 'in-progress' || job.status === 'completed' ? 
-                await db.query('SELECT * FROM job_completions WHERE job_id = $1', [job.id]).then(res => res.rows[0]) : null;
+              // const completionStatus = job.status === 'in-progress' || job.status === 'completed' ? 
+              // await db.query('SELECT * FROM job_completions WHERE job_id = $1', [job.id]).then(res => res.rows[0]) : null;
             %>
             
             <% if (completionStatus) { %>
@@ -269,8 +269,7 @@
               // Find the hired freelancer
               const hiredApplication = applications.find(app => app.status === 'hired');
               if (hiredApplication) {
-                const freelancerUserId = await db.query('SELECT user_id FROM freelancers WHERE id = $1', [hiredApplication.freelancer_id])
-                  .then(res => res.rows[0]?.user_id);
+                const freelancerUserId = query1;
                 if (freelancerUserId) {
             %>
               <a href="/admin/users/<%= freelancerUserId %>" class="btn btn-info btn-block mb-2">View Hired Freelancer</a>
@@ -334,13 +333,13 @@
         </div>
         <div class="card-body">
           <% 
-            // Get any reports for this job
-            const reports = await db.query(`
-              SELECT r.*, u.email as reporter_email 
-              FROM reports r 
-              JOIN users u ON r.reported_by = u.id 
-              WHERE r.job_id = $1
-            `, [job.id]).then(res => res.rows);
+            // // Get any reports for this job
+            // const reports = await db.query(`
+            //   SELECT r.*, u.email as reporter_email 
+            //   FROM reports r 
+            //   JOIN users u ON r.reported_by = u.id 
+            //   WHERE r.job_id = $1
+            // `, [job.id]).then(res => res.rows);
           %>
           
           <% if (reports && reports.length > 0) { %>
