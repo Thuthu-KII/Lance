@@ -9,11 +9,13 @@ router.get('/', (req, res) => {
 });
 
 router.get('/browse', jobController.getAllJobs);
+router.get('/create', isAuthenticated, isClient, jobController.getCreateJob);
+router.post('/create', isAuthenticated, isClient, jobController.postCreateJob);
 router.get('/:id', jobController.getJobDetails);
 
 // Client routes
-router.get('/create', isAuthenticated, isClient, jobController.getCreateJob);
-router.post('/create', isAuthenticated, isClient, jobController.postCreateJob);
+// router.get('/create', isAuthenticated, isClient, jobController.getCreateJob);
+// router.post('/create', isAuthenticated, isClient, jobController.postCreateJob);
 router.get('/:id/edit', isAuthenticated, isClient, jobController.getEditJob);
 router.put('/:id', isAuthenticated, isClient, jobController.putEditJob);
 router.delete('/:id', isAuthenticated, isClient, jobController.deleteJob);
