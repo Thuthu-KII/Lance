@@ -6,8 +6,12 @@
 class AppError extends Error {
   constructor(message, statusCode) {
     super(message);
-    this.statusCode = statusCode;
-    this.status = `${statusCode}`.startsWith('4') ? 'fail' : 'error';
+    
+    // Ensure statusCode is a number
+    this.statusCode = typeof statusCode === 'number' ? statusCode : 500;
+    
+    // Status is just a string descriptor, not used for HTTP responses
+    this.status = `${this.statusCode}`.startsWith('4') ? 'fail' : 'error';
     this.isOperational = true;
 
     Error.captureStackTrace(this, this.constructor);
@@ -16,7 +20,8 @@ class AppError extends Error {
 
 // Global error handler middleware
 const globalErrorHandler = (err, req, res, next) => {
-  err.statusCode = err.statusCode || 500;
+  // Ensure statusCode is a number
+  err.statusCode = err.statusCode && typeof err.statusCode === 'number' ? err.statusCode : 500;
   err.status = err.status || 'error';
 
   // Log error details
@@ -36,6 +41,19 @@ const globalErrorHandler = (err, req, res, next) => {
     });
   }
 
+  // Add flash message if available
+  if (req.flash) {
+    req.flash('error_msg', err.message || 'An error occurred');
+  }
+
+  // For XHR requests
+  if (req.xhr) {
+    return res.status(err.statusCode).json({
+      message: err.message,
+      status: false
+    });
+  }
+
   // For rendered website
   if (err.isOperational) {
     return res.status(err.statusCode).render('error', {
@@ -47,7 +65,14 @@ const globalErrorHandler = (err, req, res, next) => {
 
   // For unknown errors in production
   console.error('UNKNOWN ERROR 💥', err);
-  res.status(500).render('error', {
+  
+  // Try to redirect back or to home page if headers are available
+  if (req.headers && req.headers.referer && !req.headers.referer.includes('/error')) {
+    return res.redirect(req.headers.referer);
+  }
+  
+  // Render error page
+  return res.status(500).render('error', {
     title: 'Error',
     message: 'Something went wrong!',
     status: 500

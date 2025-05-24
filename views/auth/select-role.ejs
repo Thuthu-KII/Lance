@@ -1,0 +1,68 @@
+<!-- views/auth/select-role.ejs -->
+
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-6 m-auto">
+      <div class="card card-body">
+        <h1 class="text-center mb-3">
+          <i class="fas fa-user-plus"></i> Select Your Role
+        </h1>
+        
+        <% if(typeof errors != 'undefined') { %>
+          <% errors.forEach(function(error) { %>
+            <div class="alert alert-danger alert-dismissible fade show">
+              <%= error.message %>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          <% }); %>
+        <% } %>
+        
+        <% if(success_msg != '') { %>
+          <div class="alert alert-success alert-dismissible fade show">
+            <%= success_msg %>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        <% } %>
+        
+        <% if(error_msg != '') { %>
+          <div class="alert alert-danger alert-dismissible fade show">
+            <%= error_msg %>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        <% } %>
+        
+        <p>Welcome <%= user.first_name %>! Please select your role:</p>
+        
+        <form action="/auth/select-role" method="POST">
+          <div class="form-group mb-4">
+            <div class="role-selection">
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="radio" name="role" id="client" value="client" required>
+                <label class="form-check-label" for="client">
+                  <strong>I'm a Client</strong> - I want to post jobs and hire freelancers
+                </label>
+              </div>
+              
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="role" id="freelancer" value="freelancer">
+                <label class="form-check-label" for="freelancer">
+                  <strong>I'm a Freelancer</strong> - I want to find work and apply for jobs
+                </label>
+              </div>
+            </div>
+          </div>
+          
+          <button type="submit" class="btn btn-primary btn-block">Continue</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

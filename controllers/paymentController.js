@@ -5,7 +5,7 @@ const yoco = require('../config/yoco');
 exports.getJobPaymentPage = async (req, res) => {
   try {
     const { id } = req.params;
-    const clientId = req.user.profile.id;
+    const clientId = req.user.profile ? req.user.profile.id : req.user.id;
     
     // Verify job ownership
     const jobResult = await db.query(
@@ -41,7 +41,7 @@ exports.postJobPayment = async (req, res) => {
   try {
     const { id } = req.params;
     const { token } = req.body;
-    const clientId = req.user.profile.id;
+    const clientId = req.user.profile ? req.user.profile.id : req.user.id;
     const userId = req.user.id;
     
     // Verify job ownership

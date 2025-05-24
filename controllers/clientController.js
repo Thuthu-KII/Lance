@@ -3,7 +3,14 @@ const db = require('../config/database');
 // Client dashboard
 exports.getDashboard = async (req, res) => {
   try {
-    const clientId = req.user.profile.id;
+    // Add defensive check
+    if (!req.user) {
+      req.flash('error_msg', 'User session not found');
+      return res.redirect('/auth/login');
+    }
+    
+    // Use the correct path to the ID based on your user object structure
+    const clientId = req.user.profile ? req.user.profile ? req.user.profile.id : req.user.id : req.user.id;
     
     // Get client's jobs
     const jobsResult = await db.query(
@@ -46,7 +53,7 @@ exports.getDashboard = async (req, res) => {
 // Get client's jobs
 exports.getJobs = async (req, res) => {
   try {
-    const clientId = req.user.profile.id;
+    const clientId = req.user.profile ? req.user.profile.id : req.user.id;
     
     // Get all jobs for this client
     const jobsResult = await db.query(
@@ -69,7 +76,7 @@ exports.getJobs = async (req, res) => {
 exports.getJobDetails = async (req, res) => {
   try {
     const { id } = req.params;
-    const clientId = req.user.profile.id;
+    const clientId = req.user.profile ? req.user.profile.id : req.user.id;
     
     // Get job details and verify ownership
     const jobResult = await db.query(

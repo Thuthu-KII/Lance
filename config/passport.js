@@ -55,13 +55,14 @@ passport.use(new GoogleStrategy({
 }, async (accessToken, refreshToken, profile, done) => {
   try {
     // Check if user already exists
+    console.log("Google OAuth Strategy - Starting authentication for:", profile.emails[0].value);
     const userResult = await db.query(
       'SELECT * FROM users WHERE google_id = $1 OR email = $2',
       [profile.id, profile.emails[0].value]
     );
 
     if (userResult.rows.length > 0) {
-      // User exists, check if they have a profile
+      // User exists
       const user = userResult.rows[0];
       
       // Update Google ID if necessary
@@ -72,7 +73,7 @@ passport.use(new GoogleStrategy({
         );
       }
       
-      // Check if the user has a profile
+      // Check if user has a profile
       let hasProfile = false;
       
       if (user.role === 'client') {
@@ -84,74 +85,160 @@ passport.use(new GoogleStrategy({
       }
       
       if (hasProfile) {
+        // Complete user with profile - proceed with login
         return done(null, user);
       } else {
-        // User exists but needs to complete their profile
-        const tempUser = {
-          ...user,
+        // User exists but needs to complete profile
+        return done(null, {
+          id: user.id,
+          email: user.email,
+          role: user.role,
+          google_id: profile.id,
           first_name: profile.name.givenName,
           last_name: profile.name.familyName,
-          tempUser: true
-        };
-        return done(null, tempUser);
+          needsProfile: true
+        });
       }
     }
 
-    // This is a new user - create a temporary user object to complete profile
+    // New user - DON'T create in database yet, use temporary object
     const tempUser = {
       email: profile.emails[0].value,
       google_id: profile.id,
       first_name: profile.name.givenName,
       last_name: profile.name.familyName,
-      tempUser: true
+      isNewUser: true  // Flag to indicate this is a new user
     };
     
     return done(null, tempUser);
   } catch (error) {
+    console.error("Google OAuth Strategy Error:", error);
     return done(error);
   }
 }));
 
 // Serialize and Deserialize User
 passport.serializeUser((user, done) => {
-   if (!user.id) {
-    return done(new Error('Cannot serialize user without id'));
+  console.log("Serializing user:", user);
+  
+  // For temporary users (like from OAuth)
+  if (user.isNewUser) {
+    console.log("Serializing new OAuth user");
+    return done(null, { type: 'new', data: user });
   }
-  done(null, user.id);
+  
+  // For users who need to complete profile
+  if (user.needsProfile) {
+    console.log("Serializing user who needs profile");
+    return done(null, { type: 'incomplete', id: user.id, role: user.role });
+  }
+  
+  // For regular users with ID
+  if (user.id) {
+    console.log("Serializing regular user with ID:", user.id);
+    return done(null, { type: 'regular', id: user.id });
+  }
+  
+  return done(new Error('Cannot serialize user without proper data'));
 });
 
-passport.deserializeUser(async (id, done) => {
+passport.deserializeUser(async (serialized, done) => {
+  console.log("Deserializing:", serialized);
+  
   try {
-    const userResult = await db.query('SELECT * FROM users WHERE id = $1', [id]);
-    
-    if (userResult.rows.length === 0) {
+    if (!serialized) {
       return done(null, false);
     }
     
-    const user = userResult.rows[0];
-    let profile = null;
-    
-    // Get role-specific data
-    if (user.role === 'client') {
-      const profileResult = await db.query('SELECT * FROM clients WHERE user_id = $1', [id]);
-      if (profileResult.rows.length > 0) {
-        profile = profileResult.rows[0];
-      }
-    } else if (user.role === 'freelancer') {
-      const profileResult = await db.query('SELECT * FROM freelancers WHERE user_id = $1', [id]);
-      if (profileResult.rows.length > 0) {
-        profile = profileResult.rows[0];
-      }
-    } else if (user.role === 'admin') {
-      const profileResult = await db.query('SELECT * FROM admins WHERE user_id = $1', [id]);
-      if (profileResult.rows.length > 0) {
-        profile = profileResult.rows[0];
-      }
+    // Handle different types of serialized data
+    if (serialized.type === 'new') {
+      console.log("Deserializing new OAuth user");
+      return done(null, serialized.data);
     }
     
-    // Combine user and profile data
-    done(null, { ...user, profile });
+    if (serialized.type === 'incomplete') {
+      console.log("Deserializing user who needs profile");
+      const userResult = await db.query('SELECT * FROM users WHERE id = $1', [serialized.id]);
+      if (userResult.rows.length === 0) {
+        return done(null, false);
+      }
+      
+      const user = userResult.rows[0];
+      user.needsProfile = true;
+      return done(null, user);
+    }
+    
+    if (serialized.type === 'regular') {
+      console.log("Deserializing regular user");
+      const userResult = await db.query('SELECT * FROM users WHERE id = $1', [serialized.id]);
+      
+      if (userResult.rows.length === 0) {
+        return done(null, false);
+      }
+      
+      const user = userResult.rows[0];
+      let profile = null;
+      
+      // Get role-specific data
+      if (user.role === 'client') {
+        const profileResult = await db.query('SELECT * FROM clients WHERE user_id = $1', [serialized.id]);
+        if (profileResult.rows.length > 0) {
+          profile = profileResult.rows[0];
+        }
+      } else if (user.role === 'freelancer') {
+        const profileResult = await db.query('SELECT * FROM freelancers WHERE user_id = $1', [serialized.id]);
+        if (profileResult.rows.length > 0) {
+          profile = profileResult.rows[0];
+        }
+      } else if (user.role === 'admin') {
+        const profileResult = await db.query('SELECT * FROM admins WHERE user_id = $1', [serialized.id]);
+        if (profileResult.rows.length > 0) {
+          profile = profileResult.rows[0];
+        }
+      }
+      
+      // Combine user and profile data
+      return done(null, { ...user, profile });
+    }
+    
+    // Fallback for legacy serialized data (just an ID)
+    if (typeof serialized === 'number' || typeof serialized === 'string') {
+      console.log("Deserializing legacy format with just ID");
+      const userResult = await db.query('SELECT * FROM users WHERE id = $1', [serialized]);
+      
+      if (userResult.rows.length === 0) {
+        return done(null, false);
+      }
+      
+      const user = userResult.rows[0];
+      let profile = null;
+      
+      // Get role-specific data
+      if (user.role === 'client') {
+        const profileResult = await db.query('SELECT * FROM clients WHERE user_id = $1', [serialized]);
+        if (profileResult.rows.length > 0) {
+          profile = profileResult.rows[0];
+        }
+      } else if (user.role === 'freelancer') {
+        const profileResult = await db.query('SELECT * FROM freelancers WHERE user_id = $1', [serialized]);
+        if (profileResult.rows.length > 0) {
+          profile = profileResult.rows[0];
+        }
+      } else if (user.role === 'admin') {
+        const profileResult = await db.query('SELECT * FROM admins WHERE user_id = $1', [serialized]);
+        if (profileResult.rows.length > 0) {
+          profile = profileResult.rows[0];
+        }
+      }
+      
+      // Combine user and profile data
+      return done(null, { ...user, profile });
+    }
+    
+    return done(null, false);
   } catch (error) {
+    console.error("Deserialization detailed error:", error.message);
+    console.error("Deserialization error:", error);
     done(error);
   }
 });
