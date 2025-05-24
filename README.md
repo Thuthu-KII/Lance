@@ -1,4 +1,4 @@
-https://coveralls.io/repos/github/Thuthu-KII/Lance/badge.svg?branch=lance(Coverage Status)!:https://coveralls.io/github/Thuthu-KII/Lance?branch=lance
+[![Coverage Status](https://coveralls.io/repos/github/Thuthu-KII/Lance/badge.svg?branch=lance)](https://coveralls.io/github/Thuthu-KII/Lance?branch=lance)
 # Freelancer Management Platform
 
 A comprehensive web application for connecting clients with freelancers. This platform allows clients to post jobs, freelancers to apply, and administrators to manage the entire system.
