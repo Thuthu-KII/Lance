@@ -62,7 +62,7 @@ describe('Payment Model', () => {
     });
 
     it('returns original payment if no data to update', async () => {
-      const mockFound = { id: 1, status: 'pending' };
+      const mockFound = { id: 1, status: 'completed' };
       jest.spyOn(Payment, 'findById').mockResolvedValue(mockFound);
 
       const result = await Payment.update(1, {});

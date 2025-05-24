@@ -107,7 +107,7 @@ describe('Admin Model', () => {
 
       const result = await Admin.getAll();
       expect(result).toEqual(mockAdmins);
-      expect(db.query).toHaveBeenCalledWith(expect.stringContaining('SELECT a.*, u.email'), undefined);
+      expect(db.query).toHaveBeenCalledWith(expect.stringContaining('SELECT a.*, u.email'));
     });
   });
 

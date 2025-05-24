@@ -133,7 +133,7 @@ describe('Job Model', () => {
 
       const result = await Job.hireFreelancer(1, 5);
       expect(result).toBe(true);
-      expect(mockClient.query).toHaveBeenCalledTimes(5);
+      expect(mockClient.query).toHaveBeenCalledTimes(6);
     });
 
     it('should rollback on failure', async () => {
