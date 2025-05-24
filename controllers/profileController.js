@@ -60,18 +60,9 @@ exports.getProfile = async (req, res, next) => {
 // Update client profile
 exports.updateClientProfile = async (req, res, next) => {
   try {
-    const { firstName, lastName, companyName, phone, address, skills, experience } = req.body;
+    const { firstName, lastName, companyName, phone, address} = req.body;
     const userId = req.user.id;
     const clientId = req.user.profile ? req.user.profile.id : req.user.id;
-    
-    // Process skills into array
-    let skillsArray = skills ? skills.split(',').map(skill => skill.trim()).filter(skill => skill !== '') : [];
-    
-    // Get CV path from file upload or use existing
-    let cvPath = req.user.profile.cv_path;
-    if (req.file) {
-      cvPath = `/uploads/cvs/${req.file.filename}`;
-    }
     
     // Update profile
     await Client.update(clientId, {
@@ -79,10 +70,7 @@ exports.updateClientProfile = async (req, res, next) => {
       lastName,
       companyName,
       phone,
-      address,
-      skills: skillsArray,
-      experience,
-      cvPath
+      address
     });
     
     req.flash('success_msg', 'Profile updated successfully');
