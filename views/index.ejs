@@ -8,7 +8,7 @@
       <p class="mb-4">Connect with skilled professionals, post jobs, and get your projects done efficiently.</p>
       <div class="d-flex">
         <% if (!user) { %>
-          <a href="/auth/register" class="btn btn-primary mr-3">Sign Up</a>
+          <a href="/auth/google" class="btn btn-primary mr-3">Sign Up</a>
           <a href="/auth/login" class="btn btn-secondary">Login</a>
         <% } else if (user.role === 'client') { %>
           <a href="/jobs/create" class="btn btn-primary mr-3">Post a Job</a>
@@ -105,13 +105,6 @@
       <div class="col-12 text-center mb-4">
         <h2>Join Our Community Today</h2>
         <p class="text-muted mb-4">Start hiring or working on projects in minutes</p>
-        
-        <% if (!user) { %>
-          <a href="/auth/register/client" class="btn btn-primary mr-3">Register as Client</a>
-          <a href="/auth/register/freelancer" class="btn btn-secondary">Register as Freelancer</a>
-        <% } else { %>
-          <a href="/jobs/browse" class="btn btn-primary">Explore Jobs</a>
-        <% } %>
       </div>
     </div>
   </div>

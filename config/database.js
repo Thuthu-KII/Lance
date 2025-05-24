@@ -49,9 +49,6 @@ const initializeDatabase = async () => {
         company_name VARCHAR(200),
         phone VARCHAR(20),
         address TEXT,
-        skills TEXT[],
-        experience TEXT,
-        cv_path VARCHAR(255),
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
       )
