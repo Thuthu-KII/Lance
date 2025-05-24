@@ -11,6 +11,13 @@ const { AppError } = require('../utils/errorHandler');
 // Get profile page
 exports.getProfile = async (req, res, next) => {
   try {
+
+    console.log(req.user);
+
+
+    
+
+
     if (req.user.role === 'client') {
       res.render('profile/client-profile', {
         user: req.user

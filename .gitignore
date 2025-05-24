@@ -3,6 +3,7 @@ node_modules/
 npm-debug.log
 yarn-error.log
 yarn-debug.log
+crawler.js
 
 # Environment variables
 .env
@@ -22,6 +23,7 @@ public/uploads/cvs/*
 public/uploads/clearances/*
 !public/uploads/cvs/.gitkeep
 !public/uploads/clearances/.gitkeep
+config/scripts/create-default-users.js
 
 # Dependencies
 .npm/
