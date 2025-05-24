@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy Node.js app to Azure Web App - LanceApp
+name: Build and deploy Node.js app to Azure Web App - lance-ai
 
 on:
   push:
@@ -21,13 +21,13 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: '22.x'
+          node-version: '20.x'
 
       - name: npm install, build #, and test
         run: |
           npm install
           npm run build --if-present
-      #npm run test --if-present
+        #npm run test --if-present
 
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r
@@ -60,15 +60,15 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_36D4299CCE0240389D394D93ABF99ED2 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_8787E7DBA7334E6790F6718767408A98 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_E568247C91614B3DADF9371DB0C4BA03 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_5120065ED5854F20844F00C8E1C01ED9 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_CBA4C09CD78E413BB7CA440DB4A752BA }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_856F09208C414C109A6DC663B5FE9D8C }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'LanceApp'
+          app-name: 'lance-ai'
           slot-name: 'Production'
           package: .
           
