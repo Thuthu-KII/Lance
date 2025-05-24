@@ -87,7 +87,7 @@ app.use('/jobs', jobRoutes);
 app.use('/payments', paymentRoutes);
 app.use('/profile', profileRoutes);
 
-// Home route
+// // Home route
 app.get('/', (req, res) => {
   res.render('index');
 });
