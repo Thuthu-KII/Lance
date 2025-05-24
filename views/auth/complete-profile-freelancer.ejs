@@ -1,0 +1,145 @@
+<!-- views/auth/complete-profile-freelancer.ejs -->
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-8 m-auto">
+      <div class="card card-body">
+        <h1 class="text-center mb-3">
+          <i class="fas fa-user-circle"></i> Complete Your Freelancer Profile
+        </h1>
+        
+        <% if(typeof errors != 'undefined') { %>
+          <% errors.forEach(function(error) { %>
+            <div class="alert alert-danger alert-dismissible fade show">
+              <%= error.message %>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          <% }); %>
+        <% } %>
+        
+        <% if(success_msg != '') { %>
+          <div class="alert alert-success alert-dismissible fade show">
+            <%= success_msg %>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        <% } %>
+        
+        <% if(error_msg != '') { %>
+          <div class="alert alert-danger alert-dismissible fade show">
+            <%= error_msg %>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        <% } %>
+        
+        <p>Please provide the following information to complete your freelancer profile:</p>
+        
+        <form action="/auth/complete-profile/freelancer" method="POST" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="firstName">First Name*</label>
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              class="form-control"
+              placeholder="Enter First Name"
+              value="<%= typeof firstName != 'undefined' ? firstName : user.first_name %>"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name*</label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              class="form-control"
+              placeholder="Enter Last Name"
+              value="<%= typeof lastName != 'undefined' ? lastName : user.last_name %>"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number*</label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              class="form-control"
+              placeholder="Enter Phone Number"
+              value="<%= typeof phone != 'undefined' ? phone : '' %>"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="address">Address*</label>
+            <textarea
+              id="address"
+              name="address"
+              class="form-control"
+              placeholder="Enter Address"
+              rows="2"
+              required
+            ><%= typeof address != 'undefined' ? address : '' %></textarea>
+          </div>
+          <div class="form-group">
+            <label for="skills">Skills (comma separated)*</label>
+            <input
+              type="text"
+              id="skills"
+              name="skills"
+              class="form-control"
+              placeholder="e.g. Web Development, Graphic Design, Content Writing"
+              value="<%= typeof skills != 'undefined' ? skills : '' %>"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="experience">Experience*</label>
+            <textarea
+              id="experience"
+              name="experience"
+              class="form-control"
+              placeholder="Describe your professional experience, qualifications and skills"
+              rows="4"
+              required
+            ><%= typeof experience != 'undefined' ? experience : '' %></textarea>
+          </div>
+          <div class="form-group">
+            <label for="cv">Upload CV (PDF, DOC, DOCX)*</label>
+            <input
+              type="file"
+              id="cv"
+              name="cv"
+              class="form-control-file"
+              accept=".pdf,.doc,.docx"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="clearance">Upload Police Clearance Certificate (PDF, JPG, PNG)*</label>
+            <input
+              type="file"
+              id="clearance"
+              name="clearance"
+              class="form-control-file"
+              accept=".pdf,.jpg,.jpeg,.png"
+              required
+            />
+            <small class="form-text text-muted">
+              Your account will need to be approved by an administrator before you can apply for jobs.
+            </small>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">
+            Complete Profile
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

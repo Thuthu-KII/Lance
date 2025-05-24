@@ -49,7 +49,7 @@ exports.getJobDetails = async (req, res) => {
     if (req.user && req.user.role === 'freelancer') {
       const applicationResult = await db.query(
         'SELECT * FROM job_applications WHERE job_id = $1 AND freelancer_id = $2',
-        [id, req.user.profile.id]
+        [id, req.user.profile ? req.user.profile.id : req.user.id]
       );
       
       hasApplied = applicationResult.rows.length > 0;
@@ -94,7 +94,7 @@ exports.getApplyJob = async (req, res) => {
     // Check if already applied
     const applicationResult = await db.query(
       'SELECT * FROM job_applications WHERE job_id = $1 AND freelancer_id = $2',
-      [id, req.user.profile.id]
+      [id, req.user.profile ? req.user.profile.id : req.user.id]
     );
     
     if (applicationResult.rows.length > 0) {
@@ -140,7 +140,7 @@ exports.postApplyJob = async (req, res) => {
     // Insert application
     await db.query(
       'INSERT INTO job_applications (job_id, freelancer_id, motivation) VALUES ($1, $2, $3)',
-      [id, req.user.profile.id, motivation]
+      [id, req.user.profile ? req.user.profile.id : req.user.id, motivation]
     );
     
     req.flash('success_msg', 'Application submitted successfully');
@@ -165,7 +165,7 @@ exports.getCreateJob = (req, res) => {
 exports.postCreateJob = async (req, res) => {
   try {
     const { title, description, requirements, budget, deadline } = req.body;
-    const clientId = req.user.profile.id;
+    const clientId = req.user.profile ? req.user.profile.id : req.user.id;
     
     // Validate inputs
     if (!title || !description || !budget) {
@@ -194,7 +194,7 @@ exports.postCreateJob = async (req, res) => {
 exports.getEditJob = async (req, res) => {
   try {
     const { id } = req.params;
-    const clientId = req.user.profile.id;
+    const clientId = req.user.profile ? req.user.profile.id : req.user.id;
     
     // Get job details and verify ownership
     const jobResult = await db.query(
@@ -230,7 +230,7 @@ exports.putEditJob = async (req, res) => {
   try {
     const { id } = req.params;
     const { title, description, requirements, budget, deadline } = req.body;
-    const clientId = req.user.profile.id;
+    const clientId = req.user.profile ? req.user.profile.id : req.user.id;
     
     // Validate inputs
     if (!title || !description || !budget) {
@@ -262,7 +262,7 @@ exports.putEditJob = async (req, res) => {
 exports.deleteJob = async (req, res) => {
   try {
     const { id } = req.params;
-    const clientId = req.user.profile.id;
+    const clientId = req.user.profile ? req.user.profile.id : req.user.id;
     
     // Verify ownership and delete
     const jobResult = await db.query(
@@ -288,7 +288,7 @@ exports.deleteJob = async (req, res) => {
 exports.getJobApplications = async (req, res) => {
   try {
     const { id } = req.params;
-    const clientId = req.user.profile.id;
+    const clientId = req.user.profile ? req.user.profile.id : req.user.id;
     
     // Get job details and verify ownership
     const jobResult = await db.query(
@@ -326,7 +326,7 @@ exports.getJobApplications = async (req, res) => {
 exports.postHireFreelancer = async (req, res) => {
   try {
     const { jobId, applicationId } = req.params;
-    const clientId = req.user.profile.id;
+    const clientId = req.user.profile ? req.user.profile.id : req.user.id;
     
     const client = await db.getClient();
     await client.query('BEGIN');
@@ -405,7 +405,7 @@ exports.postHireFreelancer = async (req, res) => {
 exports.postCompleteJob = async (req, res) => {
   try {
     const { id } = req.params;
-    const clientId = req.user.profile.id;
+    const clientId = req.user.profile ? req.user.profile.id : req.user.id;
     
     const client = await db.getClient();
     await client.query('BEGIN');
@@ -490,7 +490,7 @@ exports.postCompleteJob = async (req, res) => {
 exports.postFreelancerCompleteJob = async (req, res) => {
   try {
     const { id } = req.params;
-    const freelancerId = req.user.profile.id;
+    const freelancerId = req.user.profile ? req.user.profile.id : req.user.id;
     
     const client = await db.getClient();
     await client.query('BEGIN');
@@ -726,7 +726,7 @@ exports.getJobInvoice = async (req, res) => {
         INNER JOIN users u ON c.user_id = u.id
         INNER JOIN job_applications ja ON j.id = ja.job_id
         WHERE j.id = $1 AND ja.freelancer_id = $2 AND ja.status = 'hired'
-      `, [id, req.user.profile.id]);
+      `, [id, req.user.profile ? req.user.profile.id : req.user.id]);
     }
     
     if (jobResult.rows.length === 0) {

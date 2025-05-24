@@ -52,7 +52,7 @@ exports.isJobOwner = async (req, res, next) => {
     }
     
     const jobId = req.params.id || req.params.jobId;
-    const clientId = req.user.profile.id;
+    const clientId = req.user.profile ? req.user.profile.id : req.user.id;
     
     // Require database access
     const db = require('../config/database');
@@ -86,7 +86,7 @@ exports.hasAppliedToJob = async (req, res, next) => {
     }
     
     const jobId = req.params.id || req.params.jobId;
-    const freelancerId = req.user.profile.id;
+    const freelancerId = req.user.profile ? req.user.profile.id : req.user.id;
     
     // Require database access
     const db = require('../config/database');
@@ -120,7 +120,7 @@ exports.isHiredForJob = async (req, res, next) => {
     }
     
     const jobId = req.params.id || req.params.jobId;
-    const freelancerId = req.user.profile.id;
+    const freelancerId = req.user.profile ? req.user.profile.id : req.user.id;
     
     // Require database access
     const db = require('../config/database');

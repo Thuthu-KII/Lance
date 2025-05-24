@@ -11,13 +11,22 @@ const { AppError } = require('../utils/errorHandler');
 // Get profile page
 exports.getProfile = async (req, res, next) => {
   try {
-
     console.log(req.user);
 
-
+    // Handle special cases for Google OAuth users
+    if (req.user.isNewUser) {
+      return res.redirect('/auth/select-role');
+    }
     
-
-
+    if (req.user.needsProfile) {
+      if (req.user.role === 'client') {
+        return res.redirect('/auth/complete-profile/client');
+      } else if (req.user.role === 'freelancer') {
+        return res.redirect('/auth/complete-profile/freelancer');
+      }
+    }
+    
+    // Handle regular roles
     if (req.user.role === 'client') {
       res.render('profile/client-profile', {
         user: req.user
@@ -30,20 +39,30 @@ exports.getProfile = async (req, res, next) => {
       res.render('profile/admin-profile', {
         user: req.user
       });
+    } else if (req.user.role === 'pending') {
+      // Redirect pending users to role selection
+      return res.redirect('/auth/select-role');
     } else {
-      return next(new AppError('Invalid user role', 400));
+      // Use an actual error object with numeric status code
+      req.flash('error_msg', 'Invalid user role. Please contact support.');
+      return res.redirect('/');
     }
   } catch (error) {
-    next(error);
+    // Handle error properly without passing it to next()
+    console.error('Profile error:', error);
+    req.flash('error_msg', 'An error occurred while loading your profile');
+    return res.redirect('/');
   }
 };
+
+// Rest of the controller stays the same...
 
 // Update client profile
 exports.updateClientProfile = async (req, res, next) => {
   try {
     const { firstName, lastName, companyName, phone, address, skills, experience } = req.body;
     const userId = req.user.id;
-    const clientId = req.user.profile.id;
+    const clientId = req.user.profile ? req.user.profile.id : req.user.id;
     
     // Process skills into array
     let skillsArray = skills ? skills.split(',').map(skill => skill.trim()).filter(skill => skill !== '') : [];
@@ -78,7 +97,7 @@ exports.updateFreelancerProfile = async (req, res, next) => {
   try {
     const { firstName, lastName, phone, address, skills, experience } = req.body;
     const userId = req.user.id;
-    const freelancerId = req.user.profile.id;
+    const freelancerId = req.user.profile ? req.user.profile.id : req.user.id;
     
     // Process skills into array
     let skillsArray = skills ? skills.split(',').map(skill => skill.trim()).filter(skill => skill !== '') : [];
@@ -120,7 +139,7 @@ exports.updateFreelancerProfile = async (req, res, next) => {
 exports.updateAdminProfile = async (req, res, next) => {
   try {
     const { firstName, lastName } = req.body;
-    const adminId = req.user.profile.id;
+    const adminId = req.user.profile ? req.user.profile.id : req.user.id;
     
     // Update profile
     await Admin.update(adminId, {

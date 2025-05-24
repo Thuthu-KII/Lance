@@ -3,7 +3,14 @@ const db = require('../config/database');
 // Freelancer dashboard
 exports.getDashboard = async (req, res) => {
   try {
-    const freelancerId = req.user.profile.id;
+        // Check if freelancer is approved
+    if (req.user.role === 'freelancer' && 
+        req.user.profile && 
+        !req.user.profile.is_approved) {
+      return res.redirect('/freelancer/pending');
+    }
+    
+    const freelancerId = req.user.profile ? req.user.profile.id : req.user.id;
     
     // Get freelancer's applications
     const applicationsResult = await db.query(`
@@ -75,7 +82,7 @@ exports.getPendingPage = (req, res) => {
 // Get freelancer's applications
 exports.getApplications = async (req, res) => {
   try {
-    const freelancerId = req.user.profile.id;
+    const freelancerId = req.user.profile ? req.user.profile.id : req.user.id;
     
     // Get all applications
     const applicationsResult = await db.query(`
@@ -102,7 +109,7 @@ exports.getApplications = async (req, res) => {
 // Get freelancer's active jobs
 exports.getActiveJobs = async (req, res) => {
   try {
-    const freelancerId = req.user.profile.id;
+    const freelancerId = req.user.profile ? req.user.profile.id : req.user.id;
     
     // Get active jobs (hired and in progress or completed)
     const jobsResult = await db.query(`
@@ -151,7 +158,7 @@ exports.getActiveJobs = async (req, res) => {
 exports.getJobDetails = async (req, res) => {
   try {
     const { id } = req.params;
-    const freelancerId = req.user.profile.id;
+    const freelancerId = req.user.profile ? req.user.profile.id : req.user.id;
     
     // Get job details
     const jobResult = await db.query(`
@@ -206,6 +213,108 @@ exports.getJobDetails = async (req, res) => {
   }
 };
 
+// Add to your freelancerController.js
+exports.getCompleteProfile = (req, res) => {
+  if (req.user.role !== 'freelancer') {
+    return res.redirect('/');
+  }
+  
+  res.render('auth/complete-profile-freelancer', {
+    user: req.user,
+    title: 'Complete Your Profile'
+  });
+};
+
+// Add this to your freelancerController.js
+exports.getProfile = async (req, res) => {
+  try {
+    const freelancerId = req.user.profile ? req.user.profile.id : req.user.id;
+    
+    // Get freelancer details
+    const freelancerResult = await db.query(
+      'SELECT * FROM freelancers WHERE id = $1',
+      [freelancerId]
+    );
+    
+    if (freelancerResult.rows.length === 0) {
+      req.flash('error_msg', 'Freelancer profile not found');
+      return res.redirect('/freelancer/dashboard');
+    }
+    
+    const freelancer = freelancerResult.rows[0];
+    
+    // Get statistics
+    const stats = {
+      completedJobs: (await db.query(`
+        SELECT COUNT(*) FROM jobs j
+        INNER JOIN job_applications ja ON j.id = ja.job_id
+        WHERE ja.freelancer_id = $1 AND j.status = 'completed' AND ja.status = 'hired'
+      `, [freelancerId])).rows[0].count,
+      
+      activeJobs: (await db.query(`
+        SELECT COUNT(*) FROM jobs j
+        INNER JOIN job_applications ja ON j.id = ja.job_id
+        WHERE ja.freelancer_id = $1 AND j.status = 'in-progress' AND ja.status = 'hired'
+      `, [freelancerId])).rows[0].count,
+      
+      totalApplications: (await db.query(
+        'SELECT COUNT(*) FROM job_applications WHERE freelancer_id = $1',
+        [freelancerId]
+      )).rows[0].count
+    };
+    
+    res.render('freelancer/profile', {
+      freelancer,
+      stats,
+      user: req.user
+    });
+  } catch (error) {
+    console.error('Error loading freelancer profile:', error);
+    req.flash('error_msg', 'Error loading profile');
+    res.redirect('/freelancer/dashboard');
+  }
+};
+
+exports.postCompleteProfile = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { firstName, lastName, skills, experience, hourlyRate, bio } = req.body;
+    
+    // Validate input
+    if (!firstName || !lastName || !skills || !experience) {
+      req.flash('error_msg', 'All fields are required');
+      return res.redirect('/auth/complete-profile-freelancer');
+    }
+    
+    // Check if freelancer record already exists
+    const existingFreelancer = await db.query(
+      'SELECT * FROM freelancers WHERE user_id = $1',
+      [userId]
+    );
+    
+    if (existingFreelancer.rows.length > 0) {
+      // Update existing record
+      await db.query(
+        'UPDATE freelancers SET first_name = $1, last_name = $2, skills = $3, experience = $4, hourly_rate = $5, bio = $6 WHERE user_id = $7',
+        [firstName, lastName, skills, experience, hourlyRate, bio, userId]
+      );
+    } else {
+      // Create new record
+      await db.query(
+        'INSERT INTO freelancers (user_id, first_name, last_name, skills, experience, hourly_rate, bio, is_approved) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
+        [userId, firstName, lastName, skills, experience, hourlyRate, bio, false]
+      );
+    }
+    
+    req.flash('success_msg', 'Profile completed! Your profile is now pending approval.');
+    res.redirect('/freelancer/pending');
+  } catch (error) {
+    console.error('Error completing profile:', error);
+    req.flash('error_msg', 'Error completing profile');
+    res.redirect('/auth/complete-profile-freelancer');
+  }
+};
+
 // Report a problem with a job
 exports.reportJobIssue = async (req, res) => {
   const { id } = req.params;
@@ -232,4 +341,12 @@ exports.reportJobIssue = async (req, res) => {
     req.flash('error_msg', 'Error reporting issue');
     res.redirect(`/freelancer/jobs/${id}`);
   }
+};
+
+// Add to freelancerController.js
+exports.getPendingPage = (req, res) => {
+  res.render('freelancer/pending', {
+    user: req.user,
+    title: 'Approval Pending'
+  });
 };
