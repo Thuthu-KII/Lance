@@ -221,8 +221,9 @@ exports.postRegisterFreelancer = async (req, res) => {
 };
 
 // Google OAuth callback
+// Google OAuth callback
 exports.googleCallback = (req, res) => {
-  if (req.user.tempUser) {
+  if (req.user && req.user.tempUser) {
     // Store temp user data in session and redirect to role selection
     req.session.tempUser = req.user;
     return res.redirect('/auth/select-role');
@@ -278,6 +279,7 @@ exports.getCompleteClientProfile = (req, res) => {
 };
 
 // Process client profile completion
+// Process client profile completion
 exports.postCompleteClientProfile = async (req, res) => {
   const tempUser = req.session.tempUser;
   
@@ -311,32 +313,83 @@ exports.postCompleteClientProfile = async (req, res) => {
     });
   }
   
-  // Create user and profile
   try {
     const client = await db.getClient();
     await client.query('BEGIN');
     
-    // Insert user
-    const userInsert = await client.query(
-      'INSERT INTO users (email, role, google_id) VALUES ($1, $2, $3) RETURNING id',
-      [tempUser.email, 'client', tempUser.google_id]
+    let userId;
+    
+    // Check if the user already exists (has an ID) or needs to be created
+    if (tempUser.id) {
+      userId = tempUser.id;
+      // Update role if needed
+      await client.query(
+        'UPDATE users SET role = $1 WHERE id = $2',
+        ['client', userId]
+      );
+    } else {
+      // Insert new user
+      const userInsert = await client.query(
+        'INSERT INTO users (email, role, google_id) VALUES ($1, $2, $3) RETURNING id',
+        [tempUser.email, 'client', tempUser.google_id]
+      );
+      
+      userId = userInsert.rows[0].id;
+    }
+    
+    // Check if client profile already exists
+    const profileCheck = await client.query(
+      'SELECT * FROM clients WHERE user_id = $1',
+      [userId]
     );
     
-    const userId = userInsert.rows[0].id;
-    
-    // Insert client profile
-    await client.query(
-      'INSERT INTO clients (user_id, first_name, last_name, company_name, phone, address, skills, experience, cv_path) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)',
-      [userId, firstName || tempUser.first_name, lastName || tempUser.last_name, companyName, phone, address, skills, experience, cvPath]
-    );
+    if (profileCheck.rows.length > 0) {
+      // Update existing profile
+      await client.query(
+        `UPDATE clients 
+         SET first_name = $1, last_name = $2, company_name = $3, 
+             phone = $4, address = $5, skills = $6, 
+             experience = $7, cv_path = $8
+         WHERE user_id = $9`,
+        [
+          firstName || tempUser.first_name, 
+          lastName || tempUser.last_name, 
+          companyName, 
+          phone, 
+          address, 
+          skills, 
+          experience, 
+          cvPath || profileCheck.rows[0].cv_path, 
+          userId
+        ]
+      );
+    } else {
+      // Insert new client profile
+      await client.query(
+        `INSERT INTO clients 
+         (user_id, first_name, last_name, company_name, phone, address, skills, experience, cv_path) 
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+        [
+          userId, 
+          firstName || tempUser.first_name, 
+          lastName || tempUser.last_name, 
+          companyName, 
+          phone, 
+          address, 
+          skills, 
+          experience, 
+          cvPath
+        ]
+      );
+    }
     
     await client.query('COMMIT');
     client.release();
     
-    // Clear temp user and login
+    // Clear temp user
     delete req.session.tempUser;
     
-    // Login the new user
+    // Login the user
     const user = {
       id: userId,
       email: tempUser.email,
@@ -409,24 +462,76 @@ exports.postCompleteFreelancerProfile = async (req, res) => {
     });
   }
   
-  // Create user and profile
   try {
     const client = await db.getClient();
     await client.query('BEGIN');
     
-    // Insert user
-    const userInsert = await client.query(
-      'INSERT INTO users (email, role, google_id) VALUES ($1, $2, $3) RETURNING id',
-      [tempUser.email, 'freelancer', tempUser.google_id]
+    let userId;
+    
+    // Check if the user already exists (has an ID) or needs to be created
+    if (tempUser.id) {
+      userId = tempUser.id;
+      // Update role if needed
+      await client.query(
+        'UPDATE users SET role = $1 WHERE id = $2',
+        ['freelancer', userId]
+      );
+    } else {
+      // Insert new user
+      const userInsert = await client.query(
+        'INSERT INTO users (email, role, google_id) VALUES ($1, $2, $3) RETURNING id',
+        [tempUser.email, 'freelancer', tempUser.google_id]
+      );
+      
+      userId = userInsert.rows[0].id;
+    }
+    
+    // Check if freelancer profile already exists
+    const profileCheck = await client.query(
+      'SELECT * FROM freelancers WHERE user_id = $1',
+      [userId]
     );
     
-    const userId = userInsert.rows[0].id;
-    
-    // Insert freelancer profile
-    await client.query(
-      'INSERT INTO freelancers (user_id, first_name, last_name, phone, address, skills, experience, cv_path, clearance_path, is_approved) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)',
-      [userId, firstName || tempUser.first_name, lastName || tempUser.last_name, phone, address, skills, experience, cvPath, clearancePath, false]
-    );
+    if (profileCheck.rows.length > 0) {
+      // Update existing profile
+      await client.query(
+        `UPDATE freelancers 
+         SET first_name = $1, last_name = $2, phone = $3, 
+             address = $4, skills = $5, experience = $6,
+             cv_path = $7, clearance_path = $8, is_approved = FALSE
+         WHERE user_id = $9`,
+        [
+          firstName || tempUser.first_name, 
+          lastName || tempUser.last_name, 
+          phone, 
+          address, 
+          skills, 
+          experience, 
+          cvPath || profileCheck.rows[0].cv_path, 
+          clearancePath || profileCheck.rows[0].clearance_path, 
+          userId
+        ]
+      );
+    } else {
+      // Insert new freelancer profile
+      await client.query(
+        `INSERT INTO freelancers 
+         (user_id, first_name, last_name, phone, address, skills, experience, cv_path, clearance_path, is_approved) 
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
+        [
+          userId, 
+          firstName || tempUser.first_name, 
+          lastName || tempUser.last_name, 
+          phone, 
+          address, 
+          skills, 
+          experience, 
+          cvPath, 
+          clearancePath, 
+          false
+        ]
+      );
+    }
     
     await client.query('COMMIT');
     client.release();

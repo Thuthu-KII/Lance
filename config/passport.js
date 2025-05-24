@@ -61,33 +61,52 @@ passport.use(new GoogleStrategy({
     );
 
     if (userResult.rows.length > 0) {
-      // User exists, update Google ID if necessary
-      if (!userResult.rows[0].google_id) {
+      // User exists, check if they have a profile
+      const user = userResult.rows[0];
+      
+      // Update Google ID if necessary
+      if (!user.google_id) {
         await db.query(
           'UPDATE users SET google_id = $1 WHERE id = $2',
-          [profile.id, userResult.rows[0].id]
+          [profile.id, user.id]
         );
       }
-      return done(null, userResult.rows[0]);
+      
+      // Check if the user has a profile
+      let hasProfile = false;
+      
+      if (user.role === 'client') {
+        const clientResult = await db.query('SELECT * FROM clients WHERE user_id = $1', [user.id]);
+        hasProfile = clientResult.rows.length > 0;
+      } else if (user.role === 'freelancer') {
+        const freelancerResult = await db.query('SELECT * FROM freelancers WHERE user_id = $1', [user.id]);
+        hasProfile = freelancerResult.rows.length > 0;
+      }
+      
+      if (hasProfile) {
+        return done(null, user);
+      } else {
+        // User exists but needs to complete their profile
+        const tempUser = {
+          ...user,
+          first_name: profile.name.givenName,
+          last_name: profile.name.familyName,
+          tempUser: true
+        };
+        return done(null, tempUser);
+      }
     }
 
-    // Redirect to role selection for new users
-    // We'll handle the actual creation in the auth controller
-    const insertResult = await db.query(
-  `INSERT INTO users (google_id, email, role)
-   VALUES ($1, $2, $3)
-   RETURNING *`,
-  [profile.id, profile.emails[0].value, 'client'] // default role can be changed
-);
-
-const newUser = insertResult.rows[0];
-
-// Optionally, insert into clients table
-await db.query(`INSERT INTO clients (user_id,first_name,last_name) VALUES ($1,$2,$3)`, [profile.id, profile.name.givenName, profile.name.familyName]);
-//console.log("Client has been addded to db");
-
-return done(null, newUser);
-
+    // This is a new user - create a temporary user object to complete profile
+    const tempUser = {
+      email: profile.emails[0].value,
+      google_id: profile.id,
+      first_name: profile.name.givenName,
+      last_name: profile.name.familyName,
+      tempUser: true
+    };
+    
+    return done(null, tempUser);
   } catch (error) {
     return done(error);
   }
