@@ -200,3 +200,27 @@ module.exports = {
   getClient: () => pool.connect(),
   pool
 };
+
+const createSessionTable = async () => {
+  const client = await pool.connect();
+  try {
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS "session" (
+        "sid" varchar NOT NULL COLLATE "default",
+        "sess" json NOT NULL,
+        "expire" timestamp(6) NOT NULL,
+        PRIMARY KEY ("sid")
+      );
+    `);
+    await client.query(`
+      CREATE INDEX IF NOT EXISTS "IDX_session_expire" ON "session" ("expire");
+    `);
+    console.log('Session table checked/created.');
+  } catch (err) {
+    console.error('Error creating session table:', err);
+  } finally {
+    client.release();
+  }
+};
+
+createSessionTable().catch(console.error);
