@@ -35,8 +35,6 @@ We are currently sitting on **65.46%** test coverage overall.
 *Note: Two test suites failed; the rest passed successfully.*
 
 
-Let me know if you want me to save this as a file or generate a formatted image!
-
 
 ---
 
@@ -46,4 +44,4 @@ We are currently sitting on **67%** test coverage.
 
 ---
 
-*Note: The images above represent the output screenshots from the latest test runs and coverage reports.*
+*Note: The figure above represent the output screenshots from the latest test runs and coverage reports.*
