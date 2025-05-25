@@ -35,7 +35,7 @@
             <%= job.company_name || `${job.first_name} ${job.last_name}` %>
           </div>
           <div class="job-details">
-            <div class="job-budget">Budget: $<%= parseFloat(job.budget).toFixed(2) %></div>
+            <div class="job-budget">Budget: R<%= parseFloat(job.budget).toFixed(2) %></div>
             <% if (job.deadline) { %>
               <div class="job-deadline">Deadline: <%= new Date(job.deadline).toLocaleDateString() %></div>
             <% } %>

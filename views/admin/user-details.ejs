@@ -197,7 +197,7 @@
                         <% jobs.forEach(function(job) { %>
                           <tr>
                             <td><%= job.title %></td>
-                            <td>$<%= parseFloat(job.budget).toFixed(2) %></td>
+                            <td>R<%= parseFloat(job.budget).toFixed(2) %></td>
                             <td>
                               <span class="status-badge status-<%= job.status.replace(' ', '-') %>">
                                 <%= job.status.charAt(0).toUpperCase() + job.status.slice(1) %>
@@ -397,7 +397,7 @@
                             <%= payment.payment_type %>
                           <% } %>
                         </td>
-                        <td>$<%= parseFloat(payment.amount).toFixed(2) %></td>
+                        <td>R<%= parseFloat(payment.amount).toFixed(2) %></td>
                         <td>
                           <span class="badge badge-<%= payment.status === 'completed' ? 'success' : payment.status === 'pending' ? 'warning' : 'danger' %>">
                             <%= payment.status.charAt(0).toUpperCase() + payment.status.slice(1) %>

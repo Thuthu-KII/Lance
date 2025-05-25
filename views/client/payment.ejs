@@ -10,30 +10,30 @@
         <div class="card-body">
           <div class="mb-4">
             <h3><%= job.title %></h3>
-            <p class="text-muted">Budget: $<%= parseFloat(job.budget).toFixed(2) %></p>
+            <p class="text-muted">Budget: R<%= parseFloat(job.budget).toFixed(2) %></p>
           </div>
-
+          <div class="alert alert-warning">
+            <p><strong>Having trouble with payment?</strong> If you see errors, please temporarily disable any ad blockers or privacy extensions in your browser, then try again.</p>
+          </div>  
           <div class="alert alert-info mb-4">
             <p>Your job will be posted and visible to freelancers after payment is completed.</p>
           </div>
-
+          
+          <!-- Simplified payment form -->
           <div id="payment-form" class="mb-4">
-            <div class="form-group">
-              <label for="card-frame" class="form-label">Payment Details</label>
-              <div id="card-frame" class="p-3 border rounded"></div>
-              <div id="payment-error" class="text-danger mt-2"></div>
-            </div>
-            
             <div class="mb-3">
-              <p><strong>Total Amount: $<%= parseFloat(job.budget).toFixed(2) %></strong></p>
+              <p><strong>Total Amount: R<%= parseFloat(job.budget).toFixed(2) %></strong></p>
             </div>
 
             <button id="pay-button" class="btn btn-primary btn-lg">Pay Now</button>
-            <div id="payment-processing" class="d-none mt-3">
-              <p>Processing payment...</p>
-              <div class="progress">
-                <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
-              </div>
+            <div id="payment-error" class="text-danger mt-2"></div>
+          </div>
+          
+          <!-- Common elements -->
+          <div id="payment-processing" class="d-none mt-3">
+            <p>Processing payment...</p>
+            <div class="progress">
+              <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
             </div>
           </div>
 
@@ -53,40 +53,44 @@
 <script src="https://js.yoco.com/sdk/v1/yoco-sdk-web.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    // Initialize variables
     const yoco = new window.YocoSDK({
       publicKey: '<%= yocoPublicKey %>'
     });
     
+    // Get DOM elements
     const payButton = document.getElementById('pay-button');
-    const paymentForm = document.getElementById('payment-form');
     const paymentSuccess = document.getElementById('payment-success');
     const paymentProcessing = document.getElementById('payment-processing');
     const paymentError = document.getElementById('payment-error');
+    const paymentForm = document.getElementById('payment-form');
     
-    // Create the card frame
-    const cardFrame = yoco.inline({
-      element: '#card-frame',
-      layout: 'standard'
-    });
-    
+    // Process payment with a single button
     payButton.addEventListener('click', function(event) {
       event.preventDefault();
       payButton.disabled = true;
       paymentProcessing.classList.remove('d-none');
       paymentError.textContent = '';
       
-      yoco.tokenize({
-        name: '<%= user.profile.first_name %> <%= user.profile.last_name %>',
+      const amountInCents = Math.round(<%= parseFloat(job.budget) %> * 100);
+      
+      yoco.showPopup({
+        amountInCents: amountInCents,
+        currency: 'ZAR',
+        name: '<%= job.title %>',
+        description: 'Job Posting Payment',
         callback: async function(result) {
           if (result.error) {
+            console.error('Yoco popup error:', result.error);
             payButton.disabled = false;
             paymentProcessing.classList.add('d-none');
             paymentError.textContent = result.error.message;
             return;
           }
-          
-          // Send token to the server
+          console.log('Yoco token received:', result.id);
+          // Process the payment on the server
           try {
+            console.log('Sending payment request to server...');
             const response = await fetch('/payments/job/<%= job.id %>', {
               method: 'POST',
               headers: {
@@ -98,19 +102,22 @@
             });
             
             const data = await response.json();
+            console.log('Server response:', data);
             
             if (data.success) {
               paymentForm.classList.add('d-none');
+              paymentProcessing.classList.add('d-none');
               paymentSuccess.classList.remove('d-none');
             } else {
               payButton.disabled = false;
               paymentProcessing.classList.add('d-none');
-              paymentError.textContent = data.message || 'Payment failed. Please try again.';
+              paymentError.textContent = data.message || 'We are currently experiencing issues, please retry at a later time.';
             }
           } catch (error) {
+            console.error('Fetch error:', error);
             payButton.disabled = false;
             paymentProcessing.classList.add('d-none');
-            paymentError.textContent = 'An error occurred. Please try again.';
+            paymentError.textContent = 'We are currently experiencing issues, please retry at a later time.';
           }
         }
       });

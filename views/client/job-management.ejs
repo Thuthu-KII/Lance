@@ -43,7 +43,7 @@
               <% jobs.forEach(function(job) { %>
                 <tr data-status="<%= job.status %>">
                   <td><%= job.title %></td>
-                  <td>$<%= parseFloat(job.budget).toFixed(2) %></td>
+                  <td>R<%= parseFloat(job.budget).toFixed(2) %></td>
                   <td>
                     <span class="status-badge status-<%= job.status.replace(' ', '-') %>">
                       <%= job.status.charAt(0).toUpperCase() + job.status.slice(1) %>

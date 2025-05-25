@@ -11,7 +11,7 @@
     </div>
     <div class="card-body">
       <div class="mb-4">
-        <p><strong>Budget:</strong> $<%= parseFloat(job.budget).toFixed(2) %></p>
+        <p><strong>Budget:</strong> R<%= parseFloat(job.budget).toFixed(2) %></p>
         <p><strong>Status:</strong> 
           <span class="status-badge status-<%= job.status.replace(' ', '-') %>">
             <%= job.status.charAt(0).toUpperCase() + job.status.slice(1) %>

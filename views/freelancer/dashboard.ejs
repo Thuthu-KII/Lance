@@ -52,7 +52,7 @@
                 <tr>
                   <td><%= job.title %></td>
                   <td><%= job.client_first_name %> <%= job.client_last_name %></td>
-                  <td>$<%= parseFloat(job.budget).toFixed(2) %></td>
+                  <td>R<%= parseFloat(job.budget).toFixed(2) %></td>
                   <td>
                     <span class="status-badge status-<%= job.status.replace(' ', '-') %>">
                       <%= job.status.charAt(0).toUpperCase() + job.status.slice(1) %>
@@ -125,7 +125,7 @@
                 <%= job.company_name || 'Individual Client' %>
               </div>
               <div class="job-details">
-                <div class="job-budget">Budget: $<%= parseFloat(job.budget).toFixed(2) %></div>
+                <div class="job-budget">Budget: R<%= parseFloat(job.budget).toFixed(2) %></div>
                 <% if (job.deadline) { %>
                   <div class="job-deadline">Deadline: <%= new Date(job.deadline).toLocaleDateString() %></div>
                 <% } %>

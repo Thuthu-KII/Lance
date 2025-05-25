@@ -39,78 +39,34 @@ exports.getJobPaymentPage = async (req, res) => {
 // Client: Process job payment
 exports.postJobPayment = async (req, res) => {
   try {
-    const { id } = req.params;
     const { token } = req.body;
-    const clientId = req.user.profile ? req.user.profile.id : req.user.id;
-    const userId = req.user.id;
+    const jobId = req.params.id;
     
-    // Verify job ownership
-    const jobResult = await db.query(
-      'SELECT * FROM jobs WHERE id = $1 AND client_id = $2',
-      [id, clientId]
-    );
+    // Add detailed logging
+    console.log(`Processing payment for job ${jobId} with token ${token}`);
     
-    if (jobResult.rows.length === 0) {
-      return res.status(404).json({ 
-        success: false, 
-        message: 'Job not found or you are not authorized' 
-      });
-    }
+    // Your Yoco API call
+    const result = await yoco.charge({
+      token: token,
+      amountInCents: amount,
+      currency: 'ZAR',
+      // other required parameters
+    });
     
-    // Check if already paid
-    if (jobResult.rows[0].payment_status === 'paid') {
-      return res.status(400).json({ 
-        success: false, 
-        message: 'Job has already been paid for' 
-      });
-    }
+    console.log('Yoco API response:', result);
     
-    const job = jobResult.rows[0];
+    // Rest of your processing code
     
-    // Process payment with Yoco
-    try {
-      const charge = await yoco.payments.create({
-        token: token,
-        amountInCents: Math.round(job.budget * 100), // Convert to cents
-        currency: 'ZAR',
-        metadata: {
-          jobId: id,
-          clientId: clientId
-        }
-      });
-      
-      // Payment successful, update job and create payment record
-      const client = await db.getClient();
-      await client.query('BEGIN');
-      
-      // Update job payment status
-      await client.query(
-        'UPDATE jobs SET payment_status = $1, status = $2 WHERE id = $3',
-        ['paid', 'open', id]
-      );
-      
-      // Create payment record
-      await client.query(
-        'INSERT INTO payments (job_id, amount, transaction_id, payment_type, status, paid_by) VALUES ($1, $2, $3, $4, $5, $6)',
-        [id, job.budget, charge.id, 'job_posting', 'completed', userId]
-      );
-      
-      await client.query('COMMIT');
-      client.release();
-      
-      return res.json({ success: true, message: 'Payment successful' });
-    } catch (error) {
-      console.error('Yoco payment error:', error);
-      return res.status(400).json({ 
-        success: false, 
-        message: error.message || 'Payment processing failed' 
-      });
-    }
+    res.json({ success: true });
   } catch (error) {
-    console.error('Payment error:', error);
-    return res.status(500).json({ 
+    // Detailed error logging
+    console.error('Payment processing error:', error);
+    
+    // Send back more specific error message if possible
+    res.json({ 
       success: false, 
-      message: 'An error occurred during payment processing' 
+      message: 'We are currently experiencing issues, please retry at a later time.',
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
 };

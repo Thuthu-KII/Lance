@@ -31,7 +31,7 @@
           
           <div class="job-details mb-4">
             <div class="job-budget">
-              <strong>Budget:</strong> $<%= parseFloat(job.budget).toFixed(2) %>
+              <strong>Budget:</strong> R<%= parseFloat(job.budget).toFixed(2) %>
             </div>
             
             <% if (job.deadline) { %>
@@ -170,7 +170,7 @@
             <% 
               // Find the completion status in the database
               // const completionStatus = job.status === 'in-progress' || job.status === 'completed' ? 
-              // await db.query('SELECT * FROM job_completions WHERE job_id = $1', [job.id]).then(res => res.rows[0]) : null;
+              // await db.query('SELECT * FROM job_completions WHERE job_id = R1', [job.id]).then(res => res.rows[0]) : null;
             %>
             
             <% if (completionStatus) { %>
@@ -230,7 +230,7 @@
                       <td>
                         <%= payment.payment_type === 'job_posting' ? 'Job Posting' : 'Freelancer Payment' %>
                       </td>
-                      <td>$<%= parseFloat(payment.amount).toFixed(2) %></td>
+                      <td>R<%= parseFloat(payment.amount).toFixed(2) %></td>
                       <td>
                         <span class="badge badge-<%= payment.status === 'completed' ? 'success' : payment.status === 'pending' ? 'warning' : 'danger' %>">
                           <%= payment.status.charAt(0).toUpperCase() + payment.status.slice(1) %>
@@ -338,7 +338,7 @@
             //   SELECT r.*, u.email as reporter_email 
             //   FROM reports r 
             //   JOIN users u ON r.reported_by = u.id 
-            //   WHERE r.job_id = $1
+            //   WHERE r.job_id = R1
             // `, [job.id]).then(res => res.rows);
           %>
           

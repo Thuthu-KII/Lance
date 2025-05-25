@@ -11,7 +11,7 @@
           <div class="mb-4">
             <h3><%= job.title %></h3>
             <div class="text-muted mb-2">
-              Budget: $<%= parseFloat(job.budget).toFixed(2) %>
+              Budget: R<%= parseFloat(job.budget).toFixed(2) %>
               <% if (job.deadline) { %> 
                 | Deadline: <%= new Date(job.deadline).toLocaleDateString() %>
               <% } %>

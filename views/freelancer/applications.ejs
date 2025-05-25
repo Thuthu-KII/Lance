@@ -41,7 +41,7 @@
                   <td>
                     <%= application.company_name || `${application.client_first_name} ${application.client_last_name}` %>
                   </td>
-                  <td>$<%= parseFloat(application.budget).toFixed(2) %></td>
+                  <td>R<%= parseFloat(application.budget).toFixed(2) %></td>
                   <td>
                     <span class="status-badge status-<%= application.status %>">
                       <%= application.status.charAt(0).toUpperCase() + application.status.slice(1) %>

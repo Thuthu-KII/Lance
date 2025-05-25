@@ -41,17 +41,21 @@ app.use(expressLayouts);
 app.set('layout', 'common/layout');
 
 // Middlewares
+// app.use(helmet({
+//   contentSecurityPolicy: {
+//     directives: {
+//       defaultSrc: ["'self'"],
+//       scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.yoco.com", "https://js.yoco.com"],
+//       styleSrc: ["'self'", "'unsafe-inline'"],
+//       imgSrc: ["'self'", "data:"],
+//       connectSrc: ["'self'", "https://api.yoco.com", "https://online.yoco.com"]
+//     }
+//   }
+// }));
 app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.yoco.com"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
-      imgSrc: ["'self'", "data:"],
-      connectSrc: ["'self'", "https://api.yoco.com"]
-    }
-  }
+  contentSecurityPolicy: false
 }));
+
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
