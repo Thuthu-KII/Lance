@@ -39,8 +39,8 @@
 
           <section id="payment-success" class="d-none">
             <section class="alert alert-success">
-              <h4>Payment Successful!</h4>
-              <p>Your job has been posted successfully.</p>
+              <h4>Processing Payment</h4>
+              <p>When processing is done, you will be redirected to your jobs page.</p>
             </section>
             <a href="/client/jobs" class="btn btn-primary">View My Jobs</a>
           </section>
@@ -105,9 +105,8 @@
             console.log('Server response:', data);
             
             if (data.success) {
-              paymentForm.classList.add('d-none');
-              paymentProcessing.classList.add('d-none');
-              paymentSuccess.classList.remove('d-none');
+              // Redirect to the jobs page on success instead of showing the success message
+              window.location.href = '/client/jobs';
             } else {
               payButton.disabled = false;
               paymentProcessing.classList.add('d-none');

@@ -41,6 +41,7 @@ exports.postJobPayment = async (req, res) => {
   try {
     const { token } = req.body;
     const jobId = req.params.id;
+    const clientId = req.user.profile ? req.user.profile.id : req.user.id;
     
     // Add detailed logging
     console.log(`Processing payment for job ${jobId} with token ${token}`);
@@ -75,19 +76,33 @@ exports.postJobPayment = async (req, res) => {
     
     console.log('Yoco API response:', result);
     
-    // Update job payment status
-    await db.query(
-      'UPDATE jobs SET payment_status = $1, updated_at = NOW() WHERE id = $2',
-      ['paid', jobId]
-    );
-    
-    // Create payment record
-    await db.query(
-      'INSERT INTO payments (job_id, paid_by, amount, payment_type, status, reference, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, NOW(), NOW())',
-      [jobId, req.user.id, job.budget, 'job_payment', 'completed', result.id || 'yoco_payment']
-    );
-    
-    res.json({ success: true });
+    // Start a transaction to ensure both updates succeed or fail together
+    const client = await db.getClient();
+    try {
+      await client.query('BEGIN');
+      
+      // Update job payment status AND set job status to "open"
+      await client.query(
+        'UPDATE jobs SET payment_status = $1, status = $2, updated_at = NOW() WHERE id = $3',
+        ['paid', 'open', jobId]
+      );
+      
+      // Create payment record
+      await client.query(
+        'INSERT INTO payments (job_id, paid_by, amount, transaction_id, payment_type, status, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, NOW(), NOW())',
+        [jobId, clientId, job.budget, result.id || 'yoco_' + Date.now(), 'job_payment', 'completed']
+      );
+      
+      await client.query('COMMIT');
+      console.log(`Job ${jobId} status updated to "open" and payment status set to "paid"`);
+      
+      res.json({ success: true });
+    } catch (error) {
+      await client.query('ROLLBACK');
+      throw error;
+    } finally {
+      client.release();
+    }
   } catch (error) {
     // Detailed error logging
     console.error('Payment processing error:', error);
