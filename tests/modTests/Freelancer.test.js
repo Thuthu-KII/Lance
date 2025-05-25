@@ -31,6 +31,12 @@ describe('Freelancer Model', () => {
       const result = await Freelancer.findByUserId(999);
       expect(result).toBeNull();
     });
+
+    it('should throw error if db query fails', async () => {
+      db.query.mockRejectedValue(new Error('DB error'));
+
+      await expect(Freelancer.findByUserId(123)).rejects.toThrow('DB error');
+    });
   });
 
   describe('create', () => {
@@ -53,6 +59,23 @@ describe('Freelancer Model', () => {
       expect(db.query).toHaveBeenCalledWith(expect.any(String), expect.any(Array));
       expect(result).toEqual(inserted);
     });
+
+    it('should throw error if db query fails', async () => {
+      db.query.mockRejectedValue(new Error('DB error'));
+      const data = {
+        userId: 1,
+        firstName: 'Jane',
+        lastName: 'Doe',
+        phone: '123456789',
+        address: '123 Street',
+        skills: 'JS, Node',
+        experience: '3 years',
+        cvPath: '/cv.pdf',
+        clearancePath: '/clearance.pdf',
+      };
+
+      await expect(Freelancer.create(data)).rejects.toThrow('DB error');
+    });
   });
 
   describe('update', () => {
@@ -74,6 +97,14 @@ describe('Freelancer Model', () => {
       const result = await Freelancer.update(1, {});
       expect(result).toEqual(existing);
     });
+
+    it('should throw error if db query fails', async () => {
+      db.query.mockRejectedValue(new Error('DB error'));
+      const id = 1;
+      const updateData = { firstName: 'Updated' };
+
+      await expect(Freelancer.update(id, updateData)).rejects.toThrow('DB error');
+    });
   });
 
   describe('approve', () => {
@@ -85,6 +116,12 @@ describe('Freelancer Model', () => {
       const result = await Freelancer.approve(id);
       expect(result).toEqual(approvedFreelancer);
     });
+
+    it('should throw error if db query fails', async () => {
+      db.query.mockRejectedValue(new Error('DB error'));
+
+      await expect(Freelancer.approve(5)).rejects.toThrow('DB error');
+    });
   });
 
   describe('getWithUserDetails', () => {
@@ -94,6 +131,12 @@ describe('Freelancer Model', () => {
 
       const result = await Freelancer.getWithUserDetails(1);
       expect(result).toEqual(joined);
+    });
+
+    it('should throw error if db query fails', async () => {
+      db.query.mockRejectedValue(new Error('DB error'));
+
+      await expect(Freelancer.getWithUserDetails(1)).rejects.toThrow('DB error');
     });
   });
 
@@ -105,6 +148,12 @@ describe('Freelancer Model', () => {
       expect(result.length).toBe(2);
       expect(db.query).toHaveBeenCalledWith(expect.stringContaining('WHERE f.is_approved'), expect.any(Array));
     });
+
+    it('should throw error if db query fails', async () => {
+      db.query.mockRejectedValue(new Error('DB error'));
+
+      await expect(Freelancer.getAll({ approved: true })).rejects.toThrow('DB error');
+    });
   });
 
   describe('getPendingApprovals', () => {
@@ -114,6 +163,12 @@ describe('Freelancer Model', () => {
 
       const result = await Freelancer.getPendingApprovals();
       expect(result).toEqual(pending);
+    });
+
+    it('should throw error if getAll fails', async () => {
+      jest.spyOn(Freelancer, 'getAll').mockRejectedValue(new Error('DB error'));
+
+      await expect(Freelancer.getPendingApprovals()).rejects.toThrow('DB error');
     });
   });
 
@@ -135,6 +190,12 @@ describe('Freelancer Model', () => {
       );
       expect(result).toBe(3);
     });
+
+    it('should throw error if db query fails', async () => {
+      db.query.mockRejectedValue(new Error('DB error'));
+
+      await expect(Freelancer.count()).rejects.toThrow('DB error');
+    });
   });
 
   describe('getApplications', () => {
@@ -145,6 +206,12 @@ describe('Freelancer Model', () => {
       const result = await Freelancer.getApplications(1);
       expect(result).toEqual(apps);
     });
+
+    it('should throw error if db query fails', async () => {
+      db.query.mockRejectedValue(new Error('DB error'));
+
+      await expect(Freelancer.getApplications(1)).rejects.toThrow('DB error');
+    });
   });
 
   describe('getHiredJobs', () => {
@@ -154,6 +221,12 @@ describe('Freelancer Model', () => {
 
       const result = await Freelancer.getHiredJobs(1);
       expect(result).toEqual(jobs);
+    });
+
+    it('should throw error if db query fails', async () => {
+      db.query.mockRejectedValue(new Error('DB error'));
+
+      await expect(Freelancer.getHiredJobs(1)).rejects.toThrow('DB error');
     });
   });
 });

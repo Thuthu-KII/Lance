@@ -25,6 +25,12 @@ describe('Job Model', () => {
       expect(db.query).toHaveBeenCalledWith('SELECT * FROM jobs WHERE id = $1', [1]);
       expect(result).toEqual(mockJob);
     });
+
+    it('should throw an error if db query fails', async () => {
+      db.query.mockRejectedValue(new Error('DB error'));
+
+      await expect(Job.findById(1)).rejects.toThrow('DB error');
+    });
   });
 
   describe('create', () => {
@@ -45,6 +51,12 @@ describe('Job Model', () => {
       const result = await Job.create(jobData);
       expect(result).toEqual(mockCreated);
     });
+
+    it('should throw an error if job creation fails', async () => {
+      db.query.mockRejectedValue(new Error('Insert failed'));
+
+      await expect(Job.create({ title: 'Fail' })).rejects.toThrow('Insert failed');
+    });
   });
 
   describe('update', () => {
@@ -63,6 +75,12 @@ describe('Job Model', () => {
       const result = await Job.update(1, {});
       expect(result).toEqual(job);
     });
+
+    it('should throw an error if update fails', async () => {
+      db.query.mockRejectedValue(new Error('Update failed'));
+
+      await expect(Job.update(1, { title: 'Fail' })).rejects.toThrow('Update failed');
+    });
   });
 
   describe('delete', () => {
@@ -72,6 +90,12 @@ describe('Job Model', () => {
 
       const result = await Job.delete(1);
       expect(result).toEqual(job);
+    });
+
+    it('should throw an error if delete fails', async () => {
+      db.query.mockRejectedValue(new Error('Delete failed'));
+
+      await expect(Job.delete(1)).rejects.toThrow('Delete failed');
     });
   });
 
@@ -83,6 +107,12 @@ describe('Job Model', () => {
       const result = await Job.getWithClientDetails(1);
       expect(result).toEqual(mockResult);
     });
+
+    it('should throw an error if client detail fetch fails', async () => {
+      db.query.mockRejectedValue(new Error('Join failed'));
+
+      await expect(Job.getWithClientDetails(1)).rejects.toThrow('Join failed');
+    });
   });
 
   describe('getApplications', () => {
@@ -92,6 +122,12 @@ describe('Job Model', () => {
 
       const result = await Job.getApplications(1);
       expect(result).toEqual(apps);
+    });
+
+    it('should throw an error if getApplications fails', async () => {
+      db.query.mockRejectedValue(new Error('Applications error'));
+
+      await expect(Job.getApplications(1)).rejects.toThrow('Applications error');
     });
   });
 
@@ -111,6 +147,12 @@ describe('Job Model', () => {
       const filters = { status: 'open', limit: 1 };
       const result = await Job.getAll(filters);
       expect(result).toEqual(jobs);
+    });
+
+    it('should throw an error if getAll fails', async () => {
+      db.query.mockRejectedValue(new Error('Fetch all failed'));
+
+      await expect(Job.getAll()).rejects.toThrow('Fetch all failed');
     });
   });
 
@@ -150,6 +192,7 @@ describe('Job Model', () => {
 
       await expect(Job.hireFreelancer(1, 5)).rejects.toThrow('fail');
       expect(mockClient.query).toHaveBeenCalledWith('ROLLBACK');
+      expect(mockClient.release).toHaveBeenCalled();
     });
   });
 
@@ -179,6 +222,18 @@ describe('Job Model', () => {
       const result = await Job.markCompleteByFreelancer(1);
       expect(result).toBe(true);
     });
+
+    it('should throw if marking complete by client fails', async () => {
+      db.query.mockRejectedValue(new Error('Client completion failed'));
+
+      await expect(Job.markCompleteByClient(1)).rejects.toThrow('Client completion failed');
+    });
+
+    it('should throw if marking complete by freelancer fails', async () => {
+      db.query.mockRejectedValue(new Error('Freelancer completion failed'));
+
+      await expect(Job.markCompleteByFreelancer(1)).rejects.toThrow('Freelancer completion failed');
+    });
   });
 
   describe('getCompletionStatus', () => {
@@ -188,6 +243,12 @@ describe('Job Model', () => {
 
       const result = await Job.getCompletionStatus(1);
       expect(result).toEqual(row);
+    });
+
+    it('should throw if getCompletionStatus fails', async () => {
+      db.query.mockRejectedValue(new Error('Completion status error'));
+
+      await expect(Job.getCompletionStatus(1)).rejects.toThrow('Completion status error');
     });
   });
 });
