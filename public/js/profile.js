@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Handle skills input formatting for tags-like UI
   const skillsInput = document.getElementById('skills');
   if (skillsInput) {
-    const skillsContainer = document.createElement('div');
+    const skillsContainer = document.createElement('section');
     skillsContainer.className = 'skills-container';
     skillsInput.parentNode.insertBefore(skillsContainer, skillsInput.nextSibling);
     
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
       
       // Create preview container if it doesn't exist
       if (!previewContainer) {
-        previewContainer = document.createElement('div');
+        previewContainer = document.createElement('section');
         previewContainer.id = previewId;
         previewContainer.className = 'file-preview mt-2';
         this.parentNode.appendChild(previewContainer);
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
           previewContainer.appendChild(img);
         } else {
           // For documents
-          const docPreview = document.createElement('div');
+          const docPreview = document.createElement('section');
           docPreview.className = 'document-preview p-2 border rounded';
           docPreview.innerHTML = `<i class="document-icon"></i> ${file.name}`;
           
@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Password strength meter
   const passwordInput = document.getElementById('newPassword');
   if (passwordInput) {
-    const strengthMeter = document.createElement('div');
+    const strengthMeter = document.createElement('section');
     strengthMeter.className = 'password-strength mt-2';
     passwordInput.parentNode.appendChild(strengthMeter);
     
@@ -164,11 +164,11 @@ document.addEventListener('DOMContentLoaded', function() {
       if (password.length === 0) {
         strengthMeter.innerHTML = '';
       } else if (strength < 2) {
-        strengthMeter.innerHTML = '<div class="progress"><div class="progress-bar bg-danger" style="width: 20%"></div></div><small class="text-danger">Weak password</small>';
+        strengthMeter.innerHTML = '<section class="progress"><section class="progress-bar bg-danger" style="width: 20%"></section></section><small class="text-danger">Weak password</small>';
       } else if (strength < 4) {
-        strengthMeter.innerHTML = '<div class="progress"><div class="progress-bar bg-warning" style="width: 60%"></div></div><small class="text-warning">Moderate password</small>';
+        strengthMeter.innerHTML = '<section class="progress"><section class="progress-bar bg-warning" style="width: 60%"></section></section><small class="text-warning">Moderate password</small>';
       } else {
-        strengthMeter.innerHTML = '<div class="progress"><div class="progress-bar bg-success" style="width: 100%"></div></div><small class="text-success">Strong password</small>';
+        strengthMeter.innerHTML = '<section class="progress"><section class="progress-bar bg-success" style="width: 100%"></section></section><small class="text-success">Strong password</small>';
       }
     });
   }

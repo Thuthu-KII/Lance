@@ -2,41 +2,41 @@
 
 <h1 class="mb-4">Freelancer Dashboard</h1>
 
-<div class="dashboard-stats">
-  <div class="stat-card">
-    <div class="stat-card-value"><%= counts.applications %></div>
-    <div class="stat-card-label">Applications</div>
-  </div>
+<section class="dashboard-stats">
+  <section class="stat-card">
+    <section class="stat-card-value"><%= counts.applications %></section>
+    <section class="stat-card-label">Applications</section>
+  </section>
   
-  <div class="stat-card">
-    <div class="stat-card-value"><%= counts.activeJobs %></div>
-    <div class="stat-card-label">Active Jobs</div>
-  </div>
+  <section class="stat-card">
+    <section class="stat-card-value"><%= counts.activeJobs %></section>
+    <section class="stat-card-label">Active Jobs</section>
+  </section>
   
-  <div class="stat-card">
-    <div class="stat-card-value"><%= counts.completedJobs %></div>
-    <div class="stat-card-label">Completed</div>
-  </div>
-</div>
+  <section class="stat-card">
+    <section class="stat-card-value"><%= counts.completedJobs %></section>
+    <section class="stat-card-label">Completed</section>
+  </section>
+</section>
 
-<div class="quick-actions mb-4">
+<section class="quick-actions mb-4">
   <a href="/jobs/browse" class="btn btn-primary quick-action-btn">Find Jobs</a>
   <a href="/freelancer/applications" class="btn btn-secondary quick-action-btn">My Applications</a>
   <a href="/freelancer/jobs" class="btn btn-light quick-action-btn">Active Jobs</a>
   <a href="/profile" class="btn btn-light quick-action-btn">Edit Profile</a>
-</div>
+</section>
 
-<div class="dashboard-container">
-  <div class="dashboard-card">
-    <div class="dashboard-card-header">
+<section class="dashboard-container">
+  <section class="dashboard-card">
+    <section class="dashboard-card-header">
       <h2 class="dashboard-card-title">Active Jobs</h2>
       <a href="/freelancer/jobs" class="btn btn-sm btn-primary">View All</a>
-    </div>
-    <div class="dashboard-card-body">
+    </section>
+    <section class="dashboard-card-body">
       <% if (activeJobs.length === 0) { %>
         <p class="text-center text-muted">You don't have any active jobs.</p>
       <% } else { %>
-        <div class="table-responsive">
+        <section class="table-responsive">
           <table class="table table-hover">
             <thead>
               <tr>
@@ -70,80 +70,80 @@
               <% }); %>
             </tbody>
           </table>
-        </div>
+        </section>
       <% } %>
-    </div>
-  </div>
+    </section>
+  </section>
   
-  <div class="dashboard-card">
-    <div class="dashboard-card-header">
+  <section class="dashboard-card">
+    <section class="dashboard-card-header">
       <h2 class="dashboard-card-title">Recent Applications</h2>
       <a href="/freelancer/applications" class="btn btn-sm btn-primary">View All</a>
-    </div>
-    <div class="dashboard-card-body">
+    </section>
+    <section class="dashboard-card-body">
       <% if (applications.length === 0) { %>
         <p class="text-center text-muted">You haven't applied to any jobs yet.</p>
       <% } else { %>
-        <div class="activity-list">
+        <section class="activity-list">
           <% applications.forEach(function(application) { %>
-            <div class="activity-item">
-              <div class="d-flex justify-content-between">
-                <div>
+            <section class="activity-item">
+              <section class="d-flex justify-content-between">
+                <section>
                   Applied to <strong><%= application.title %></strong> 
                   by <%= application.client_first_name %> <%= application.client_last_name %>
-                </div>
+                </section>
                 <span class="status-badge status-<%= application.status %>">
                   <%= application.status.charAt(0).toUpperCase() + application.status.slice(1) %>
                 </span>
-              </div>
-              <div class="activity-time">
+              </section>
+              <section class="activity-time">
                 <%= new Date(application.created_at).toLocaleString() %>
-              </div>
-            </div>
+              </section>
+            </section>
           <% }); %>
-        </div>
+        </section>
       <% } %>
-    </div>
-  </div>
-</div>
+    </section>
+  </section>
+</section>
 
-<div class="dashboard-container mt-4">
-  <div class="dashboard-card">
-    <div class="dashboard-card-header">
+<section class="dashboard-container mt-4">
+  <section class="dashboard-card">
+    <section class="dashboard-card-header">
       <h2 class="dashboard-card-title">Available Jobs</h2>
       <a href="/jobs/browse" class="btn btn-sm btn-primary">View All</a>
-    </div>
-    <div class="dashboard-card-body">
+    </section>
+    <section class="dashboard-card-body">
       <% if (availableJobs.length === 0) { %>
         <p class="text-center text-muted">No available jobs matching your skills at the moment.</p>
       <% } else { %>
-        <div class="job-list">
+        <section class="job-list">
           <% availableJobs.forEach(function(job) { %>
-            <div class="job-item">
+            <section class="job-item">
               <h3 class="job-title"><a href="/jobs/<%= job.id %>"><%= job.title %></a></h3>
-              <div class="job-company">
-                <%= job.company_name || 'Individual Client' %>
-              </div>
-              <div class="job-details">
-                <div class="job-budget">Budget: R<%= parseFloat(job.budget).toFixed(2) %></div>
+              <section class="job-company">
+                <%= job.company_name || 'Insectionidual Client' %>
+              </section>
+              <section class="job-details">
+                <section class="job-budget">Budget: R<%= parseFloat(job.budget).toFixed(2) %></section>
                 <% if (job.deadline) { %>
-                  <div class="job-deadline">Deadline: <%= new Date(job.deadline).toLocaleDateString() %></div>
+                  <section class="job-deadline">Deadline: <%= new Date(job.deadline).toLocaleDateString() %></section>
                 <% } %>
-              </div>
-              <div class="job-description">
+              </section>
+              <section class="job-description">
                 <%= job.description.length > 150 ? job.description.substring(0, 150) + '...' : job.description %>
-              </div>
-              <div class="job-actions">
+              </section>
+              <section class="job-actions">
                 <a href="/jobs/<%= job.id %>" class="btn btn-primary">View Job</a>
                 <a href="/jobs/<%= job.id %>/apply" class="btn btn-secondary">Apply Now</a>
-              </div>
-            </div>
+              </section>
+            </section>
           <% }); %>
-        </div>
+        </section>
       <% } %>
-    </div>
-  </div>
-</div>
+    </section>
+  </section>
+</section>
 <style>
   /* Dashboard Styles */
   .dashboard-stats {

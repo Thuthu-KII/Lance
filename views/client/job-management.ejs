@@ -1,15 +1,15 @@
 <%- contentFor('body') %>
 
-<div class="container">
-  <div class="mb-4 d-flex justify-content-between align-items-center">
+<section class="container">
+  <section class="mb-4 d-flex justify-content-between align-items-center">
     <h1>My Jobs</h1>
     <a href="/jobs/create" class="btn btn-primary">Post New Job</a>
-  </div>
+  </section>
   
-  <div class="card mb-4">
-    <div class="card-header d-flex justify-content-between align-items-center">
+  <section class="card mb-4">
+    <section class="card-header d-flex justify-content-between align-items-center">
       <h2 class="card-title mb-0">Job Management</h2>
-      <div class="d-flex">
+      <section class="d-flex">
         <input type="text" id="jobSearch" class="form-control form-control-sm mr-2" placeholder="Search jobs...">
         <select id="statusFilter" class="form-control form-control-sm">
           <option value="all">All Statuses</option>
@@ -18,16 +18,16 @@
           <option value="completed">Completed</option>
           <option value="pending">Pending</option>
         </select>
-      </div>
-    </div>
-    <div class="card-body">
+      </section>
+    </section>
+    <section class="card-body">
       <% if (jobs.length === 0) { %>
-        <div class="alert alert-info">
+        <section class="alert alert-info">
           <p>You haven't posted any jobs yet.</p>
           <a href="/jobs/create" class="btn btn-primary mt-2">Post Your First Job</a>
-        </div>
+        </section>
       <% } else { %>
-        <div class="table-responsive">
+        <section class="table-responsive">
           <table class="table table-hover" id="jobsTable">
             <thead>
               <tr>
@@ -56,7 +56,7 @@
                   </td>
                   <td><%= new Date(job.created_at).toLocaleDateString() %></td>
                   <td>
-                    <div class="btn-group">
+                    <section class="btn-group">
                       <a href="/client/jobs/<%= job.id %>" class="btn btn-sm btn-light">View</a>
                       
                       <% if (job.status === 'open' && job.payment_status === 'paid') { %>
@@ -78,17 +78,17 @@
                       <% if (job.status === 'completed') { %>
                         <a href="/jobs/<%= job.id %>/invoice" class="btn btn-sm btn-info">Invoice</a>
                       <% } %>
-                    </div>
+                    </section>
                   </td>
                 </tr>
               <% }); %>
             </tbody>
           </table>
-        </div>
+        </section>
       <% } %>
-    </div>
-  </div>
-</div>
+    </section>
+  </section>
+</section>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {

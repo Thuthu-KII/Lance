@@ -1,79 +1,79 @@
 <%- contentFor('body') %>
 
-<div class="container">
-  <div class="row">
-    <div class="col-md-8">
-      <div class="card mb-4">
-        <div class="card-header d-flex justify-content-between align-items-center">
+<section class="container">
+  <section class="row">
+    <section class="col-md-8">
+      <section class="card mb-4">
+        <section class="card-header d-flex justify-content-between align-items-center">
           <h1 class="card-title mb-0"><%= job.title %></h1>
           <span class="status-badge status-<%= job.status.replace(' ', '-') %>">
             <%= job.status.charAt(0).toUpperCase() + job.status.slice(1) %>
           </span>
-        </div>
+        </section>
         
-        <div class="card-body">
-          <div class="job-company mb-3">
+        <section class="card-body">
+          <section class="job-company mb-3">
             <strong>Client:</strong> <%= job.company_name || `${job.client_first_name} ${job.client_last_name}` %>
-          </div>
+          </section>
           
-          <div class="job-details mb-4">
-            <div class="job-budget">
+          <section class="job-details mb-4">
+            <section class="job-budget">
               <strong>Budget:</strong> R<%= parseFloat(job.budget).toFixed(2) %>
-            </div>
+            </section>
             
             <% if (job.deadline) { %>
-              <div class="job-deadline">
+              <section class="job-deadline">
                 <strong>Deadline:</strong> <%= new Date(job.deadline).toLocaleDateString() %>
-              </div>
+              </section>
             <% } %>
             
-            <div>
+            <section>
               <strong>Posted:</strong> <%= new Date(job.created_at).toLocaleDateString() %>
-            </div>
-          </div>
+            </section>
+          </section>
           
-          <div class="mb-4">
+          <section class="mb-4">
             <h3>Description</h3>
             <p><%= job.description %></p>
-          </div>
+          </section>
           
           <% if (job.requirements) { %>
-            <div class="mb-4">
+            <section class="mb-4">
               <h3>Requirements</h3>
               <p><%= job.requirements %></p>
-            </div>
+            </section>
           <% } %>
           
           <% if (job.client_skills && job.client_skills.length > 0) { %>
-            <div class="mb-4">
+            <section class="mb-4">
               <h3>Client Skills</h3>
-              <div>
+              <section>
                 <% job.client_skills.forEach(function(skill) { %>
                   <span class="badge badge-primary mr-2 mb-2"><%= skill %></span>
                 <% }); %>
-              </div>
-            </div>
+              </section>
+            </section>
           <% } %>
           
           <% if (job.client_experience) { %>
-            <div>
+            <section>
               <h3>Client Experience</h3>
               <p><%= job.client_experience %></p>
-            </div>
+            </section>
           <% } %>
-        </div>
-      </div>
+        </section>
+      </section>
       
       <% if (job.status === 'in-progress' && application && application.status === 'hired') { %>
-        <div class="card mb-4">
-          <div class="card-header">
+        <section class="card mb-4">
+          <section class="card-header">
             <h3 class="card-title">Job Progress</h3>
-          </div>
-          <div class="card-body">
+          </section>
+          <section class="card-body">
             <p><strong>Status:</strong> In Progress</p>
             
             <% if (completionStatus) { %>
-              <div class="mb-3">
+              <section class="mb-3">
                 <p><strong>Client confirmed:</strong> 
                   <% if (completionStatus.client_confirmed) { %>
                     <span class="text-success">Yes</span>
@@ -89,46 +89,46 @@
                     <span class="text-warning">Waiting</span>
                   <% } %>
                 </p>
-              </div>
+              </section>
               
               <% if (!completionStatus.freelancer_confirmed) { %>
                 <form action="/freelancer/jobs/<%= job.id %>/complete" method="POST">
                   <button type="submit" class="btn btn-success">Mark as Complete</button>
                 </form>
               <% } else { %>
-                <div class="alert alert-info">
+                <section class="alert alert-info">
                   You have marked this job as complete. Waiting for the client to confirm.
-                </div>
+                </section>
               <% } %>
             <% } %>
-          </div>
-        </div>
-        <div class="card mb-4">
-          <div class="card-header">
+          </section>
+        </section>
+        <section class="card mb-4">
+          <section class="card-header">
             <h3 class="card-title">Report an Issue</h3>
-          </div>
-          <div class="card-body">
+          </section>
+          <section class="card-body">
             <form action="/freelancer/jobs/<%= job.id %>/report" method="POST">
               <input type="hidden" name="reportedUser" value="<%= job.client_id %>">
               
-              <div class="form-group">
+              <section class="form-group">
                 <label for="issue" class="form-label">Describe the issue:</label>
                 <textarea id="issue" name="issue" class="form-control" rows="3" required></textarea>
-              </div>
+              </section>
               
               <button type="submit" class="btn btn-warning">Report Issue</button>
             </form>
-          </div>
-        </div>
+          </section>
+        </section>
       <% } %>
-    </div>
+    </section>
     
-    <div class="col-md-4">
-      <div class="card mb-4">
-        <div class="card-header">
+    <section class="col-md-4">
+      <section class="card mb-4">
+        <section class="card-header">
           <h3 class="card-title">Application Status</h3>
-        </div>
-        <div class="card-body">
+        </section>
+        <section class="card-body">
           <% if (!application) { %>
             <% if (job.status === 'open') { %>
               <p>You haven't applied to this job yet.</p>
@@ -148,56 +148,56 @@
               <strong>Applied:</strong> <%= new Date(application.created_at).toLocaleString() %>
             </p>
             
-            <div class="mb-3">
+            <section class="mb-3">
               <h4>Your Motivation:</h4>
               <p><%= application.motivation %></p>
-            </div>
+            </section>
             
             <% if (application.status === 'hired') { %>
-              <div class="alert alert-success">
+              <section class="alert alert-success">
                 <p>Congratulations! You have been hired for this job.</p>
                 
                 <% if (job.status === 'completed') { %>
                   <p>This job has been completed.</p>
                 <% } %>
-              </div>
+              </section>
             <% } else if (application.status === 'rejected') { %>
-              <div class="alert alert-danger">
+              <section class="alert alert-danger">
                 <p>Your application was not selected for this job.</p>
-              </div>
+              </section>
             <% } else { %>
-              <div class="alert alert-info">
+              <section class="alert alert-info">
                 <p>Your application is awaiting client review.</p>
-              </div>
+              </section>
             <% } %>
           <% } %>
-        </div>
-      </div>
+        </section>
+      </section>
       
       <% if (job.status === 'completed' && application && application.status === 'hired') { %>
-        <div class="card mb-4">
-          <div class="card-header">
+        <section class="card mb-4">
+          <section class="card-header">
             <h3 class="card-title">Job Completion</h3>
-          </div>
-          <div class="card-body">
-            <div class="alert alert-success">
+          </section>
+          <section class="card-body">
+            <section class="alert alert-success">
               <p>This job has been completed successfully!</p>
-            </div>
+            </section>
             
             <a href="/jobs/<%= job.id %>/invoice" class="btn btn-primary btn-block">Download Invoice</a>
-          </div>
-        </div>
+          </section>
+        </section>
       <% } %>
       
-      <div class="card">
-        <div class="card-header">
+      <section class="card">
+        <section class="card-header">
           <h3 class="card-title">Actions</h3>
-        </div>
-        <div class="card-body">
+        </section>
+        <section class="card-body">
           <a href="/jobs/browse" class="btn btn-light btn-block">Back to Jobs</a>
           <a href="/freelancer/dashboard" class="btn btn-light btn-block">Dashboard</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+        </section>
+      </section>
+    </section>
+  </section>
+</section>

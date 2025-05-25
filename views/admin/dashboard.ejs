@@ -3,29 +3,29 @@
 
 <h1 class="mb-4">Admin Dashboard</h1>
 
-<div class="dashboard-stats">
-  <div class="stat-card">
-    <div class="stat-card-value"><%= counts.clients %></div>
-    <div class="stat-card-label">Clients</div>
-  </div>
+<section class="dashboard-stats">
+  <section class="stat-card">
+    <section class="stat-card-value"><%= counts.clients %></section>
+    <section class="stat-card-label">Clients</section>
+  </section>
   
-  <div class="stat-card">
-    <div class="stat-card-value"><%= counts.freelancers %></div>
-    <div class="stat-card-label">Freelancers</div>
-  </div>
+  <section class="stat-card">
+    <section class="stat-card-value"><%= counts.freelancers %></section>
+    <section class="stat-card-label">Freelancers</section>
+  </section>
   
-  <div class="stat-card">
-    <div class="stat-card-value"><%= counts.jobs %></div>
-    <div class="stat-card-label">Total Jobs</div>
-  </div>
+  <section class="stat-card">
+    <section class="stat-card-value"><%= counts.jobs %></section>
+    <section class="stat-card-label">Total Jobs</section>
+  </section>
   
-  <div class="stat-card">
-    <div class="stat-card-value">R<%= parseFloat(counts.payments).toFixed(2) %></div>
-    <div class="stat-card-label">Total Payments</div>
-  </div>
-</div>
+  <section class="stat-card">
+    <section class="stat-card-value">R<%= parseFloat(counts.payments).toFixed(2) %></section>
+    <section class="stat-card-label">Total Payments</section>
+  </section>
+</section>
 
-<div class="quick-actions mb-4">
+<section class="quick-actions mb-4">
   <a href="/admin/approvals" class="btn btn-primary quick-action-btn">
     Pending Approvals <span class="badge badge-light"><%= counts.pendingApprovals %></span>
   </a>
@@ -34,19 +34,19 @@
   </a>
   <a href="/admin/users" class="btn btn-secondary quick-action-btn">Manage Users</a>
   <a href="/admin/jobs" class="btn btn-light quick-action-btn">Manage Jobs</a>
-</div>
+</section>
 
-<div class="dashboard-container">
-  <div class="dashboard-card">
-    <div class="dashboard-card-header">
+<section class="dashboard-container">
+  <section class="dashboard-card">
+    <section class="dashboard-card-header">
       <h2 class="dashboard-card-title">Recent Jobs</h2>
       <a href="/admin/jobs" class="btn btn-sm btn-primary">View All</a>
-    </div>
-    <div class="dashboard-card-body">
+    </section>
+    <section class="dashboard-card-body">
       <% if (recentJobs.length === 0) { %>
         <p class="text-center text-muted">No jobs found in the system.</p>
       <% } else { %>
-        <div class="table-responsive">
+        <section class="table-responsive">
           <table class="table table-hover">
             <thead>
               <tr>
@@ -77,17 +77,17 @@
               <% }); %>
             </tbody>
           </table>
-        </div>
+        </section>
       <% } %>
-    </div>
-  </div>
+    </section>
+  </section>
   
-  <div class="dashboard-card">
-    <div class="dashboard-card-header">
+  <section class="dashboard-card">
+    <section class="dashboard-card-header">
       <h2 class="dashboard-card-title">System Status</h2>
-    </div>
-    <div class="dashboard-card-body">
-      <div class="mb-3">
+    </section>
+    <section class="dashboard-card-body">
+      <section class="mb-3">
         <h4 class="mb-2">Pending Tasks</h4>
         <ul class="list-group">
           <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -99,9 +99,9 @@
             <span class="badge badge-danger badge-pill"><%= counts.reports %></span>
           </li>
         </ul>
-      </div>
+      </section>
       
-      <div>
+      <section>
         <h4 class="mb-2">Quick Stats</h4>
         <ul class="list-group">
           <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -113,10 +113,10 @@
             <span class="badge badge-info badge-pill"><%= parseInt(counts.clients) + parseInt(counts.freelancers) %></span>
           </li>
         </ul>
-      </div>
-    </div>
-  </div>
-</div>
+      </section>
+    </section>
+  </section>
+</section>
 <style>
   /* Dashboard Styles */
 .dashboard-stats {

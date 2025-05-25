@@ -19,7 +19,7 @@
     
     <li class="user-dropdown">
       <a href="#"><%= user.profile ? (user.profile.first_name + ' ' + user.profile.last_name) : user.email %> ▼</a>
-      <div class="dropdown-content">
+      <section class="dropdown-content">
         <a href="/profile">My Profile</a>
         <% if (user.role === 'client') { %>
           <a href="/client/jobs">My Jobs</a>
@@ -29,7 +29,7 @@
           <a href="/admin/stats">System Stats</a>
         <% } %>
         <a href="/auth/logout">Logout</a>
-      </div>
+      </section>
     </li>
   <% } else { %>
     <li><a href="/auth/login">Login</a></li>

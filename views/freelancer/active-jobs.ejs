@@ -1,35 +1,35 @@
 <%- contentFor('body') %>
 
-<div class="container">
+<section class="container">
   <h1 class="mb-4">My Active Jobs</h1>
   
   <% if (jobs.length === 0) { %>
-    <div class="alert alert-info">
+    <section class="alert alert-info">
       <p>You don't have any active jobs yet.</p>
       <a href="/jobs/browse" class="btn btn-primary mt-2">Find Jobs</a>
-    </div>
+    </section>
   <% } else { %>
-    <div class="row">
+    <section class="row">
       <% jobs.forEach(function(job) { %>
-        <div class="col-md-6 mb-4">
-          <div class="card h-100">
-            <div class="card-header d-flex justify-content-between align-items-center">
+        <section class="col-md-6 mb-4">
+          <section class="card h-100">
+            <section class="card-header d-flex justify-content-between align-items-center">
               <h2 class="card-title mb-0"><%= job.title %></h2>
               <span class="status-badge status-<%= job.status.replace(' ', '-') %>">
                 <%= job.status.charAt(0).toUpperCase() + job.status.slice(1) %>
               </span>
-            </div>
-            <div class="card-body">
+            </section>
+            <section class="card-body">
               <p><strong>Client:</strong> <%= job.client_first_name %> <%= job.client_last_name %></p>
               <p><strong>Budget:</strong> R<%= parseFloat(job.budget).toFixed(2) %></p>
               
-              <div class="mb-3">
+              <section class="mb-3">
                 <p><strong>Description:</strong></p>
                 <p><%= job.description.length > 150 ? job.description.substring(0, 150) + '...' : job.description %></p>
-              </div>
+              </section>
               
               <% if (job.status === 'in-progress' && job.completionStatus) { %>
-                <div class="mb-3">
+                <section class="mb-3">
                   <p><strong>Completion Status:</strong></p>
                   <ul class="list-group">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -49,7 +49,7 @@
                       <% } %>
                     </li>
                   </ul>
-                </div>
+                </section>
                 
                 <% if (!job.completionStatus.freelancer_confirmed) { %>
                   <form action="/freelancer/jobs/<%= job.id %>/complete" method="POST" class="mb-3">
@@ -59,24 +59,24 @@
               <% } %>
               
               <% if (job.status === 'completed') { %>
-                <div class="alert alert-success">
+                <section class="alert alert-success">
                   <p>This job has been completed successfully!</p>
-                </div>
+                </section>
                 
                 <a href="/jobs/<%= job.id %>/invoice" class="btn btn-primary">Download Invoice</a>
               <% } %>
-            </div>
-            <div class="card-footer">
-              <div class="d-flex justify-content-between align-items-center">
+            </section>
+            <section class="card-footer">
+              <section class="d-flex justify-content-between align-items-center">
                 <small class="text-muted">
                   Hired on <%= new Date(job.application_date).toLocaleDateString() %>
                 </small>
                 <a href="/freelancer/jobs/<%= job.id %>" class="btn btn-light">View Details</a>
-              </div>
-            </div>
-          </div>
-        </div>
+              </section>
+            </section>
+          </section>
+        </section>
       <% }); %>
-    </div>
+    </section>
   <% } %>
-</div>
+</section>

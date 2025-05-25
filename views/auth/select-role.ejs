@@ -1,54 +1,54 @@
 <!-- views/auth/select-role.ejs -->
 
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-md-8 col-lg-7">
-      <div class="card shadow-lg border-0 rounded-lg">
-        <div class="card-header bg-primary text-white text-center py-4">
+<section class="container mt-5">
+  <section class="row justify-content-center">
+    <section class="col-md-8 col-lg-7">
+      <section class="card shadow-lg border-0 rounded-lg">
+        <section class="card-header bg-primary text-white text-center py-4">
           <h2 class="m-0"><i class="fas fa-user-circle me-2"></i>Select Your Account Type</h2>
-        </div>
-        <div class="card-body p-4">
+        </section>
+        <section class="card-body p-4">
           <% if(typeof errors != 'undefined') { %>
             <% errors.forEach(function(error) { %>
-              <div class="alert alert-danger alert-dismissible fade show">
+              <section class="alert alert-danger alert-dismissible fade show">
                 <i class="fas fa-exclamation-circle me-2"></i> <%= error.message %>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
+              </section>
             <% }); %>
           <% } %>
           
           <% if(success_msg != '') { %>
-            <div class="alert alert-success alert-dismissible fade show">
+            <section class="alert alert-success alert-dismissible fade show">
               <i class="fas fa-check-circle me-2"></i> <%= success_msg %>
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+            </section>
           <% } %>
           
           <% if(error_msg != '') { %>
-            <div class="alert alert-danger alert-dismissible fade show">
+            <section class="alert alert-danger alert-dismissible fade show">
               <i class="fas fa-exclamation-circle me-2"></i> <%= error_msg %>
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+            </section>
           <% } %>
           
-          <div class="text-center mb-4">
+          <section class="text-center mb-4">
             <i class="fas fa-user-circle fa-4x text-primary"></i>
             <h4 class="mt-3 mb-1">Welcome, <%= user.first_name %>!</h4>
             <p class="text-muted">Please choose how you want to use our platform</p>
-          </div>
+          </section>
           
           <form action="/auth/select-role" method="POST">
-            <div class="row g-4">
+            <section class="row g-4">
               <!-- Client Role Card -->
-              <div class="col-md-6">
-                <div class="card role-card h-100 border-0 shadow-sm">
-                  <div class="form-check position-absolute m-3">
+              <section class="col-md-6">
+                <section class="card role-card h-100 border-0 shadow-sm">
+                  <section class="form-check position-absolute m-3">
                     <input class="form-check-input" type="radio" name="role" id="client" value="client" required>
-                  </div>
+                  </section>
                   <label class="card-body d-flex flex-column text-center p-4" for="client">
-                    <div class="icon-wrapper mb-3 mx-auto">
+                    <section class="icon-wrapper mb-3 mx-auto">
                       <i class="fas fa-building fa-3x text-primary"></i>
-                    </div>
+                    </section>
                     <h5 class="card-title">I'm a Client</h5>
                     <ul class="list-unstyled text-start mt-3 mb-0">
                       <li><i class="fas fa-check text-success me-2"></i> Post projects & jobs</li>
@@ -57,19 +57,19 @@
                       <li><i class="fas fa-credit-card text-success me-2"></i> Pay securely for completed work</li>
                     </ul>
                   </label>
-                </div>
-              </div>
+                </section>
+              </section>
               
               <!-- Freelancer Role Card -->
-              <div class="col-md-6">
-                <div class="card role-card h-100 border-0 shadow-sm">
-                  <div class="form-check position-absolute m-3">
+              <section class="col-md-6">
+                <section class="card role-card h-100 border-0 shadow-sm">
+                  <section class="form-check position-absolute m-3">
                     <input class="form-check-input" type="radio" name="role" id="freelancer" value="freelancer">
-                  </div>
+                  </section>
                   <label class="card-body d-flex flex-column text-center p-4" for="freelancer">
-                    <div class="icon-wrapper mb-3 mx-auto">
+                    <section class="icon-wrapper mb-3 mx-auto">
                       <i class="fas fa-laptop fa-3x text-primary"></i>
-                    </div>
+                    </section>
                     <h5 class="card-title">I'm a Freelancer</h5>
                     <ul class="list-unstyled text-start mt-3 mb-0">
                       <li><i class="fas fa-search text-success me-2"></i> Find relevant projects</li>
@@ -78,26 +78,26 @@
                       <li><i class="fas fa-coins text-success me-2"></i> Get paid for your work</li>
                     </ul>
                   </label>
-                </div>
-              </div>
-            </div>
+                </section>
+              </section>
+            </section>
             
-            <div class="mt-4 pt-2">
+            <section class="mt-4 pt-2">
               <button type="submit" class="btn btn-primary btn-lg w-100">
                 <i class="fas fa-arrow-right me-2"></i> Continue
               </button>
-            </div>
+            </section>
           </form>
-        </div>
-        <div class="card-footer text-center py-3 bg-light">
+        </section>
+        <section class="card-footer text-center py-3 bg-light">
           <small class="text-muted">
             <i class="fas fa-info-circle me-1"></i> You can always update your preferences later in your account settings
           </small>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+        </section>
+      </section>
+    </section>
+  </section>
+</section>
 
 <style>
   .role-card {

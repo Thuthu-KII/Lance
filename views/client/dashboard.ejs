@@ -2,46 +2,46 @@
 
 <h1 class="mb-4">Client Dashboard</h1>
 
-<div class="dashboard-stats">
-  <div class="stat-card">
-    <div class="stat-card-value"><%= jobCounts.total %></div>
-    <div class="stat-card-label">Total Jobs</div>
-  </div>
+<section class="dashboard-stats">
+  <section class="stat-card">
+    <section class="stat-card-value"><%= jobCounts.total %></section>
+    <section class="stat-card-label">Total Jobs</section>
+  </section>
   
-  <div class="stat-card">
-    <div class="stat-card-value"><%= jobCounts.open %></div>
-    <div class="stat-card-label">Open Jobs</div>
-  </div>
+  <section class="stat-card">
+    <section class="stat-card-value"><%= jobCounts.open %></section>
+    <section class="stat-card-label">Open Jobs</section>
+  </section>
   
-  <div class="stat-card">
-    <div class="stat-card-value"><%= jobCounts.inProgress %></div>
-    <div class="stat-card-label">In Progress</div>
-  </div>
+  <section class="stat-card">
+    <section class="stat-card-value"><%= jobCounts.inProgress %></section>
+    <section class="stat-card-label">In Progress</section>
+  </section>
   
-  <div class="stat-card">
-    <div class="stat-card-value"><%= jobCounts.completed %></div>
-    <div class="stat-card-label">Completed</div>
-  </div>
-</div>
+  <section class="stat-card">
+    <section class="stat-card-value"><%= jobCounts.completed %></section>
+    <section class="stat-card-label">Completed</section>
+  </section>
+</section>
 
-<div class="quick-actions mb-4">
+<section class="quick-actions mb-4">
   <a href="/jobs/create" class="btn btn-primary quick-action-btn">Post a Job</a>
   <a href="/client/jobs" class="btn btn-secondary quick-action-btn">Manage Jobs</a>
   <a href="/profile" class="btn btn-light quick-action-btn">Edit Profile</a>
   <a href="/jobs/browse" class="btn btn-light quick-action-btn">Browse Jobs</a>
-</div>
+</section>
 
-<div class="dashboard-container">
-  <div class="dashboard-card">
-    <div class="dashboard-card-header">
+<section class="dashboard-container">
+  <section class="dashboard-card">
+    <section class="dashboard-card-header">
       <h2 class="dashboard-card-title">Recent Jobs</h2>
       <a href="/client/jobs" class="btn btn-sm btn-primary">View All</a>
-    </div>
-    <div class="dashboard-card-body">
+    </section>
+    <section class="dashboard-card-body">
       <% if (jobs.length === 0) { %>
         <p class="text-center text-muted">You haven't posted any jobs yet.</p>
       <% } else { %>
-        <div class="table-responsive">
+        <section class="table-responsive">
           <table class="table table-hover">
             <thead>
               <tr>
@@ -73,43 +73,43 @@
               <% }); %>
             </tbody>
           </table>
-        </div>
+        </section>
       <% } %>
-    </div>
-  </div>
+    </section>
+  </section>
   
-  <div class="dashboard-card">
-    <div class="dashboard-card-header">
+  <section class="dashboard-card">
+    <section class="dashboard-card-header">
       <h2 class="dashboard-card-title">Recent Applications</h2>
-    </div>
-    <div class="dashboard-card-body">
+    </section>
+    <section class="dashboard-card-body">
       <% if (applications.length === 0) { %>
         <p class="text-center text-muted">No recent applications to your jobs.</p>
       <% } else { %>
-        <div class="activity-list">
+        <section class="activity-list">
           <% applications.forEach(function(application) { %>
-            <div class="activity-item">
-              <div class="d-flex justify-content-between">
-                <div>
+            <section class="activity-item">
+              <section class="d-flex justify-content-between">
+                <section>
                   <strong><%= application.first_name %> <%= application.last_name %></strong> applied to <strong><%= application.job_title %></strong>
-                </div>
+                </section>
                 <span class="status-badge status-<%= application.status %>">
                   <%= application.status.charAt(0).toUpperCase() + application.status.slice(1) %>
                 </span>
-              </div>
-              <div class="activity-time">
+              </section>
+              <section class="activity-time">
                 <%= new Date(application.created_at).toLocaleString() %>
-              </div>
-            </div>
+              </section>
+            </section>
           <% }); %>
-        </div>
-        <div class="text-center mt-3">
+        </section>
+        <section class="text-center mt-3">
           <a href="/client/jobs" class="btn btn-sm btn-light">View All Jobs</a>
-        </div>
+        </section>
       <% } %>
-    </div>
-  </div>
-</div>
+    </section>
+  </section>
+</section>
 <style>
   /* Dashboard Styles */
 .dashboard-stats {

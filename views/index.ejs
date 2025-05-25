@@ -1,12 +1,12 @@
 <%- contentFor('body') %>
 
 <!-- HERO SECTION -->
-<div class="hero">
-  <div id="hero-particles"></div>
-  <div class="hero-content">
+<section class="hero">
+  <section id="hero-particles"></section>
+  <section class="hero-content">
     <h1>Find the Perfect Freelancer for Your Project</h1>
     <p>Connect with skilled professionals, post jobs, and get your projects done efficiently.</p>
-    <div class="hero-buttons">
+    <section class="hero-buttons">
       <% if (!user) { %>
         <a href="/auth/google" class="btn fancy-btn">
           <span>Sign Up with Google</span>
@@ -21,66 +21,66 @@
         <a href="/jobs/browse" class="btn fancy-btn"><span>Find Jobs</span></a>
         <a href="/freelancer/dashboard" class="btn ghost-btn"><span>My Dashboard</span></a>
       <% } %>
-    </div>
-  </div>
+    </section>
+  </section>
   <!-- Decorative SVG Waves at Bottom -->
   <svg class="waves" viewBox="0 0 1440 100" style="display:block;">
     <path fill="#EEF2FF" fill-opacity="1" d="M0,64L60,80C120,96,240,128,360,117.3C480,107,600,53,720,37.3C840,21,960,43,1080,53.3C1200,64,1320,64,1380,64L1440,64L1440,120L1380,120C1320,120,1200,120,1080,120C960,120,840,120,720,120C600,120,480,120,360,120C240,120,120,120,60,120L0,120Z"></path>
   </svg>
-</div>
+</section>
 
 <!-- HOW IT WORKS -->
 <section class="how-it-works" id="how">
   <h2>How It Works</h2>
   <p class="subtitle">Our platform makes it easy to connect clients and freelancers</p>
-  <div class="step-cards">
-    <div class="step-card">
+  <section class="step-cards">
+    <section class="step-card">
       <span class="step-num">1</span>
-      <div>
+      <section>
         <h3>Post a Job</h3>
         <p>Clients can post jobs with details about their requirements and budget.</p>
-      </div>
-    </div>
-    <div class="step-card">
+      </section>
+    </section>
+    <section class="step-card">
       <span class="step-num">2</span>
-      <div>
+      <section>
         <h3>Find Talent</h3>
         <p>Freelancers apply with their qualifications and you choose the best fit.</p>
-      </div>
-    </div>
-    <div class="step-card">
+      </section>
+    </section>
+    <section class="step-card">
       <span class="step-num">3</span>
-      <div>
+      <section>
         <h3>Complete Projects</h3>
         <p>Work together efficiently and securely through our platform.</p>
-      </div>
-    </div>
-  </div>
+      </section>
+    </section>
+  </section>
 </section>
 
 <!-- FEATURED CATEGORIES -->
 <section class="featured-categories">
   <h2>Featured Categories</h2>
   <p class="subtitle">Explore popular job categories on our platform</p>
-  <div class="cat-cards">
-    <div class="cat-card"><div class="cat-icon">💻</div><h4>Web Development</h4></div>
-    <div class="cat-card"><div class="cat-icon">🎨</div><h4>Design</h4></div>
-    <div class="cat-card"><div class="cat-icon">✍️</div><h4>Writing</h4></div>
-    <div class="cat-card"><div class="cat-icon">📢</div><h4>Marketing</h4></div>
-  </div>
+  <section class="cat-cards">
+    <section class="cat-card"><section class="cat-icon">💻</section><h4>Web Development</h4></section>
+    <section class="cat-card"><section class="cat-icon">🎨</section><h4>Design</h4></section>
+    <section class="cat-card"><section class="cat-icon">✍️</section><h4>Writing</h4></section>
+    <section class="cat-card"><section class="cat-icon">📢</section><h4>Marketing</h4></section>
+  </section>
 </section>
 
 <!-- JOIN COMMUNITY -->
 <section class="join-community">
-  <div class="community-bg">
+  <section class="community-bg">
     <!-- faint grid svg BG for extra effect, optional -->
     <svg width="100%" height="100%"> <rect width="100%" height="100%" fill="url(#grid-ptn)" /> <defs> <pattern id="grid-ptn" width="60" height="60" patternUnits="userSpaceOnUse"> <path d="M60,0L0,0L0,60" fill="none" stroke="#fff" stroke-width="1" opacity="0.07"/> </pattern></defs></svg>
-  </div>
-  <div class="jcontent">
+  </section>
+  <section class="jcontent">
     <h2>Join Our Community Today</h2>
     <p>Start hiring or working on projects in minutes.</p>
     <a href="/auth/google" class="btn mega-btn"><span>Sign Up Now</span></a>
-  </div>
+  </section>
 </section>
 
 
@@ -382,7 +382,7 @@ a {
 }
 .join-community p {color:#ddd6fe; font-size:1.13em; margin-bottom:1.7em;}
 
-.hero div#hero-particles div,
+.hero section#hero-particles section,
 .join-community .particle {
   position: absolute;
   border-radius: 50%;
@@ -411,7 +411,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if (heroParticlesContainer) {
     let nParticles = window.innerWidth < 700 ? 7 : 13;
     for (let i = 0; i < nParticles; i++) {
-      let particle = document.createElement('div');
+      let particle = document.createElement('section');
       // Random position within hero section
       let top = Math.random() * 75 + 5;
       let left = Math.random() * 92 + 2;
@@ -453,7 +453,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const jc = document.querySelector('.join-community');
   if (jc) {
     for (let i = 0; i < 8; i++) {
-      let particle = document.createElement('div');
+      let particle = document.createElement('section');
       let top = Math.random() * 100, left = Math.random() * 100;
       let size = Math.random() * 10 + 8;
       let dur = Math.random() * 5 + 4;

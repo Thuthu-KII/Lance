@@ -1,14 +1,14 @@
 <header>
-  <div class="container">
+  <section class="container">
     <nav class="navbar">
       <a href="/" class="logo">
         <i class="fa-solid fa-rocket"></i>
         <span>LanceAI</span>
       </a>
 
-      <div class="mobile-menu-toggle">
+      <section class="mobile-menu-toggle">
         <i class="fas fa-bars"></i>
-      </div>
+      </section>
 
       <ul class="nav-links">
         <% if (user) { %>
@@ -30,17 +30,17 @@
 
           <li class="user-dropdown">
             <a href="#" class="profile-link">
-              <div class="avatar">
+              <section class="avatar">
                 <% if (user.profile && user.profile.avatar) { %>
                   <img src="<%= user.profile.avatar %>" alt="Profile">
                 <% } else { %>
                   <i class="fas fa-user"></i>
                 <% } %>
-              </div>
+              </section>
               <span><%= user.profile ? (user.profile.first_name + ' ' + user.profile.last_name) : user.email %></span>
               <i class="fas fa-chevron-down"></i>
             </a>
-            <div class="dropdown-content">
+            <section class="dropdown-content">
               <a href="/profile" class="dropdown-item"><i class="fas fa-user-circle"></i> My Profile</a>
               <% if (user.role === 'client') { %>
                 <a href="/client/jobs" class="dropdown-item"><i class="fas fa-briefcase"></i> My Jobs</a>
@@ -49,9 +49,9 @@
               <% } else if (user.role === 'admin') { %>
                 <a href="/admin/stats" class="dropdown-item"><i class="fas fa-chart-line"></i> System Stats</a>
               <% } %>
-              <div class="dropdown-divider"></div>
+              <section class="dropdown-sectionider"></section>
               <a href="/auth/logout" class="dropdown-item text-danger"><i class="fas fa-sign-out-alt"></i> Logout</a>
-            </div>
+            </section>
           </li>
         <% } else { %>
           <li><a href="/auth/login">Login</a></li>
@@ -59,7 +59,7 @@
         <% } %>
       </ul>
     </nav>
-  </div>
+  </section>
 </header>
 
 <style>
@@ -231,7 +231,7 @@
     text-align: center;
   }
 
-  .dropdown-divider {
+  .dropdown-sectionider {
     height: 1px;
     background: #e5e7eb;
     margin: 0.25rem 0;

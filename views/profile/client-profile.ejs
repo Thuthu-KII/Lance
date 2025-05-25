@@ -1,19 +1,19 @@
 <%- contentFor('body') %>
 
-<div class="container">
-  <div class="row">
-    <div class="col-md-4 mb-4">
-      <div class="card">
-        <div class="card-header">
+<section class="container">
+  <section class="row">
+    <section class="col-md-4 mb-4">
+      <section class="card">
+        <section class="card-header">
           <h2 class="card-title">Profile</h2>
-        </div>
-        <div class="card-body">
-          <div class="text-center mb-4">
-            <div class="profile-image mb-3">
+        </section>
+        <section class="card-body">
+          <section class="text-center mb-4">
+            <section class="profile-image mb-3">
               <span class="profile-initial">
                 <%= user.profile.first_name.charAt(0) + user.profile.last_name.charAt(0) %>
               </span>
-            </div>
+            </section>
             <h3><%= user.profile.first_name %> <%= user.profile.last_name %></h3>
             <p class="text-muted"><%= user.email %></p>
             
@@ -21,11 +21,11 @@
             <% if (user.profile.company_name) { %>
               <p class="text-muted"><%= user.profile.company_name %></p>
             <% } %>
-          </div>
+          </section>
           
-          <div class="mb-3">
+          <section class="mb-3">
             <h4>Skills & Expertise</h4>
-            <div>
+            <section>
               <% if (user.profile.skills && user.profile.skills.length > 0) { %>
                 <% user.profile.skills.forEach(function(skill) { %>
                   <span class="badge badge-primary mr-2 mb-2"><%= skill %></span>
@@ -33,16 +33,16 @@
               <% } else { %>
                 <p class="text-muted">No skills listed</p>
               <% } %>
-            </div>
-          </div>
+            </section>
+          </section>
           
-          <div class="mb-3">
+          <section class="mb-3">
             <h4>Contact</h4>
             <p><strong>Email:</strong> <%= user.email %></p>
             <p><strong>Phone:</strong> <%= user.profile.phone || 'Not provided' %></p>
-          </div>
+          </section>
           
-          <div>
+          <section>
             <h4>Document</h4>
             <% if (user.profile.cv_path) { %>
               <a href="<%= user.profile.cv_path %>" target="_blank" class="btn btn-sm btn-light">
@@ -51,57 +51,57 @@
             <% } else { %>
               <p class="text-muted">No CV/Resume uploaded</p>
             <% } %>
-          </div>
-        </div>
-      </div>
-    </div>
+          </section>
+        </section>
+      </section>
+    </section>
     
-    <div class="col-md-8">
-      <div class="card mb-4">
-        <div class="card-header">
+    <section class="col-md-8">
+      <section class="card mb-4">
+        <section class="card-header">
           <h2 class="card-title">Edit Profile</h2>
-        </div>
-        <div class="card-body">
+        </section>
+        <section class="card-body">
           <form action="/profile/client?_method=PUT" method="POST" enctype="multipart/form-data">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
+            <section class="row">
+              <section class="col-md-6">
+                <section class="form-group">
                   <label for="firstName" class="form-label">First Name*</label>
                   <input type="text" id="firstName" name="firstName" class="form-control" value="<%= user.profile.first_name %>" required>
-                </div>
-              </div>
+                </section>
+              </section>
               
-              <div class="col-md-6">
-                <div class="form-group">
+              <section class="col-md-6">
+                <section class="form-group">
                   <label for="lastName" class="form-label">Last Name*</label>
                   <input type="text" id="lastName" name="lastName" class="form-control" value="<%= user.profile.last_name %>" required>
-                </div>
-              </div>
-            </div>
+                </section>
+              </section>
+            </section>
             
-            <div class="form-group">
+            <section class="form-group">
               <label for="companyName" class="form-label">Company Name</label>
               <input type="text" id="companyName" name="companyName" class="form-control" value="<%= user.profile.company_name || '' %>">
-            </div>
+            </section>
             
-            <div class="form-group">
+            <section class="form-group">
               <label for="phone" class="form-label">Phone Number</label>
               <input type="tel" id="phone" name="phone" class="form-control" value="<%= user.profile.phone || '' %>">
-            </div>
+            </section>
             
-            <div class="form-group">
+            <section class="form-group">
               <label for="address" class="form-label">Address</label>
               <textarea id="address" name="address" class="form-control" rows="2"><%= user.profile.address || '' %></textarea>
-            </div>
+            </section>
             
             <button type="submit" class="btn btn-primary">Update Profile</button>
           </form>
-        </div>
-      </div>
+        </section>
+      </section>
       
-    </div>
-  </div>
-</div>
+    </section>
+  </section>
+</section>
 
 <style>
   .profile-image {

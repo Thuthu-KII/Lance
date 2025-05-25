@@ -1,28 +1,28 @@
 <%- contentFor('body') %>
 
-<div class="container">
+<section class="container">
   <h1 class="mb-4">My Applications</h1>
   
-  <div class="card">
-    <div class="card-header d-flex justify-content-between align-items-center">
+  <section class="card">
+    <section class="card-header d-flex justify-content-between align-items-center">
       <h2 class="card-title mb-0">Job Applications</h2>
-      <div>
+      <section>
         <select id="statusFilter" class="form-control form-control-sm">
           <option value="all">All Statuses</option>
           <option value="pending">Pending</option>
           <option value="hired">Hired</option>
           <option value="rejected">Rejected</option>
         </select>
-      </div>
-    </div>
-    <div class="card-body">
+      </section>
+    </section>
+    <section class="card-body">
       <% if (applications.length === 0) { %>
-        <div class="alert alert-info">
+        <section class="alert alert-info">
           <p>You haven't applied to any jobs yet.</p>
           <a href="/jobs/browse" class="btn btn-primary mt-2">Browse Jobs</a>
-        </div>
+        </section>
       <% } else { %>
-        <div class="table-responsive">
+        <section class="table-responsive">
           <table class="table table-hover" id="applicationsTable">
             <thead>
               <tr>
@@ -58,11 +58,11 @@
               <% }); %>
             </tbody>
           </table>
-        </div>
+        </section>
       <% } %>
-    </div>
-  </div>
-</div>
+    </section>
+  </section>
+</section>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {

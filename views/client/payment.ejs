@@ -1,54 +1,54 @@
 <%- contentFor('body') %>
 
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card">
-        <div class="card-header">
+<section class="container">
+  <section class="row justify-content-center">
+    <section class="col-md-8">
+      <section class="card">
+        <section class="card-header">
           <h1 class="card-title">Payment for Job</h1>
-        </div>
-        <div class="card-body">
-          <div class="mb-4">
+        </section>
+        <section class="card-body">
+          <section class="mb-4">
             <h3><%= job.title %></h3>
             <p class="text-muted">Budget: R<%= parseFloat(job.budget).toFixed(2) %></p>
-          </div>
-          <div class="alert alert-warning">
+          </section>
+          <section class="alert alert-warning">
             <p><strong>Having trouble with payment?</strong> If you see errors, please temporarily disable any ad blockers or privacy extensions in your browser, then try again.</p>
-          </div>  
-          <div class="alert alert-info mb-4">
+          </section>  
+          <section class="alert alert-info mb-4">
             <p>Your job will be posted and visible to freelancers after payment is completed.</p>
-          </div>
+          </section>
           
           <!-- Simplified payment form -->
-          <div id="payment-form" class="mb-4">
-            <div class="mb-3">
+          <section id="payment-form" class="mb-4">
+            <section class="mb-3">
               <p><strong>Total Amount: R<%= parseFloat(job.budget).toFixed(2) %></strong></p>
-            </div>
+            </section>
 
             <button id="pay-button" class="btn btn-primary btn-lg">Pay Now</button>
-            <div id="payment-error" class="text-danger mt-2"></div>
-          </div>
+            <section id="payment-error" class="text-danger mt-2"></section>
+          </section>
           
           <!-- Common elements -->
-          <div id="payment-processing" class="d-none mt-3">
+          <section id="payment-processing" class="d-none mt-3">
             <p>Processing payment...</p>
-            <div class="progress">
-              <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
-            </div>
-          </div>
+            <section class="progress">
+              <section class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></section>
+            </section>
+          </section>
 
-          <div id="payment-success" class="d-none">
-            <div class="alert alert-success">
+          <section id="payment-success" class="d-none">
+            <section class="alert alert-success">
               <h4>Payment Successful!</h4>
               <p>Your job has been posted successfully.</p>
-            </div>
+            </section>
             <a href="/client/jobs" class="btn btn-primary">View My Jobs</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+          </section>
+        </section>
+      </section>
+    </section>
+  </section>
+</section>
 
 <script src="https://js.yoco.com/sdk/v1/yoco-sdk-web.js"></script>
 <script>

@@ -177,33 +177,33 @@
 <body>
   <%- include('./header') %>
 
-  <div class="main-container">
-    <div class="content-container">
-      <div class="container fade-in">
+  <section class="main-container">
+    <section class="content-container">
+      <section class="container fade-in">
         <% if (success_msg && success_msg.length > 0) { %>
-          <div class="alert alert-success">
+          <section class="alert alert-success">
             <i class="fas fa-check-circle mr-2"></i> <%= success_msg %>
-          </div>
+          </section>
         <% } %>
 
         <% if (error_msg && error_msg.length > 0) { %>
-          <div class="alert alert-danger">
+          <section class="alert alert-danger">
             <i class="fas fa-exclamation-circle mr-2"></i> <%= error_msg %>
-          </div>
+          </section>
         <% } %>
 
         <% if (error && error.length > 0) { %>
-          <div class="alert alert-danger">
+          <section class="alert alert-danger">
             <i class="fas fa-exclamation-triangle mr-2"></i> <%= error %>
-          </div>
+          </section>
         <% } %>
 
         <%- body %>
-      </div>
-    </div>
+      </section>
+    </section>
 
     <%- include('./footer') %>
-  </div>
+  </section>
 
   <script>
     // Add some interactive effects

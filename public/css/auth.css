@@ -46,20 +46,20 @@
   text-align: center;
 }
 
-.auth-divider {
+.auth-sectionider {
   display: flex;
   align-items: center;
   margin: 1.5rem 0;
 }
 
-.auth-divider::before,
-.auth-divider::after {
+.auth-sectionider::before,
+.auth-sectionider::after {
   content: "";
   flex: 1;
   border-bottom: 1px solid var(--border-color);
 }
 
-.auth-divider span {
+.auth-sectionider span {
   padding: 0 10px;
   color: #6c757d;
   font-size: 0.9rem;

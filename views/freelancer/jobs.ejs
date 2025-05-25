@@ -1,57 +1,57 @@
 <%- contentFor('body') %>
 
-<div class="container">
+<section class="container">
   <h1 class="mb-4">Available Jobs</h1>
   
-  <div class="row mb-4">
-    <div class="col-md-6">
-      <div class="form-group">
+  <section class="row mb-4">
+    <section class="col-md-6">
+      <section class="form-group">
         <input type="text" id="jobSearch" class="form-control" placeholder="Search jobs...">
-      </div>
-    </div>
+      </section>
+    </section>
     
-    <div class="col-md-6">
-      <div class="form-group">
+    <section class="col-md-6">
+      <section class="form-group">
         <select id="jobSort" class="form-control">
           <option value="latest">Latest First</option>
           <option value="budget-high">Highest Budget</option>
           <option value="budget-low">Lowest Budget</option>
           <option value="deadline">Closest Deadline</option>
         </select>
-      </div>
-    </div>
-  </div>
+      </section>
+    </section>
+  </section>
   
   <% if (jobs.length === 0) { %>
-    <div class="alert alert-info">
+    <section class="alert alert-info">
       <p>No jobs available at the moment.</p>
-    </div>
+    </section>
   <% } else { %>
-    <div class="job-list" id="jobContainer">
+    <section class="job-list" id="jobContainer">
       <% jobs.forEach(function(job) { %>
-        <div class="job-item" data-budget="<%= job.budget %>" data-date="<%= job.created_at %>" data-deadline="<%= job.deadline || '9999-12-31' %>">
+        <section class="job-item" data-budget="<%= job.budget %>" data-date="<%= job.created_at %>" data-deadline="<%= job.deadline || '9999-12-31' %>">
           <h3 class="job-title"><a href="/jobs/<%= job.id %>"><%= job.title %></a></h3>
-          <div class="job-company">
+          <section class="job-company">
             <%= job.company_name || `${job.first_name} ${job.last_name}` %>
-          </div>
-          <div class="job-details">
-            <div class="job-budget">Budget: R<%= parseFloat(job.budget).toFixed(2) %></div>
+          </section>
+          <section class="job-details">
+            <section class="job-budget">Budget: R<%= parseFloat(job.budget).toFixed(2) %></section>
             <% if (job.deadline) { %>
-              <div class="job-deadline">Deadline: <%= new Date(job.deadline).toLocaleDateString() %></div>
+              <section class="job-deadline">Deadline: <%= new Date(job.deadline).toLocaleDateString() %></section>
             <% } %>
-          </div>
-          <div class="job-description">
+          </section>
+          <section class="job-description">
             <%= job.description.length > 200 ? job.description.substring(0, 200) + '...' : job.description %>
-          </div>
-          <div class="job-actions">
+          </section>
+          <section class="job-actions">
             <a href="/jobs/<%= job.id %>" class="btn btn-primary">View Details</a>
             <a href="/jobs/<%= job.id %>/apply" class="btn btn-secondary">Apply Now</a>
-          </div>
-        </div>
+          </section>
+        </section>
       <% }); %>
-    </div>
+    </section>
   <% } %>
-</div>
+</section>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {

@@ -1,44 +1,44 @@
 <%- contentFor('body') %>
 
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card">
-        <div class="card-header">
+<section class="container">
+  <section class="row justify-content-center">
+    <section class="col-md-8">
+      <section class="card">
+        <section class="card-header">
           <h1 class="card-title">Apply for Job</h1>
-        </div>
-        <div class="card-body">
-          <div class="mb-4">
+        </section>
+        <section class="card-body">
+          <section class="mb-4">
             <h3><%= job.title %></h3>
-            <div class="text-muted mb-2">
+            <section class="text-muted mb-2">
               Budget: R<%= parseFloat(job.budget).toFixed(2) %>
               <% if (job.deadline) { %> 
                 | Deadline: <%= new Date(job.deadline).toLocaleDateString() %>
               <% } %>
-            </div>
+            </section>
             <p><%= job.description %></p>
-          </div>
+          </section>
           
           <form action="/jobs/<%= job.id %>/apply" method="POST">
-            <div class="form-group">
+            <section class="form-group">
               <label for="motivation" class="form-label">Why are you the right person for this job?*</label>
               <textarea id="motivation" name="motivation" class="form-control" rows="6" required></textarea>
               <small class="form-text">Explain why you're interested and qualified for this job. The client will see this along with your profile.</small>
-            </div>
+            </section>
             
-            <div class="alert alert-info mb-4">
+            <section class="alert alert-info mb-4">
               <p class="mb-0">
                 <strong>Note:</strong> The client will be able to see your profile details and CV.
               </p>
-            </div>
+            </section>
             
-            <div class="d-flex justify-content-between">
+            <section class="d-flex justify-content-between">
               <a href="/jobs/<%= job.id %>" class="btn btn-light">Cancel</a>
               <button type="submit" class="btn btn-primary">Submit Application</button>
-            </div>
+            </section>
           </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+        </section>
+      </section>
+    </section>
+  </section>
+</section>
