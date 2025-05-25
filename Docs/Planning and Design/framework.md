@@ -2,7 +2,7 @@
 
 ## Purpose
 This document contains initial wireframes created to guide the layout and user interface design of our application.
-
+The wireframe was to big so it is split into seperate files
 ---
 
 ## General  Wireframe
