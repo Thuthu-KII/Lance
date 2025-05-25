@@ -190,7 +190,7 @@ exports.postCreateJob = async (req, res) => {
     res.redirect(`/payments/job/${jobId}`);
   } catch (error) {
     console.error('Error creating job:', error);
-    req.flash('error_msg', 'Error creating job');
+    req.flash('error_msg', 'Hey Newbie, Please Log Out & Login again to be able to post jobs:)');
     res.redirect('/jobs/create');
   }
 };

@@ -561,7 +561,7 @@ exports.postCompleteClientProfile = async (req, res) => {
       }
       
       // Success message and redirect
-      req.flash('success_msg', 'Profile completed successfully');
+      req.flash('success_msg', 'Profile completed successfully. Please Log Out and Log In.');
       return res.redirect('/client/dashboard');
     } catch (error) {
       await client.query('ROLLBACK');

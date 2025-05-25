@@ -5,14 +5,12 @@
         <i class="fa-solid fa-rocket"></i>
         <span>LanceAI</span>
       </a>
-      
+
       <div class="mobile-menu-toggle">
         <i class="fas fa-bars"></i>
       </div>
-      
+
       <ul class="nav-links">
-        
-        
         <% if (user) { %>
           <% if (user.role === 'client') { %>
             <li><a href="/client/dashboard">Dashboard</a></li>
@@ -29,7 +27,7 @@
             <li><a href="/admin/approvals">Approvals</a></li>
             <li><a href="/admin/reports">Reports</a></li>
           <% } %>
-          
+
           <li class="user-dropdown">
             <a href="#" class="profile-link">
               <div class="avatar">
@@ -43,26 +41,16 @@
               <i class="fas fa-chevron-down"></i>
             </a>
             <div class="dropdown-content">
-              <a href="/profile" class="dropdown-item">
-                <i class="fas fa-user-circle"></i> My Profile
-              </a>
+              <a href="/profile" class="dropdown-item"><i class="fas fa-user-circle"></i> My Profile</a>
               <% if (user.role === 'client') { %>
-                <a href="/client/jobs" class="dropdown-item">
-                  <i class="fas fa-briefcase"></i> My Jobs
-                </a>
+                <a href="/client/jobs" class="dropdown-item"><i class="fas fa-briefcase"></i> My Jobs</a>
               <% } else if (user.role === 'freelancer') { %>
-                <a href="/freelancer/applications" class="dropdown-item">
-                  <i class="fas fa-file-alt"></i> My Applications
-                </a>
+                <a href="/freelancer/applications" class="dropdown-item"><i class="fas fa-file-alt"></i> My Applications</a>
               <% } else if (user.role === 'admin') { %>
-                <a href="/admin/stats" class="dropdown-item">
-                  <i class="fas fa-chart-line"></i> System Stats
-                </a>
+                <a href="/admin/stats" class="dropdown-item"><i class="fas fa-chart-line"></i> System Stats</a>
               <% } %>
               <div class="dropdown-divider"></div>
-              <a href="/auth/logout" class="dropdown-item text-danger">
-                <i class="fas fa-sign-out-alt"></i> Logout
-              </a>
+              <a href="/auth/logout" class="dropdown-item text-danger"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </div>
           </li>
         <% } else { %>
@@ -75,11 +63,9 @@
 </header>
 
 <style>
-  /* Header Styles */
   header {
     background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     position: fixed;
     top: 0;
@@ -90,14 +76,14 @@
     display: flex;
     align-items: center;
   }
-  
+
   .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
   }
-  
+
   .logo {
     display: flex;
     align-items: center;
@@ -107,11 +93,7 @@
     text-decoration: none;
     transition: transform 0.3s ease;
   }
-  
-  .logo:hover {
-    transform: scale(1.05);
-  }
-  
+
   .logo i {
     margin-right: 0.5rem;
     font-size: 1.25rem;
@@ -120,25 +102,25 @@
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
-  
+
   .nav-links {
     display: flex;
     align-items: center;
     list-style: none;
+    gap: 1.5rem;
     margin: 0;
     padding: 0;
-    gap: 1.5rem;
   }
-  
+
   .nav-links li a {
     color: #4b5563;
     text-decoration: none;
     font-weight: 500;
-    padding: 0.5rem 0;
     position: relative;
+    padding: 0.5rem 0;
     transition: color 0.3s ease;
   }
-  
+
   .nav-links li a:not(.btn)::after {
     content: '';
     position: absolute;
@@ -149,20 +131,19 @@
     background: linear-gradient(to right, #4f46e5, #8b5cf6);
     transition: width 0.3s ease;
   }
-  
+
   .nav-links li a:not(.btn):hover {
     color: #4f46e5;
   }
-  
+
   .nav-links li a:not(.btn):hover::after {
     width: 100%;
   }
-  
-  /* User Dropdown Styles */
+
   .user-dropdown {
     position: relative;
   }
-  
+
   .profile-link {
     display: flex;
     align-items: center;
@@ -172,11 +153,11 @@
     border-radius: 0.5rem;
     transition: background 0.3s ease;
   }
-  
+
   .profile-link:hover {
     background: rgba(243, 244, 246, 0.8);
   }
-  
+
   .avatar {
     width: 2rem;
     height: 2rem;
@@ -189,13 +170,13 @@
     margin-right: 0.5rem;
     overflow: hidden;
   }
-  
+
   .avatar img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
-  
+
   .profile-link span {
     margin: 0 0.5rem;
     font-weight: 500;
@@ -204,7 +185,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  
+
   .dropdown-content {
     position: absolute;
     top: calc(100% + 0.5rem);
@@ -212,7 +193,8 @@
     width: 220px;
     border-radius: 0.75rem;
     background: white;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+                0 4px 6px -2px rgba(0, 0, 0, 0.05);
     opacity: 0;
     visibility: hidden;
     transform: translateY(10px);
@@ -220,53 +202,62 @@
     overflow: hidden;
     z-index: 100;
   }
-  
-  .user-dropdown:hover .dropdown-content {
+
+  .user-dropdown:hover .dropdown-content,
+  .dropdown-content:hover {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
   }
-  
+
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    color: #374151;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.2s ease;
+  }
+
   .dropdown-item:hover {
     background: rgba(243, 244, 246, 0.8);
     color: #4f46e5;
   }
-  
+
   .dropdown-item i {
     width: 1.5rem;
     margin-right: 0.75rem;
     text-align: center;
   }
-  
+
   .dropdown-divider {
     height: 1px;
     background: #e5e7eb;
     margin: 0.25rem 0;
   }
-  
+
   .text-danger {
     color: #ef4444;
   }
-  
+
   .text-danger:hover {
     background: rgba(254, 226, 226, 0.5);
     color: #dc2626;
   }
-  
-  /* Mobile Menu Toggle */
+
   .mobile-menu-toggle {
     display: none;
     font-size: 1.5rem;
     cursor: pointer;
     color: #4b5563;
   }
-  
-  /* Mobile Responsive */
+
   @media (max-width: 768px) {
     .mobile-menu-toggle {
       display: block;
     }
-    
+
     .nav-links {
       position: fixed;
       top: 70px;
@@ -283,45 +274,23 @@
       transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s;
       z-index: 999;
     }
-    
+
     .nav-links.active {
       transform: translateY(0);
       opacity: 1;
       visibility: visible;
     }
-    
-    .nav-links li {
-      width: 100%;
-    }
-    
-    .nav-links li a {
-      display: block;
-      padding: 0.75rem 1rem;
-      width: 100%;
-    }
-    
-    .user-dropdown {
-      width: 100%;
-    }
-    
-    .profile-link {
-      justify-content: space-between;
-      width: 100%;
-    }
-    
-    .dropdown-content {
+
+    .user-dropdown .dropdown-content {
       position: static;
-      width: 100%;
-      opacity: 1;
-      visibility: visible;
       transform: none;
+      opacity: 1 !important;
+      visibility: visible !important;
       display: none;
       box-shadow: none;
-      border-radius: 0;
-      border-left: 2px solid #4f46e5;
-      margin-left: 1rem;
+      margin-top: 0.5rem;
     }
-    
+
     .user-dropdown.active .dropdown-content {
       display: block;
     }
@@ -329,31 +298,59 @@
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Mobile menu toggle
-    const menuToggle = document.querySelector('.mobile-menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
-    
-    if (menuToggle) {
-      menuToggle.addEventListener('click', function() {
-        navLinks.classList.toggle('active');
+  document.addEventListener('DOMContentLoaded', () => {
+    const userDropdown = document.querySelector('.user-dropdown');
+    const profileLink = userDropdown?.querySelector('.profile-link');
+
+    let hideTimeout;
+
+    // Only desktop behavior (hover)
+    if (window.innerWidth > 768 && profileLink && userDropdown) {
+      profileLink.addEventListener('pointerenter', () => {
+        clearTimeout(hideTimeout);
+        userDropdown.classList.add('active');
+      });
+
+      userDropdown.addEventListener('pointerenter', () => {
+        clearTimeout(hideTimeout);
+        userDropdown.classList.add('active');
+      });
+
+      profileLink.addEventListener('pointerleave', () => {
+        hideTimeout = setTimeout(() => {
+          userDropdown.classList.remove('active');
+        }, 200); // Delay helps with diagonal movement
+      });
+
+      userDropdown.addEventListener('pointerleave', () => {
+        hideTimeout = setTimeout(() => {
+          userDropdown.classList.remove('active');
+        }, 200);
       });
     }
-    
-    // Handle mobile dropdown toggles
-    const userDropdowns = document.querySelectorAll('.user-dropdown');
-    
-    if (window.innerWidth <= 768) {
-      userDropdowns.forEach(dropdown => {
-        const profileLink = dropdown.querySelector('.profile-link');
-        
-        if (profileLink) {
-          profileLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            dropdown.classList.toggle('active');
-          });
+
+    // Mobile click behavior
+    if (window.innerWidth <= 768 && profileLink && userDropdown) {
+      profileLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        userDropdown.classList.toggle('active');
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!userDropdown.contains(event.target)) {
+          setTimeout(() => {
+            userDropdown.classList.remove('active');
+          }, 100);
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          userDropdown.classList.remove('active');
         }
       });
     }
   });
 </script>
+
