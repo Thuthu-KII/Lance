@@ -3,6 +3,10 @@
 ## Overview
 This application follows the **MVC (Model-View-Controller)** architecture, a design pattern that separates concerns to enhance modularity, scalability, and maintainability. Below is a breakdown of the architecture and its implementation in the provided codebase.
 
+##  NOTE
+this is some in the ealry stages of production so some models may change
+
+
 ## Architecture: MVC
 
 ### Model
