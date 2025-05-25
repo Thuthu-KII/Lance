@@ -96,8 +96,8 @@ A comprehensive web application connecting clients with freelancers, enabling jo
 
 ## Usage & Demo
 
-- [Screen Recording Demo Video]([SCREEN_RECORDING_VIDEO_LINK](https://youtu.be/KLZIrqr79cs))
-- [Publicly Hosted Application]([DEPLOYED_APP_LINK](https://lanceapp-bah9ctdnd4d7grhb.southafricanorth-01.azurewebsites.net))
+--  **Screen Recording Demo Video:** [Watch on YouTube](https://youtu.be/KLZIrqr79cs)
+-  **Publicly Hosted Application:** [Visit the Deployed App](https://lanceapp-bah9ctdnd4d7grhb.southafricanorth-01.azurewebsites.net)
 - **Access Instructions:**
   - Credentials or any special instructions to login/use the app: `<INSTRUCTIONS OR TEST ACCOUNTS HERE>`
 
