@@ -44,7 +44,7 @@ This application follows the **MVC (Model-View-Controller)** architecture, a des
 
 - **Purpose**: Illustrates the interaction between users, the application, and the database during login and registration.
 
-![Sequence Diagram](./Customer%20Journey%20Map%20-%20Frame%201.jpg.png)
+![Sequence Diagram](./Customer%20Journey%20Map%20-%20Frame%201.jpg)
 
 ### State Diagram
 
@@ -56,4 +56,4 @@ This application follows the **MVC (Model-View-Controller)** architecture, a des
 
 - **Purpose**: Represents the static structure of the system, including entities like Users, Clients, and Freelancers.
 
-![Class Diagram](./Customer%20Journey%20Map%20-%20Frame%202.jpg.png)
+![Class Diagram](./Customer%20Journey%20Map%20-%20Frame%202.jpg)
