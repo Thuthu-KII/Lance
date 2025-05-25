@@ -18,6 +18,7 @@ const adminRoutes = require('./routes/adminRoutes');
 const jobRoutes = require('./routes/jobRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const profileRoutes = require('./routes/profileRoutes');
+const uploadRoute = require('./routes/upload')
 
 // Import passport config
 require('./config/passport');
@@ -86,6 +87,7 @@ app.use('/admin', adminRoutes);
 app.use('/jobs', jobRoutes);
 app.use('/payments', paymentRoutes);
 app.use('/profile', profileRoutes);
+app.use('/',uploadRoute);
 
 // Home route
 app.get('/', (req, res) => {

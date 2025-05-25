@@ -2,7 +2,6 @@
  * @jest-environment node
  */
 
-
 const { TextEncoder, TextDecoder } = require('util');
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
@@ -57,10 +56,10 @@ describe('Upload Middleware', () => {
   it('should reject upload with an invalid field name', async () => {
     const res = await request(app)
       .post('/upload')
-      .attach('invalidField', path.join(testFilesDir, 'test.pdf'));
+      .attach('wrongFieldName','tests/testfile.txt');
 
     expect(res.status).toBe(500);
-    expect(res.text).toMatch(/Invalid file field/);
+    expect(res.text).toMatch(/Unexpected field/);
   });
 
   it('should reject files larger than 5MB', async () => {
