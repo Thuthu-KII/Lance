@@ -25,7 +25,7 @@ Each chart shows the remaining story points per sprint for a team member. All ch
 
 > ![Burndown Chart](burndown_chart.png)
 
-*Include individual or team-specific burndown charts if preferred.*
+
 
 ## Notes
 
