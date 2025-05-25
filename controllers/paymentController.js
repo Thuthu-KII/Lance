@@ -45,17 +45,47 @@ exports.postJobPayment = async (req, res) => {
     // Add detailed logging
     console.log(`Processing payment for job ${jobId} with token ${token}`);
     
+    // Get the job details to determine the amount
+    const jobResult = await db.query(
+      'SELECT * FROM jobs WHERE id = $1',
+      [jobId]
+    );
+    
+    if (jobResult.rows.length === 0) {
+      return res.json({
+        success: false,
+        message: 'Job not found'
+      });
+    }
+    
+    const job = jobResult.rows[0];
+    
+    // Calculate amount in cents (Yoco requires cents)
+    const amountInCents = Math.round(parseFloat(job.budget) * 100);
+    
+    console.log(`Charging ${amountInCents} cents for job ${jobId}`);
+    
     // Your Yoco API call
     const result = await yoco.charge({
       token: token,
-      amountInCents: amount,
+      amountInCents: amountInCents,
       currency: 'ZAR',
-      // other required parameters
+      description: `Payment for job: ${job.title || 'Job ID: ' + jobId}`
     });
     
     console.log('Yoco API response:', result);
     
-    // Rest of your processing code
+    // Update job payment status
+    await db.query(
+      'UPDATE jobs SET payment_status = $1, updated_at = NOW() WHERE id = $2',
+      ['paid', jobId]
+    );
+    
+    // Create payment record
+    await db.query(
+      'INSERT INTO payments (job_id, paid_by, amount, payment_type, status, reference, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, NOW(), NOW())',
+      [jobId, req.user.id, job.budget, 'job_payment', 'completed', result.id || 'yoco_payment']
+    );
     
     res.json({ success: true });
   } catch (error) {
@@ -70,7 +100,6 @@ exports.postJobPayment = async (req, res) => {
     });
   }
 };
-
 // Admin: Process freelancer payment (after job completion)
 exports.adminProcessFreelancerPayment = async (req, res) => {
   try {

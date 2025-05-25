@@ -55,7 +55,7 @@
   document.addEventListener('DOMContentLoaded', function() {
     // Initialize variables
     const yoco = new window.YocoSDK({
-      publicKey: '<%= yocoPublicKey %>'
+      publicKey: 'pk_test_ed3c54a6gOol69qa7f45'
     });
     
     // Get DOM elements
@@ -73,7 +73,7 @@
       paymentError.textContent = '';
       
       const amountInCents = Math.round(<%= parseFloat(job.budget) %> * 100);
-      
+      console.log(amountInCents);
       yoco.showPopup({
         amountInCents: amountInCents,
         currency: 'ZAR',
