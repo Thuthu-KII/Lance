@@ -8,17 +8,19 @@ This document summarizes the outcomes of our sprint, focusing on the progress ma
 ## 1. Landing Page
 
 **Initial Version:**  
-![Landing Page - Old](./images/landing_old.png)
+![Landing Page - Old](./Screenshot%202025-05-25%20133440.png)
+![Landing Page - Old](./Screenshot%202025-05-25%133449.png)
 
 **Current Version:**  
-![Landing Page - New](./images/landing_new.png)
+![Landing Page - New]()
 
 ---
 
 ## 2. Sign-Up Page
 
 **Initial Version:**  
-![Sign-Up Page - Old](./images/signup_old.png)
+![Sign-Up Page - Old](./Screenshot%202025-05-25%133455.png)
+![Sign-Up Page - Old](./Screenshot%202025-05-25%133501.png)
 
 **Current Version:**  
 ![Sign-Up Page - New](./images/signup_new.png)
