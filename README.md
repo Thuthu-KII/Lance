@@ -113,7 +113,7 @@ A comprehensive web application connecting clients with freelancers, enabling jo
   - [Sprint Review Demonstrations](/Docs/scrum/sprint_reviews.md)
 - **Additional Design Documents:**
   - [Project Plan](/Docs/Planning_and_Design/framework.md)
-  - [Architecture Diagram](/Docs/Planning%and%Design/architecthure.md)
+  - [Architecture Diagram](/Docs/Planning_and_Design/architecthure.md)
   - [Test Plan and Results](/Docs/testing)
 ## License
 
