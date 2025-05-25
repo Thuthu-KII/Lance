@@ -1,4 +1,5 @@
 [![Coverage Status](https://coveralls.io/repos/github/Thuthu-KII/Lance/badge.svg?branch=backend-api)](https://coveralls.io/github/Thuthu-KII/Lance?branch=backend-api)
+[![Coverage Status](https://coveralls.io/repos/github/Thuthu-KII/Lance/badge.svg?branch=lance)](https://coveralls.io/github/Thuthu-KII/Lance?branch=lance)
 # Freelancer Management Platform (Lance)
 
 A comprehensive web application connecting clients with freelancers, enabling job posting, application, management, and payments with admin oversight.
