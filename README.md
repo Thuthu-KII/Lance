@@ -121,7 +121,7 @@ This project is licensed under the MIT License.
 
 ---
 
-*This README serves as the main navigation document for the Freelancer Management Platform project submission. Replace placeholders with actual links before final submission.*
+*This README serves as the main navigation document for the Freelancer Management Platform project submission. 
 ```
 
 ---
