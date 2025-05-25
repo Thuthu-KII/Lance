@@ -1,61 +1,79 @@
 <%- contentFor('body') %>
 
 <!-- Hero Section -->
-<div class="hero bg-primary p-5 mb-5">
-  <div class="row align-items-center">
-    <div class="col-12 col-md-6">
-      <h1 class="mb-3">Find the Perfect Freelancer for Your Project</h1>
-      <p class="mb-4">Connect with skilled professionals, post jobs, and get your projects done efficiently.</p>
+<div style="background: linear-gradient(to bottom right, #4338ca, #6366f1); color: white; padding: 40px; margin-bottom: 40px; border-radius: 1rem; position: relative; overflow: hidden; background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-size: cover;">
+  <!-- Particles for Visual Effect -->
+  <div style="position: absolute; width: 10px; height: 10px; background: rgba(255, 255, 255, 0.3); border-radius: 50%; top: 20%; left: 10%; animation: float 5s linear infinite;"></div>
+  <div style="position: absolute; width: 10px; height: 10px; background: rgba(255, 255, 255, 0.3); border-radius: 50%; top: 40%; left: 80%; animation: float 7s linear infinite;"></div>
+  <div style="position: absolute; width: 10px; height: 10px; background: rgba(255, 255, 255, 0.3); border-radius: 50%; top: 60%; left: 30%; animation: float 4s linear infinite;"></div>
+  
+  <div class="row align-items-center" style="position: relative; z-index: 10;">
+    <div class="col-12 col-md-6" style="animation: fadeInUp 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;">
+      <h1 class="mb-3" style="font-size: 2.5rem; font-weight: 800; background-clip: text; background-image: linear-gradient(to right, #ffffff, #e0e7ff); color: transparent;">Find the Perfect Freelancer for Your Project</h1>
+      <p class="mb-4" style="font-size: 1.2rem; color: rgba(219, 234, 254, 0.9);">Connect with skilled professionals, post jobs, and get your projects done efficiently.</p>
       <div class="d-flex">
         <% if (!user) { %>
-          <a href="/auth/google" class="btn btn-primary mr-3">Sign Up</a>
-          <a href="/auth/login" class="btn btn-secondary">Login</a>
+          <a href="/auth/google" class="btn mr-3" style="background: linear-gradient(to right, #4f46e5, #7e22ce); color: white; font-weight: 700; padding: 12px 24px; border-radius: 0.75rem; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease; position: relative; overflow: hidden; z-index: 1;">
+            <i class="fab fa-google mr-2"></i> Sign Up
+          </a>
+          <a href="/auth/login" class="btn" style="background: rgba(255, 255, 255, 0.2); color: white; border: 1px solid rgba(255, 255, 255, 0.3); font-weight: 700; padding: 12px 24px; border-radius: 0.75rem; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;">
+            <i class="fas fa-sign-in-alt mr-2"></i> Login
+          </a>
         <% } else if (user.role === 'client') { %>
-          <a href="/jobs/create" class="btn btn-primary mr-3">Post a Job</a>
-          <a href="/client/dashboard" class="btn btn-secondary">My Dashboard</a>
+          <a href="/jobs/create" class="btn mr-3" style="background: linear-gradient(to right, #4f46e5, #7e22ce); color: white; font-weight: 700; padding: 12px 24px; border-radius: 0.75rem; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;">Post a Job</a>
+          <a href="/client/dashboard" class="btn" style="background: rgba(255, 255, 255, 0.2); color: white; border: 1px solid rgba(255, 255, 255, 0.3); font-weight: 700; padding: 12px 24px; border-radius: 0.75rem; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;">My Dashboard</a>
         <% } else if (user.role === 'freelancer') { %>
-          <a href="/jobs/browse" class="btn btn-primary mr-3">Find Jobs</a>
-          <a href="/freelancer/dashboard" class="btn btn-secondary">My Dashboard</a>
+          <a href="/jobs/browse" class="btn mr-3" style="background: linear-gradient(to right, #4f46e5, #7e22ce); color: white; font-weight: 700; padding: 12px 24px; border-radius: 0.75rem; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;">Find Jobs</a>
+          <a href="/freelancer/dashboard" class="btn" style="background: rgba(255, 255, 255, 0.2); color: white; border: 1px solid rgba(255, 255, 255, 0.3); font-weight: 700; padding: 12px 24px; border-radius: 0.75rem; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;">My Dashboard</a>
         <% } %>
       </div>
     </div>
-    <div class="col-12 col-md-6 text-center mt-4 mt-md-0">
-      <img src="https://via.placeholder.com/600x400" alt="Freelancer Platform" class="img-fluid rounded shadow">
-    </div>
+    <!-- <div class="col-12 col-md-6 text-center mt-4 mt-md-0" style="animation: fadeInUp 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.3s;">
+      <img src="https://via.placeholder.com/600x400" alt="Freelancer Platform" class="img-fluid" style="border-radius: 1rem; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;">
+    </div> -->
   </div>
 </div>
 
 <!-- How It Works Section -->
-<section class="how-it-works container">
+<section class="how-it-works container" style="margin-bottom: 5rem;">
   <div class="row mb-5">
-    <div class="col-12 text-center mb-4">
-      <h2>How It Works</h2>
-      <p class="text-muted">Our platform makes it easy to connect clients and freelancers</p>
+    <div class="col-12 text-center mb-4" style="animation: fadeInUp 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;">
+      <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; background-clip: text; background-image: linear-gradient(to right, #4338ca, #6d28d9); color: transparent;">How It Works</h2>
+      <p style="color: #6b7280; font-size: 1.125rem; max-width: 32rem; margin: 0 auto;">Our platform makes it easy to connect clients and freelancers</p>
     </div>
     
     <div class="col-12 col-md-4 mb-4">
-      <div class="card h-100">
-        <div class="card-body text-center">
-          <h3 class="card-title">1. Post a Job</h3>
-          <p class="card-text">Clients can post jobs with details about their requirements and budget.</p>
+      <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1), inset 0 0 10px rgba(255, 255, 255, 0.1); border-radius: 1.5rem; padding: 2rem; height: 100%; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease; animation: fadeInUp 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.2s; background-image: linear-gradient(to bottom right, rgba(255, 255, 255, 0.2), rgba(79, 70, 229, 0.1));">
+        <div style="text-align: center;">
+          <div style="display: flex; justify-content: center; align-items: center; width: 4rem; height: 4rem; background-color: #e0e7ff; border-radius: 9999px; margin: 0 auto 1rem auto; color: #4f46e5;">
+            <span style="font-size: 1.5rem; font-weight: 700;">1</span>
+          </div>
+          <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem; color: #4f46e5;">Post a Job</h3>
+          <p style="color: #4b5563; font-size: 1.125rem;">Clients can post jobs with details about their requirements and budget.</p>
         </div>
       </div>
     </div>
     
     <div class="col-12 col-md-4 mb-4">
-      <div class="card h-100">
-        <div class="card-body text-center">
-          <h3 class="card-title">2. Find Talent</h3>
-          <p class="card-text">Freelancers apply with their qualifications and you choose the best fit.</p>
+      <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1), inset 0 0 10px rgba(255, 255, 255, 0.1); border-radius: 1.5rem; padding: 2rem; height: 100%; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease; animation: fadeInUp 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.4s; background-image: linear-gradient(to bottom right, rgba(255, 255, 255, 0.2), rgba(168, 85, 247, 0.1));">
+        <div style="text-align: center;">
+          <div style="display: flex; justify-content: center; align-items: center; width: 4rem; height: 4rem; background-color: #f3e8ff; border-radius: 9999px; margin: 0 auto 1rem auto; color: #9333ea;">
+            <span style="font-size: 1.5rem; font-weight: 700;">2</span>
+          </div>
+          <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem; color: #9333ea;">Find Talent</h3>
+          <p style="color: #4b5563; font-size: 1.125rem;">Freelancers apply with their qualifications and you choose the best fit.</p>
         </div>
       </div>
     </div>
     
     <div class="col-12 col-md-4 mb-4">
-      <div class="card h-100">
-        <div class="card-body text-center">
-          <h3 class="card-title">3. Complete Projects</h3>
-          <p class="card-text">Work together efficiently and securely through our platform.</p>
+      <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1), inset 0 0 10px rgba(255, 255, 255, 0.1); border-radius: 1.5rem; padding: 2rem; height: 100%; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease; animation: fadeInUp 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.6s; background-image: linear-gradient(to bottom right, rgba(255, 255, 255, 0.2), rgba(59, 130, 246, 0.1));">
+        <div style="text-align: center;">
+          <div style="display: flex; justify-content: center; align-items: center; width: 4rem; height: 4rem; background-color: #dbeafe; border-radius: 9999px; margin: 0 auto 1rem auto; color: #3b82f6;">
+            <span style="font-size: 1.5rem; font-weight: 700;">3</span>
+          </div>
+          <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem; color: #3b82f6;">Complete Projects</h3>
+          <p style="color: #4b5563; font-size: 1.125rem;">Work together efficiently and securely through our platform.</p>
         </div>
       </div>
     </div>
@@ -63,35 +81,39 @@
 </section>
 
 <!-- Featured Categories Section -->
-<section class="featured-categories bg-light p-4">
+<section style="background: linear-gradient(to right, #eef2ff, #f5f3ff); padding: 5rem 0; margin-bottom: 5rem;">
   <div class="container">
     <div class="row mb-5">
-      <div class="col-12 text-center mb-4">
-        <h2>Featured Categories</h2>
-        <p class="text-muted">Explore popular job categories on our platform</p>
+      <div class="col-12 text-center mb-4" style="animation: fadeInUp 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;">
+        <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; background-clip: text; background-image: linear-gradient(to right, #4338ca, #6d28d9); color: transparent;">Featured Categories</h2>
+        <p style="color: #6b7280; font-size: 1.125rem; max-width: 32rem; margin: 0 auto 4rem auto;">Explore popular job categories on our platform</p>
       </div>
       
       <div class="col-6 col-md-3 mb-3">
-        <div class="card p-3 text-center">
-          <h4>Web Development</h4>
+        <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1), inset 0 0 10px rgba(255, 255, 255, 0.1); border-radius: 1rem; padding: 1.5rem; text-align: center; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease; animation: fadeInUp 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.1s; background-image: linear-gradient(to bottom right, rgba(255, 255, 255, 0.2), rgba(79, 70, 229, 0.1));">
+          <i class="fas fa-laptop-code" style="font-size: 1.875rem; color: #4f46e5; margin-bottom: 1rem;"></i>
+          <h4 style="font-size: 1.25rem; font-weight: 700; color: #4f46e5;">Web Development</h4>
         </div>
       </div>
       
       <div class="col-6 col-md-3 mb-3">
-        <div class="card p-3 text-center">
-          <h4>Design</h4>
+        <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1), inset 0 0 10px rgba(255, 255, 255, 0.1); border-radius: 1rem; padding: 1.5rem; text-align: center; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease; animation: fadeInUp 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.2s; background-image: linear-gradient(to bottom right, rgba(255, 255, 255, 0.2), rgba(168, 85, 247, 0.1));">
+          <i class="fas fa-paint-brush" style="font-size: 1.875rem; color: #9333ea; margin-bottom: 1rem;"></i>
+          <h4 style="font-size: 1.25rem; font-weight: 700; color: #9333ea;">Design</h4>
         </div>
       </div>
       
       <div class="col-6 col-md-3 mb-3">
-        <div class="card p-3 text-center">
-          <h4>Writing</h4>
+        <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1), inset 0 0 10px rgba(255, 255, 255, 0.1); border-radius: 1rem; padding: 1.5rem; text-align: center; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease; animation: fadeInUp 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.3s; background-image: linear-gradient(to bottom right, rgba(255, 255, 255, 0.2), rgba(59, 130, 246, 0.1));">
+          <i class="fas fa-pen-fancy" style="font-size: 1.875rem; color: #3b82f6; margin-bottom: 1rem;"></i>
+          <h4 style="font-size: 1.25rem; font-weight: 700; color: #3b82f6;">Writing</h4>
         </div>
       </div>
       
       <div class="col-6 col-md-3 mb-3">
-        <div class="card p-3 text-center">
-          <h4>Marketing</h4>
+        <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1), inset 0 0 10px rgba(255, 255, 255, 0.1); border-radius: 1rem; padding: 1.5rem; text-align: center; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease; animation: fadeInUp 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.4s; background-image: linear-gradient(to bottom right, rgba(255, 255, 255, 0.2), rgba(79, 70, 229, 0.1));">
+          <i class="fas fa-bullhorn" style="font-size: 1.875rem; color: #4f46e5; margin-bottom: 1rem;"></i>
+          <h4 style="font-size: 1.25rem; font-weight: 700; color: #4f46e5;">Marketing</h4>
         </div>
       </div>
     </div>
@@ -99,13 +121,108 @@
 </section>
 
 <!-- Join Community Section -->
-<section class="join-community">
-  <div class="container">
+<section style="background: linear-gradient(to bottom right, #312e81, #7e22ce, #1e40af); color: white; padding: 5rem 0; text-align: center; position: relative; overflow: hidden; margin-bottom: 5rem; border-radius: 0.5rem;">
+  <div class="absolute inset-0" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; opacity: 0.05;">
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
+          <path d="M 80 0 L 0 0 0 80" fill="none" stroke="white" stroke-width="1"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#grid)" />
+    </svg>
+  </div>
+  
+  <!-- Particles for Visual Effect -->
+  <div style="position: absolute; width: 10px; height: 10px; background: rgba(255, 255, 255, 0.3); border-radius: 50%; top: 10%; left: 20%; animation: float 6s linear infinite;"></div>
+  <div style="position: absolute; width: 10px; height: 10px; background: rgba(255, 255, 255, 0.3); border-radius: 50%; top: 30%; left: 70%; animation: float 5s linear infinite;"></div>
+  <div style="position: absolute; width: 10px; height: 10px; background: rgba(255, 255, 255, 0.3); border-radius: 50%; top: 50%; left: 40%; animation: float 7s linear infinite;"></div>
+  
+  <div class="container" style="position: relative; z-index: 10; animation: fadeInUp 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;">
     <div class="row">
       <div class="col-12 text-center mb-4">
-        <h2>Join Our Community Today</h2>
-        <p class="text-muted mb-4">Start hiring or working on projects in minutes</p>
+        <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1.5rem; background-clip: text; text-fill-color: transparent; background-image: linear-gradient(to right, white, #e0e7ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Join Our Community Today</h2>
+        <p style="color: #ddd6fe; font-size: 1.25rem; max-width: 48rem; margin: 1.5rem auto; line-height: 1.7;">Start hiring or working on projects in minutes</p>
+        
+        <a href="/auth/google" style="display: inline-block; background-image: linear-gradient(to right, white, #e0e7ff); color: #4338ca; padding: 1rem 2rem; margin-top: 2.5rem; border-radius: 0.75rem; font-weight: 700; font-size: 1.125rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease; position: relative; overflow: hidden; animation: pulse 3s infinite ease-in-out;">
+          <i class="fab fa-google mr-2"></i> Sign Up Now
+        </a>
       </div>
     </div>
   </div>
 </section>
+
+<style>
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+  @keyframes float {
+    0% { transform: translateY(0) translateX(0); opacity: 0.8; }
+    50% { transform: translateY(-100px) translateX(20px); opacity: 0.2; }
+    100% { transform: translateY(0) translateX(0); opacity: 0.8; }
+  }
+  @keyframes shine {
+    0% { left: -100%; }
+    50% { left: 100%; }
+    100% { left: -100%; }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Create dynamic particles for hero section
+    const heroSection = document.querySelector('.hero');
+    
+    // Create random number of particles (between 5-10)
+    const particleCount = Math.floor(Math.random() * 6) + 5;
+    
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement('div');
+      
+      // Random positioning
+      const top = Math.random() * 100;
+      const left = Math.random() * 100;
+      
+      // Random size (3-10px)
+      const size = Math.random() * 7 + 3;
+      
+      // Random animation duration (4-8s)
+      const duration = Math.random() * 4 + 4;
+      
+      particle.style.position = 'absolute';
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
+      particle.style.borderRadius = '50%';
+      particle.style.top = `${top}%`;
+      particle.style.left = `${left}%`;
+      particle.style.animation = `float ${duration}s linear infinite`;
+      
+      heroSection.appendChild(particle);
+    }
+    
+    // Make all divs with hover-scale class transform on hover
+    const hoverElements = document.querySelectorAll('.col-12.col-md-4 > div, .col-6.col-md-3 > div');
+    
+    hoverElements.forEach(element => {
+      element.addEventListener('mouseenter', function() {
+        this.style.transform = 'scale(1.05)';
+        this.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.15)';
+      });
+      
+      element.addEventListener('mouseleave', function() {
+        this.style.transform = 'scale(1)';
+        this.style.boxShadow = '0 10px 40px rgba(0, 0, 0, 0.1), inset 0 0 10px rgba(255, 255, 255, 0.1)';
+      });
+    });
+  });
+</script>

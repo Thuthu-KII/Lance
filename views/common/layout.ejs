@@ -3,42 +3,229 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Freelancer Management Platform</title>
-  <!-- Add this to your layout header if not already present -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <title>LanceAI - Freelancer Management Platform</title>
   <link rel="stylesheet" href="/css/common.css">
+  <!-- <link rel="stylesheet" href="/css/cloudflare.css"> -->
+  <link rel="stylesheet" href="/css/google.css">
+
   <% if (locals.cssFiles) { %>
     <% cssFiles.forEach(function(css) { %>
       <link rel="stylesheet" href="/css/<%= css %>">
     <% }); %>
   <% } %>
+  <style>
+    /* Base Styles */
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to bottom right, #f1f5f9, #e9eef6, #eff6ff);
+      color: #1f2937;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Main Container with Header Spacing */
+    .main-container {
+      padding-top: 70px; /* Adjust this value to match your header height */
+      min-height: calc(100vh - 70px); /* Ensure content area is at least viewport height minus header */
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem;
+      width: 100%;
+    }
+
+    /* Content Container (grows to push footer down) */
+    .content-container {
+      flex: 1;
+    }
+
+    /* Glass Effect */
+    .glass-effect {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1), inset 0 0 10px rgba(255, 255, 255, 0.1);
+    }
+
+    /* Alert Styles */
+    .alert {
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 500;
+    }
+
+    .alert-success {
+      background: rgba(167, 243, 208, 0.5);
+      border-left: 4px solid #10b981;
+      color: #065f46;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .alert-danger {
+      background: rgba(254, 202, 202, 0.5);
+      border-left: 4px solid #ef4444;
+      color: #991b1b;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s ease-in forwards;
+    }
+
+    /* Button Styles */
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: linear-gradient(to right, #4f46e5, #6366f1);
+      color: white;
+      border: none;
+      box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2), 0 2px 4px -1px rgba(79, 70, 229, 0.1);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(to right, #4338ca, #4f46e5);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3), 0 4px 6px -2px rgba(79, 70, 229, 0.1);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: #4f46e5;
+      border: 1px solid rgba(79, 70, 229, 0.3);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Card Styles */
+    .card {
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Heading Styles */
+    h1, h2, h3, h4, h5, h6 {
+      color: #1e293b;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-top: 0;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1.25rem;
+    }
+    
+    /* Hover Effects */
+    .hover-scale {
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+    }
+    .hover-scale:hover {
+      transform: scale(1.03);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+  </style>
 </head>
 <body>
   <%- include('./header') %>
 
-  <div class="container">
-    <% if (success_msg && success_msg.length > 0) { %>
-      <div class="alert alert-success">
-        <%= success_msg %>
-      </div>
-    <% } %>
+  <div class="main-container">
+    <div class="content-container">
+      <div class="container fade-in">
+        <% if (success_msg && success_msg.length > 0) { %>
+          <div class="alert alert-success">
+            <i class="fas fa-check-circle mr-2"></i> <%= success_msg %>
+          </div>
+        <% } %>
 
-    <% if (error_msg && error_msg.length > 0) { %>
-      <div class="alert alert-danger">
-        <%= error_msg %>
-      </div>
-    <% } %>
+        <% if (error_msg && error_msg.length > 0) { %>
+          <div class="alert alert-danger">
+            <i class="fas fa-exclamation-circle mr-2"></i> <%= error_msg %>
+          </div>
+        <% } %>
 
-    <% if (error && error.length > 0) { %>
-      <div class="alert alert-danger">
-        <%= error %>
-      </div>
-    <% } %>
+        <% if (error && error.length > 0) { %>
+          <div class="alert alert-danger">
+            <i class="fas fa-exclamation-triangle mr-2"></i> <%= error %>
+          </div>
+        <% } %>
 
-    <%- body %>
+        <%- body %>
+      </div>
+    </div>
+
+    <%- include('./footer') %>
   </div>
 
-  <%- include('./footer') %>
+  <script>
+    // Add some interactive effects
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add hover effects to cards
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card => {
+        card.classList.add('hover-scale');
+      });
+      
+      // Add fade-in animation to container content
+      const fadeElements = document.querySelectorAll('.container > *');
+      fadeElements.forEach((element, index) => {
+        element.style.opacity = '0';
+        setTimeout(() => {
+          element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+          element.style.opacity = '1';
+          element.style.transform = 'translateY(0)';
+        }, 100 * index);
+      });
+    });
+  </script>
 
   <% if (locals.jsFiles) { %>
     <% jsFiles.forEach(function(js) { %>

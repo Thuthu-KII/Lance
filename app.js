@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const pgSession = require('connect-pg-simple')(session);
 const passport = require('passport');
 const flash = require('connect-flash');
 const morgan = require('morgan');
@@ -9,6 +10,9 @@ const helmet = require('helmet');
 const methodOverride = require('method-override');
 const { Pool } = require('pg');
 require('dotenv').config();
+
+// Import database pool for session store
+const db = require('./config/database');
 
 // Import routes
 const authRoutes = require('./routes/authRoutes');
@@ -26,13 +30,14 @@ require('./config/passport');
 // Create Express app 
 const app = express();
 
-// Set view engine
+// Trust proxy when running behind a load balancer (e.g., Azure)
+if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', 1);
+}
+
 app.set('view engine', 'ejs');
 const expressLayouts = require('express-ejs-layouts');
-
 app.use(expressLayouts);
-
-// Set layout file (optional, defaults to views/layout.ejs)
 app.set('layout', 'common/layout');
 
 // Middlewares
@@ -52,19 +57,24 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(methodOverride('_method'));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'), { maxAge: '1d' }));
 
-// Session configuration
+// Session configuration with PostgreSQL store
+//console.log("SESSION_SECRET:", process.env.SESSION_SECRET);
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'freelancer_platform_secret',
+  store: new pgSession({
+    pool: db.pool,
+    tableName: 'session'
+  }),
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: { 
-    secure: process.env.NODE_ENV === 'production',
+  cookie: {
+    secure: process.env.NODE_ENV === 'production', // ensures cookies only sent over HTTPS
     maxAge: 24 * 60 * 60 * 1000 // 24 hours
   }
 }));
- 
+
 // Passport initialization
 app.use(passport.initialize());
 app.use(passport.session());

@@ -63,9 +63,6 @@ exports.getRegisterFreelancer = (req, res) => {
 // Process client registration
 exports.postRegisterClient = async (req, res) => {
   const { email, password, confirmPassword, firstName, lastName, companyName, phone, address } = req.body;
-  let skills = req.body.skills ? req.body.skills.split(',').map(skill => skill.trim()) : [];
-  const experience = req.body.experience || '';
-  let cvPath = req.file ? `/uploads/cvs/${req.file.filename}` : '';
   
   const errors = [];
   
@@ -97,9 +94,7 @@ exports.postRegisterClient = async (req, res) => {
       lastName,
       companyName,
       phone,
-      address,
-      skills: skills.join(', '),
-      experience
+      address
     });
   }
   
@@ -121,8 +116,8 @@ exports.postRegisterClient = async (req, res) => {
     
     // Insert client profile
     await client.query(
-      'INSERT INTO clients (user_id, first_name, last_name, company_name, phone, address, skills, experience, cv_path) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)',
-      [userId, firstName, lastName, companyName, phone, address, skills, experience, cvPath]
+      'INSERT INTO clients (user_id, first_name, last_name, company_name, phone, address) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)',
+      [userId, firstName, lastName, companyName, phone, address]
     );
     
     await client.query('COMMIT');
@@ -356,114 +351,114 @@ exports.postSelectRole = async (req, res) => {
   }
 };
 
-// Complete client profile for OAuth users
-// Process client profile completion
-exports.postCompleteClientProfile = async (req, res) => {
-  // Make sure user is authenticated and has an ID
-  if (!req.user || !req.user.id) {
-    return res.redirect('/auth/login');
-  }
+
+// exports.postCompleteClientProfile = async (req, res) => {
+//   // Make sure user is authenticated and has an ID
+//   if (!req.user || !req.user.id) {
+//     return res.redirect('/auth/login');
+//   }
   
-  const userId = req.user.id;
-  const { firstName, lastName, companyName, phone, address } = req.body;
-  let skills = req.body.skills ? req.body.skills.split(',').map(skill => skill.trim()) : [];
-  const experience = req.body.experience || '';
-  let cvPath = req.file ? `/uploads/cvs/${req.file.filename}` : '';
+//   const userId = req.user.id;
+//   const { firstName, lastName, companyName, phone, address } = req.body;
+//   let skills = req.body.skills ? req.body.skills.split(',').map(skill => skill.trim()) : [];
+//   const experience = req.body.experience || '';
+//   let cvPath = req.file ? `/uploads/cvs/${req.file.filename}` : '';
   
-  const errors = [];
+//   const errors = [];
   
-  // Validate inputs
-  if (!firstName || !lastName) {
-    errors.push({ message: 'Please fill in all required fields' });
-  }
+//   // Validate inputs
+//   if (!firstName || !lastName) {
+//     errors.push({ message: 'Please fill in all required fields' });
+//   }
   
-  if (errors.length > 0) {
-    return res.render('auth/complete-profile-client', {
-      errors,
-      user: req.user,
-      firstName,
-      lastName,
-      companyName,
-      phone,
-      address,
-      skills: skills.join(', '),
-      experience
-    });
-  }
+//   if (errors.length > 0) {
+//     return res.render('auth/complete-profile-client', {
+//       errors,
+//       user: req.user,
+//       firstName,
+//       lastName,
+//       companyName,
+//       phone,
+//       address,
+//       skills: skills.join(', '),
+//       experience
+//     });
+//   }
   
-  try {
-    const client = await db.getClient();
-    await client.query('BEGIN');
+//   try {
+//     const client = await db.getClient();
+//     await client.query('BEGIN');
     
-    // Check if client profile already exists
-    const profileCheck = await client.query(
-      'SELECT * FROM clients WHERE user_id = $1',
-      [userId]
-    );
+//     // Check if client profile already exists
+//     const profileCheck = await client.query(
+//       'SELECT * FROM clients WHERE user_id = $1',
+//       [userId]
+//     );
     
-    if (profileCheck.rows.length > 0) {
-      // Update existing profile
-      await client.query(
-        `UPDATE clients 
-         SET first_name = $1, last_name = $2, company_name = $3, 
-             phone = $4, address = $5, skills = $6, 
-             experience = $7, cv_path = CASE WHEN $8 = '' THEN cv_path ELSE $8 END
-         WHERE user_id = $9`,
-        [
-          firstName, 
-          lastName, 
-          companyName, 
-          phone, 
-          address, 
-          skills, 
-          experience, 
-          cvPath, 
-          userId
-        ]
-      );
-    } else {
-      // Insert new client profile
-      await client.query(
-        `INSERT INTO clients 
-         (user_id, first_name, last_name, company_name, phone, address, skills, experience, cv_path) 
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
-        [
-          userId, 
-          firstName, 
-          lastName, 
-          companyName, 
-          phone, 
-          address, 
-          skills, 
-          experience, 
-          cvPath
-        ]
-      );
-    }
+//     if (profileCheck.rows.length > 0) {
+//       // Update existing profile
+//       await client.query(
+//         `UPDATE clients 
+//          SET first_name = $1, last_name = $2, company_name = $3, 
+//              phone = $4, address = $5, skills = $6, 
+//              experience = $7, cv_path = CASE WHEN $8 = '' THEN cv_path ELSE $8 END
+//          WHERE user_id = $9`,
+//         [
+//           firstName, 
+//           lastName, 
+//           companyName, 
+//           phone, 
+//           address, 
+//           skills, 
+//           experience, 
+//           cvPath, 
+//           userId
+//         ]
+//       );
+//     } else {
+//       // Insert new client profile
+//       await client.query(
+//         `INSERT INTO clients 
+//          (user_id, first_name, last_name, company_name, phone, address, skills, experience, cv_path) 
+//          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+//         [
+//           userId, 
+//           firstName, 
+//           lastName, 
+//           companyName, 
+//           phone, 
+//           address, 
+//           skills, 
+//           experience, 
+//           cvPath
+//         ]
+//       );
+//     }
     
-    // Ensure role is set correctly
-    await client.query(
-      'UPDATE users SET role = $1 WHERE id = $2',
-      ['client', userId]
-    );
+//     // Ensure role is set correctly
+//     await client.query(
+//       'UPDATE users SET role = $1 WHERE id = $2',
+//       ['client', userId]
+//     );
     
-    await client.query('COMMIT');
-    client.release();
+//     await client.query('COMMIT');
+//     client.release();
     
-    // Update session
-    req.user.role = 'client';
-    req.user.needsProfile = false;
+//     // Update session
+//     req.user.role = 'client';
+//     req.user.needsProfile = false;
     
-    req.flash('success_msg', 'Profile completed successfully');
-    return res.redirect('/client/dashboard');
-  } catch (error) {
-    console.error('Profile completion error:', error);
-    req.flash('error_msg', 'Profile completion failed. Please try again.');
-    res.redirect('/auth/complete-profile/client');
-  }
-};
+//     req.flash('success_msg', 'Profile completed successfully');
+//     return res.redirect('/client/dashboard');
+//   } catch (error) {
+//     console.error('Profile completion error:', error);
+//     req.flash('error_msg', 'Profile completion failed. Please try again.');
+//     res.redirect('/auth/complete-profile/client');
+//   }
+// };
 
 // Process client profile completion
+
 exports.postCompleteClientProfile = async (req, res) => {
   try {
     // Check if user is authenticated
@@ -479,9 +474,6 @@ exports.postCompleteClientProfile = async (req, res) => {
     
     // Get form data
     const { firstName, lastName, companyName, phone, address } = req.body;
-    let skills = req.body.skills ? req.body.skills.split(',').map(skill => skill.trim()) : [];
-    const experience = req.body.experience || '';
-    let cvPath = req.file ? `/uploads/cvs/${req.file.filename}` : '';
     
     // Validate inputs
     const errors = [];
@@ -497,10 +489,9 @@ exports.postCompleteClientProfile = async (req, res) => {
         lastName: lastName || req.user.last_name || '',
         companyName: companyName || '',
         phone: phone || '',
-        address: address || '',
-        skills: skills.join(', ') || '',
-        experience: experience || ''
-      });
+        address: address || ''
+      }
+      )
     }
     
     // Begin database transaction
@@ -519,8 +510,7 @@ exports.postCompleteClientProfile = async (req, res) => {
         await client.query(
           `UPDATE clients 
            SET first_name = $1, last_name = $2, company_name = $3, 
-               phone = $4, address = $5, skills = $6, experience = $7,
-               cv_path = CASE WHEN $8 = '' THEN cv_path ELSE $8 END,
+               phone = $4, address = $5 END,
                updated_at = CURRENT_TIMESTAMP
            WHERE user_id = $9`,
           [
@@ -528,29 +518,22 @@ exports.postCompleteClientProfile = async (req, res) => {
             lastName || req.user.last_name, 
             companyName, 
             phone, 
-            address, 
-            skills, 
-            experience, 
-            cvPath, 
-            req.user.id
+            address
           ]
         );
       } else {
         // Create new client profile
         await client.query(
           `INSERT INTO clients 
-           (user_id, first_name, last_name, company_name, phone, address, skills, experience, cv_path) 
-           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+           (user_id, first_name, last_name, company_name, phone, address) 
+           VALUES ($1, $2, $3, $4, $5, $6)`,
           [
             req.user.id,
             firstName || req.user.first_name, 
             lastName || req.user.last_name, 
             companyName, 
             phone, 
-            address, 
-            skills, 
-            experience, 
-            cvPath
+            address
           ]
         );
       }

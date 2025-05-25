@@ -1,106 +1,129 @@
-[![Coverage Status](https://coveralls.io/repos/github/Thuthu-KII/Lance/badge.svg?branch=lance)](https://coveralls.io/github/Thuthu-KII/Lance?branch=lance)
-# Freelancer Management Platform
 
-A comprehensive web application for connecting clients with freelancers. This platform allows clients to post jobs, freelancers to apply, and administrators to manage the entire system.
+[![Coverage Status](https://coveralls.io/repos/github/Thuthu-KII/Lance/badge.svg?branch=lance)](https://coveralls.io/github/Thuthu-KII/Lance?branch=lance)
+
+# Freelancer Management Platform (Lance)
+
+A comprehensive web application connecting clients with freelancers, enabling job posting, application, management, and payments with admin oversight.
+
+## Table of Contents
+- [Features](#features)
+- [Technology Stack](#technology-stack)
+- [Installation](#installation)
+- [Database Structure](#database-structure)
+- [Security Features](#security-features)
+- [Usage & Demo](#usage--demo)
+- [Project Artifacts](#project-artifacts)
+- [License](#license)
 
 ## Features
 
-### For Clients
-- Register and create a profile
-- Post jobs with details and budget
-- View applications from freelancers
-- Hire freelancers for jobs
-- Mark jobs as complete
+### Clients
+- Register and create profile
+- Post jobs with budget and details
+- View and manage freelancer applications
+- Hire freelancers and mark jobs complete
 - Generate invoices
 
-### For Freelancers
-- Register and upload required documents
-- Browse available jobs
-- Apply to jobs with motivation statements
-- Work on assigned jobs
-- Mark jobs as complete
+### Freelancers
+- Register, upload documents (CV, certificates)
+- Browse and apply for jobs
+- Manage assigned jobs and mark complete
 - Track earnings
 
-### For Admins
+### Admins
 - Approve freelancer registrations
-- Manage users (clients, freelancers, admins)
-- Monitor jobs and applications
+- Manage users and monitor jobs/applications
 - Handle reported issues
 - Process payments to freelancers
-- View system statistics
+- View system statistics/dashboard
 
 ## Technology Stack
-
-- **Backend**: Node.js with Express.js
-- **Database**: PostgreSQL
-- **Authentication**: Passport.js with local strategy and Google OAuth
-- **File Upload**: Multer
-- **Payment Processing**: Yoco API
-- **Frontend**: EJS templates with CSS
-- **Security**: Helmet, bcrypt
+- **Backend:** Node.js with Express.js
+- **Database:** PostgreSQL
+- **Authentication:** Passport.js (Local & Google OAuth)
+- **File Upload:** Multer
+- **Payment:** Yoco API
+- **Frontend:** EJS templates with CSS
+- **Security:** Helmet, bcrypt, express-session
 
 ## Installation
 
-1. Clone the repository:
-git clone https://github.com/yourusername/freelancer-platform.git
-cd freelancer-platform
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/Thuthu-KII/Lance.git
+   cd Lance
 
 
 2. Install dependencies:
-npm install
+   ```bash
+   npm install
+   ```
 
-3. Create a `.env` file based on `.env.example` and fill in your configuration details.
+3. Create `.env` from `.env.example` and configure environment variables.
 
-4. Set up your PostgreSQL database and update the DATABASE_URL in your `.env` file.
+4. Setup PostgreSQL and update `DATABASE_URL` in `.env`.
 
-5. Start the application:
-npm start
+5. Start server:
+   ```bash
+   npm start
+   ```
 
+   For development with auto-reload:
+   ```bash
+   npm run dev
+   ```
 
-
-For development with auto-reload:
-npm run dev
-
-
-Collapse
-
-6. Access the application at: http://localhost:3000
+6. Access the app at: [http://localhost:3000](http://localhost:3000)
 
 ## Database Structure
 
-The application uses several related tables:
-- users - Core user information and authentication
-- clients - Client-specific profile data
-- freelancers - Freelancer-specific profile data with approval status
-- admins - Admin-specific profile data
-- jobs - Job listings with status and payment info
-- job_applications - Applications from freelancers to jobs
-- payments - Payment records for job postings and freelancer payments
-- reports - Issue reports from users
-- job_completions - Completion status tracking
+- `users` — user authentication and core info
+- `clients` — client profiles
+- `freelancers` — freelancer profiles, including approval status
+- `admins` — admin profiles
+- `jobs` — job listings with statuses and payment data
+- `job_applications` — freelancer applications to jobs
+- `payments` — records of payments made
+- `reports` — user issue reports
+- `job_completions` — tracking job completion status
 
 ## Security Features
 
 - Password hashing with bcrypt
-- Session management with express-session
-- HTTP headers security with helmet
+- Session management via express-session
+- HTTP header protection with Helmet
 - CSRF protection
-- Input validation
-- Role-based access control
+- Input validation with express-validator
+- Role-based access control (clients, freelancers, admins)
 
+## Usage & Demo
+
+- [Screen Recording Demo Video](SCREEN_RECORDING_VIDEO_LINK)
+- [Publicly Hosted Application](DEPLOYED_APP_LINK)
+- **Access Instructions:**
+  - Credentials or any special instructions to login/use the app: `<INSTRUCTIONS OR TEST ACCOUNTS HERE>`
+
+## Project Artifacts
+
+- [GitHub Repository](https://github.com/Thuthu-KII/Lance) (public, with full code and commit history)
+- **Scrum Artifacts:**
+  - [Product Backlog](/Docs/scrum/product_backlog.md)
+  - [Sprint Backlogs](/Docs/scrum/product_backlog.md)
+  - [Sprint Burndown Charts](/Docs/scrum/burndown_charts.md)
+  - [Sprint Retrospective Reports](/Docs/scrum/sprint_retros.md)
+  - [Daily Stand-Up Summaries](/Docs/scrum/sprint_retros.md)
+  - [Sprint Review Demonstrations](/Docs/scrum/sprint_reviews.md)
+- **Additional Design Documents:**
+  - [Project Plan](/Docs/Planning%and%Design/framework.md)
+  - [Architecture Diagram](/Docs/Planning%and%Design/architecthure.md)
+  - [Test Plan and Results](/Docs/testing)
 ## License
 
 This project is licensed under the MIT License.
-Summary
-This completes the implementation of the Freelancer Management Platform. The application includes:
 
-User Management System with three roles: Client, Freelancer, and Admin
-Authentication with both local email/password and Google OAuth
-Job Management for posting, browsing, and applying to jobs
-Application and Hiring Process for connecting clients with freelancers
-Payment Integration with Yoco for job posting and freelancer payments
-Document Management for uploading and viewing CVs and clearance certificates
-Approval System for admin verification of freelancers
-Reporting System for handling issues
-Invoice Generation in CSV format
-Dashboard with relevant information for each user ro
+---
+
+*This README serves as the main navigation document for the Freelancer Management Platform project submission. Replace placeholders with actual links before final submission.*
+```
+
+---

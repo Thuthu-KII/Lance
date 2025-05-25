@@ -3,39 +3,36 @@
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-6 col-lg-5">
-      <div class="card shadow-lg border-0 rounded-lg">
-        <div class="card-header bg-primary text-white text-center py-4">
-          <h2 class="m-0"><i class="fas fa-sign-in-alt me-2"></i>Login</h2>
+      <div class="card glass-effect">
+        <div class="card-header text-center py-4">
+          <h2 class="m-0 text-gradient"><i class="fas fa-sign-in-alt me-2"></i>Login</h2>
         </div>
         
         <div class="card-body p-4">
           <% if(typeof errors != 'undefined') { %>
             <% errors.forEach(function(error) { %>
-              <div class="alert alert-danger alert-dismissible fade show">
+              <div class="alert alert-danger">
                 <i class="fas fa-exclamation-circle me-2"></i> <%= error.message %>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
             <% }); %>
           <% } %>
           
           <% if(success_msg != '') { %>
-            <div class="alert alert-success alert-dismissible fade show">
+            <div class="alert alert-success">
               <i class="fas fa-check-circle me-2"></i> <%= success_msg %>
-              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
           <% } %>
           
           <% if(error_msg != '') { %>
-            <div class="alert alert-danger alert-dismissible fade show">
+            <div class="alert alert-danger">
               <i class="fas fa-exclamation-circle me-2"></i> <%= error_msg %>
-              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
           <% } %>
           
           <!-- Google OAuth Button -->
           <div class="text-center mb-4">
             <p class="text-muted mb-4">Log in to access your account</p>
-            <a href="/auth/google" class="btn btn-light btn-google btn-lg w-100 position-relative shadow-sm">
+            <a href="/auth/google" class="btn btn-google btn-lg w-100 position-relative">
               <i class="fab fa-google google-icon position-absolute"></i>
               <span>Continue with Google</span>
             </a>
@@ -48,13 +45,13 @@
           
           <!-- Admin Toggle Button -->
           <div class="text-center mb-3">
-            <button id="toggleAdminLogin" class="btn btn-sm btn-outline-secondary px-3">
+            <button id="toggleAdminLogin" class="btn btn-outline-secondary px-3">
               <i class="fas fa-user-shield me-2"></i>Admin Login
             </button>
           </div>
           
           <!-- Traditional Login Form (Hidden by Default) -->
-          <div id="traditionalLoginForm" class="d-none">
+          <div id="traditionalLoginForm" class="login-form-container">
             <form action="/auth/login" method="POST">
               <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
@@ -93,14 +90,6 @@
                 </div>
               </div>
               
-              <div class="d-flex justify-content-between align-items-center mb-4">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="remember" id="remember">
-                  <label class="form-check-label" for="remember">Remember me</label>
-                </div>
-                <a href="/auth/forgot-password" class="text-primary small">Forgot Password?</a>
-              </div>
-              
               <button type="submit" class="btn btn-primary w-100">
                 <i class="fas fa-sign-in-alt me-2"></i>Log In
               </button>
@@ -108,7 +97,7 @@
           </div>
         </div>
         
-        <div class="card-footer text-center py-3 bg-light">
+        <div class="card-footer text-center py-3">
           <p class="mb-0">
             New to the platform?
             <a href="/auth/register" class="text-primary">Create an account</a>
@@ -120,18 +109,47 @@
 </div>
 
 <style>
+  /* Card Styling */
+  .card {
+    border-radius: 1rem;
+    overflow: hidden;
+    border: none;
+  }
+  
+  .card-header {
+    background: rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  .card-footer {
+    background: rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  /* Text Gradient */
+  .text-gradient {
+    background: linear-gradient(to right, #4f46e5, #8b5cf6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
   /* Google Button Styling */
   .btn-google {
+    background: white;
     border: 1px solid #dadce0;
     padding: 12px;
     color: #3c4043;
     font-weight: 500;
     transition: all 0.3s ease;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   }
   
   .btn-google:hover {
     background-color: #f8f9fa;
-    box-shadow: 0 1px 3px rgba(60,64,67,0.3);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
   }
   
   .google-icon {
@@ -152,28 +170,100 @@
   .divider::after {
     content: "";
     flex: 1;
-    border-bottom: 1px solid #dee2e6;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
   
   /* Toggle Button Styling */
   #toggleAdminLogin {
     font-size: 0.85rem;
     transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
   }
   
   #toggleAdminLogin:hover {
-    background-color: #e9ecef;
+    background: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
   }
   
-  /* Subtle animation for form reveal */
-  #traditionalLoginForm {
-    transition: all 0.3s ease;
-    overflow: hidden;
+  #toggleAdminLogin.active {
+    background: #4f46e5;
+    color: white;
+    border-color: #4f46e5;
+  }
+  
+  /* Form Styling */
+  .login-form-container {
     max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+    opacity: 0;
   }
   
-  #traditionalLoginForm.show {
-    max-height: 400px;
+  .login-form-container.visible {
+    max-height: 500px;
+    opacity: 1;
+  }
+  
+  .form-control, .input-group-text {
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.9);
+  }
+  
+  .input-group-text {
+    background: rgba(243, 244, 246, 0.5);
+  }
+  
+  .input-group .form-control {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  
+  .input-group-text {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  
+  .toggle-password {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background: rgba(243, 244, 246, 0.5);
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-label {
+    font-weight: 500;
+    color: #4b5563;
+    margin-bottom: 0.5rem;
+  }
+  
+  .btn-primary {
+    background: linear-gradient(to right, #4f46e5, #6366f1);
+    border: none;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-primary:hover {
+    background: linear-gradient(to right, #4338ca, #4f46e5);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(79, 70, 229, 0.3);
+  }
+  
+  /* Form Check */
+  .form-check-input {
+    cursor: pointer;
+  }
+  
+  .form-check-input:checked {
+    background-color: #4f46e5;
+    border-color: #4f46e5;
   }
 </style>
 
@@ -184,16 +274,13 @@
     const loginForm = document.getElementById('traditionalLoginForm');
     
     toggleButton.addEventListener('click', function() {
-      loginForm.classList.toggle('d-none');
+      loginForm.classList.toggle('visible');
+      toggleButton.classList.toggle('active');
       
-      if (loginForm.classList.contains('d-none')) {
-        toggleButton.innerHTML = '<i class="fas fa-user-shield me-2"></i>Admin Login';
-        toggleButton.classList.remove('btn-secondary');
-        toggleButton.classList.add('btn-outline-secondary');
-      } else {
+      if (loginForm.classList.contains('visible')) {
         toggleButton.innerHTML = '<i class="fas fa-times me-2"></i>Hide Admin Login';
-        toggleButton.classList.remove('btn-outline-secondary');
-        toggleButton.classList.add('btn-secondary');
+      } else {
+        toggleButton.innerHTML = '<i class="fas fa-user-shield me-2"></i>Admin Login';
       }
     });
     
@@ -202,8 +289,8 @@
     
     togglePasswordButtons.forEach(button => {
       button.addEventListener('click', function() {
-        const passwordInput = this.previousElementSibling;
-        const icon = this.querySelector('i');
+        const passwordInput = button.previousElementSibling;
+        const icon = button.querySelector('i');
         
         if (passwordInput.type === 'password') {
           passwordInput.type = 'text';
