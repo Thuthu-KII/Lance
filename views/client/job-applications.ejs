@@ -1,0 +1,97 @@
+<%- contentFor('body') %>
+
+<section class="container">
+  <section class="mb-4">
+    <a href="/client/jobs" class="btn btn-light">← Back to Jobs</a>
+  </section>
+
+  <section class="card mb-4">
+    <section class="card-header">
+      <h1 class="card-title">Applications for: <%= job.title %></h1>
+    </section>
+    <section class="card-body">
+      <section class="mb-4">
+        <p><strong>Budget:</strong> R<%= parseFloat(job.budget).toFixed(2) %></p>
+        <p><strong>Status:</strong> 
+          <span class="status-badge status-<%= job.status.replace(' ', '-') %>">
+            <%= job.status.charAt(0).toUpperCase() + job.status.slice(1) %>
+          </span>
+        </p>
+        <% if (job.deadline) { %>
+          <p><strong>Deadline:</strong> <%= new Date(job.deadline).toLocaleDateString() %></p>
+        <% } %>
+      </section>
+    </section>
+  </section>
+
+  <% if (applications.length === 0) { %>
+    <section class="alert alert-info">
+      <p>No applications have been received for this job yet.</p>
+    </section>
+  <% } else { %>
+    <section class="row">
+      <% applications.forEach(function(application) { %>
+        <section class="col-md-6 mb-4">
+          <section class="card h-100">
+            <section class="card-header d-flex justify-content-between align-items-center">
+              <h3 class="card-title mb-0"><%= application.first_name %> <%= application.last_name %></h3>
+              <span class="status-badge status-<%= application.status %>">
+                <%= application.status.charAt(0).toUpperCase() + application.status.slice(1) %>
+              </span>
+            </section>
+            <section class="card-body">
+              <section class="mb-3">
+                <h4>Skills:</h4>
+                <section>
+                  <% if (application.skills && application.skills.length > 0) { %>
+                    <% application.skills.forEach(function(skill) { %>
+                      <span class="badge badge-primary mr-2 mb-2"><%= skill %></span>
+                    <% }); %>
+                  <% } else { %>
+                    <p class="text-muted">No skills listed</p>
+                  <% } %>
+                </section>
+              </section>
+              
+              <section class="mb-3">
+                <h4>Motivation:</h4>
+                <p><%= application.motivation %></p>
+              </section>
+              
+              <section class="mb-3">
+                <h4>Experience:</h4>
+                <p><%= application.experience || 'No experience listed' %></p>
+              </section>
+              
+              <% if (application.cv_path) { %>
+                <section class="mb-3">
+                  <a href="<%= application.cv_path %>" target="_blank" class="btn btn-sm btn-light">
+                    View CV
+                  </a>
+                </section>
+              <% } %>
+              
+              <p class="text-muted mb-0">
+                Applied on <%= new Date(application.created_at).toLocaleString() %>
+              </p>
+            </section>
+            
+            <% if (job.status === 'open' && job.payment_status === 'paid' && application.status === 'pending') { %>
+              <section class="card-footer">
+                <form action="/client/jobs/<%= job.id %>/applications/<%= application.id %>/hire" method="POST">
+                  <button type="submit" class="btn btn-success btn-block">Hire This Freelancer</button>
+                </form>
+              </section>
+            <% } %>
+          </section>
+        </section>
+      <% }); %>
+    </section>
+  <% } %>
+
+  <% if (job.status !== 'open') { %>
+    <section class="alert alert-warning mt-3">
+      <p>This job is no longer accepting applications.</p>
+    </section>
+  <% } %>
+</section>

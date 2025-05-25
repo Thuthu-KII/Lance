@@ -1,0 +1,482 @@
+<%- contentFor('body') %>
+
+<section class="container">
+  <section class="mb-4">
+    <a href="/admin/jobs" class="btn btn-light">← Back to Jobs</a>
+  </section>
+
+  <section class="row">
+    <section class="col-md-8">
+      <section class="card mb-4">
+        <section class="card-header d-flex justify-content-between align-items-center">
+          <h1 class="card-title mb-0"><%= job.title %></h1>
+          <section>
+            <span class="status-badge status-<%= job.status.replace(' ', '-') %>">
+              <%= job.status.charAt(0).toUpperCase() + job.status.slice(1) %>
+            </span>
+            <span class="badge badge-<%= job.payment_status === 'paid' ? 'success' : 'warning' %> ml-2">
+              <%= job.payment_status.charAt(0).toUpperCase() + job.payment_status.slice(1) %>
+            </span>
+          </section>
+        </section>
+        
+        <section class="card-body">
+          <section class="mb-4">
+            <h3>Client Information</h3>
+            <p><strong>Name:</strong> <%= job.client_first_name %> <%= job.client_last_name %></p>
+            <% if (job.company_name) { %>
+              <p><strong>Company:</strong> <%= job.company_name %></p>
+            <% } %>
+          </section>
+          
+          <section class="job-details mb-4">
+            <section class="job-budget">
+              <strong>Budget:</strong> R<%= parseFloat(job.budget).toFixed(2) %>
+            </section>
+            
+            <% if (job.deadline) { %>
+              <section class="job-deadline">
+                <strong>Deadline:</strong> <%= new Date(job.deadline).toLocaleDateString() %>
+              </section>
+            <% } %>
+            
+            <section>
+              <strong>Posted:</strong> <%= new Date(job.created_at).toLocaleDateString() %>
+            </section>
+            
+            <section>
+              <strong>Last Updated:</strong> <%= new Date(job.updated_at).toLocaleDateString() %>
+            </section>
+          </section>
+          
+          <section class="mb-4">
+            <h3>Description</h3>
+            <p><%= job.description %></p>
+          </section>
+          
+          <% if (job.requirements) { %>
+            <section class="mb-4">
+              <h3>Requirements</h3>
+              <p><%= job.requirements %></p>
+            </section>
+          <% } %>
+        </section>
+      </section>
+      
+      <section class="card mb-4">
+        <section class="card-header">
+          <h3 class="card-title">Applications</h3>
+        </section>
+        <section class="card-body">
+          <% if (applications.length === 0) { %>
+            <p class="text-muted">No applications for this job yet.</p>
+          <% } else { %>
+            <section class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Freelancer</th>
+                    <th>Status</th>
+                    <th>Applied</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% applications.forEach(function(application) { %>
+                    <tr>
+                      <td><%= application.first_name %> <%= application.last_name %></td>
+                      <td>
+                        <span class="status-badge status-<%= application.status %>">
+                          <%= application.status.charAt(0).toUpperCase() + application.status.slice(1) %>
+                        </span>
+                      </td>
+                      <td><%= new Date(application.created_at).toLocaleDateString() %></td>
+                      <td>
+                        <button type="button" class="btn btn-sm btn-light" 
+                                data-toggle="modal" 
+                                data-target="#applicationModal<%= application.id %>">
+                          View Details
+                        </button>
+                        
+                        <!-- Modal for Application Details -->
+                        <section class="modal fade" id="applicationModal<%= application.id %>" tabindex="-1" role="dialog" aria-labelledby="applicationModalLabel<%= application.id %>" aria-hidden="true">
+                          <section class="modal-dialog modal-lg" role="document">
+                            <section class="modal-content">
+                              <section class="modal-header">
+                                <h5 class="modal-title" id="applicationModalLabel<%= application.id %>">
+                                  Application from <%= application.first_name %> <%= application.last_name %>
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </section>
+                              <section class="modal-body">
+                                <section class="mb-3">
+                                  <h6>Skills:</h6>
+                                  <section>
+                                    <% if (application.skills && application.skills.length > 0) { %>
+                                      <% application.skills.forEach(function(skill) { %>
+                                        <span class="badge badge-primary mr-2 mb-2"><%= skill %></span>
+                                      <% }); %>
+                                    <% } else { %>
+                                      <p class="text-muted">No skills listed</p>
+                                    <% } %>
+                                  </section>
+                                </section>
+                                
+                                <section class="mb-3">
+                                  <h6>Motivation:</h6>
+                                  <p><%= application.motivation %></p>
+                                </section>
+                                
+                                <section class="mb-3">
+                                  <h6>Experience:</h6>
+                                  <p><%= application.experience || 'No experience listed' %></p>
+                                </section>
+                                
+                                <% if (application.cv_path) { %>
+                                  <section class="mb-3">
+                                    <a href="<%= application.cv_path %>" target="_blank" class="btn btn-sm btn-light">
+                                      View CV/Resume
+                                    </a>
+                                  </section>
+                                <% } %>
+                                <p class="text-muted mb-0">
+                                  Applied on <%= new Date(application.created_at).toLocaleString() %>
+                                </p>
+                              </section>
+                              <section class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              </section>
+                            </section>
+                          </section>
+                        </section>
+                      </td>
+                    </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+            </section>
+          <% } %>
+        </section>
+      </section>
+      
+      <% if (job.status === 'in-progress' || job.status === 'completed') { %>
+        <section class="card mb-4">
+          <section class="card-header">
+            <h3 class="card-title">Job Completion Status</h3>
+          </section>
+          <section class="card-body">
+            <% 
+              // Find the completion status in the database
+              // const completionStatus = job.status === 'in-progress' || job.status === 'completed' ? 
+              // await db.query('SELECT * FROM job_completions WHERE job_id = R1', [job.id]).then(res => res.rows[0]) : null;
+            %>
+            
+            <% if (completionStatus) { %>
+              <section class="row">
+                <section class="col-6">
+                  <p><strong>Client confirmed:</strong> 
+                    <% if (completionStatus.client_confirmed) { %>
+                      <span class="text-success">Yes</span>
+                    <% } else { %>
+                      <span class="text-warning">Waiting</span>
+                    <% } %>
+                  </p>
+                </section>
+                <section class="col-6">
+                  <p><strong>Freelancer confirmed:</strong> 
+                    <% if (completionStatus.freelancer_confirmed) { %>
+                      <span class="text-success">Yes</span>
+                    <% } else { %>
+                      <span class="text-warning">Waiting</span>
+                    <% } %>
+                  </p>
+                </section>
+              </section>
+              
+              <% if (job.status === 'completed' && completionStatus.completed_at) { %>
+                <p><strong>Completed on:</strong> <%= new Date(completionStatus.completed_at).toLocaleString() %></p>
+              <% } %>
+            <% } else { %>
+              <p class="text-muted">No completion record found.</p>
+            <% } %>
+          </section>
+        </section>
+      <% } %>
+      
+      <section class="card mb-4">
+        <section class="card-header">
+          <h3 class="card-title">Payment History</h3>
+        </section>
+        <section class="card-body">
+          <% if (payments.length === 0) { %>
+            <p class="text-muted">No payment records for this job.</p>
+          <% } else { %>
+            <section class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% payments.forEach(function(payment) { %>
+                    <tr>
+                      <td>
+                        <%= payment.payment_type === 'job_posting' ? 'Job Posting' : 'Freelancer Payment' %>
+                      </td>
+                      <td>R<%= parseFloat(payment.amount).toFixed(2) %></td>
+                      <td>
+                        <span class="badge badge-<%= payment.status === 'completed' ? 'success' : payment.status === 'pending' ? 'warning' : 'danger' %>">
+                          <%= payment.status.charAt(0).toUpperCase() + payment.status.slice(1) %>
+                        </span>
+                      </td>
+                      <td><%= new Date(payment.created_at).toLocaleDateString() %></td>
+                      <td>
+                        <% if (payment.payment_type === 'freelancer_payment' && payment.status === 'pending') { %>
+                          <form action="/admin/payments/<%= payment.id %>/process" method="POST">
+                            <button type="submit" class="btn btn-sm btn-success">Process Payment</button>
+                          </form>
+                        <% } else { %>
+                          <span class="text-muted">No actions</span>
+                        <% } %>
+                      </td>
+                    </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+            </section>
+          <% } %>
+        </section>
+      </section>
+    </section>
+    
+    <section class="col-md-4">
+      <section class="card mb-4">
+        <section class="card-header">
+          <h3 class="card-title">Admin Actions</h3>
+        </section>
+        <section class="card-body">
+          <a href="/admin/users/<%= job.client_user_id %>" class="btn btn-primary btn-block mb-2">View Client Profile</a>
+          
+          <% if (job.status === 'in-progress') { %>
+            <% 
+              // Find the hired freelancer
+              const hiredApplication = applications.find(app => app.status === 'hired');
+              if (hiredApplication) {
+                const freelancerUserId = query1;
+                if (freelancerUserId) {
+            %>
+              <a href="/admin/users/<%= freelancerUserId %>" class="btn btn-info btn-block mb-2">View Hired Freelancer</a>
+            <% 
+                }
+              } 
+            %>
+          <% } %>
+          
+          <a href="/jobs/<%= job.id %>/invoice" class="btn btn-secondary btn-block mb-2">Generate Invoice</a>
+          
+          <form action="/admin/jobs/<%= job.id %>?_method=DELETE" method="POST" onsubmit="return confirm('Are you sure you want to delete this job? This cannot be undone.');" class="mb-2">
+            <button type="submit" class="btn btn-danger btn-block">Delete Job</button>
+          </form>
+          
+          <% if (job.status === 'open' && job.payment_status === 'paid') { %>
+            <form action="/admin/jobs/<%= job.id %>/close" method="POST" class="mb-2">
+              <button type="submit" class="btn btn-warning btn-block">Close Job</button>
+            </form>
+          <% } else if (job.status === 'pending') { %>
+            <form action="/admin/jobs/<%= job.id %>/approve-payment" method="POST" class="mb-2">
+              <button type="submit" class="btn btn-success btn-block">Approve Payment Manually</button>
+            </form>
+          <% } %>
+        </section>
+      </section>
+      
+      <section class="card mb-4">
+        <section class="card-header">
+          <h3 class="card-title">Job Statistics</h3>
+        </section>
+        <section class="card-body">
+          <p><strong>Applications:</strong> <%= applications.length %></p>
+          <p><strong>Status:</strong> <%= job.status.charAt(0).toUpperCase() + job.status.slice(1) %></p>
+          <p><strong>Payment:</strong> <%= job.payment_status.charAt(0).toUpperCase() + job.payment_status.slice(1) %></p>
+          <p><strong>Days Active:</strong> <%= Math.ceil((new Date() - new Date(job.created_at)) / (1000 * 60 * 60 * 24)) %></p>
+          
+          <% if (job.status === 'open') { %>
+            <section class="progress mb-2">
+              <section class="progress-bar bg-primary" style="width: 100%">Open</section>
+            </section>
+          <% } else if (job.status === 'in-progress') { %>
+            <section class="progress mb-2">
+              <section class="progress-bar bg-warning" style="width: 50%">In Progress</section>
+            </section>
+          <% } else if (job.status === 'completed') { %>
+            <section class="progress mb-2">
+              <section class="progress-bar bg-success" style="width: 100%">Completed</section>
+            </section>
+          <% } else if (job.status === 'pending') { %>
+            <section class="progress mb-2">
+              <section class="progress-bar bg-secondary" style="width: 25%">Pending</section>
+            </section>
+          <% } %>
+        </section>
+      </section>
+      
+      <section class="card">
+        <section class="card-header">
+          <h3 class="card-title">Related Reports</h3>
+        </section>
+        <section class="card-body">
+          <% 
+            // // Get any reports for this job
+            // const reports = await db.query(`
+            //   SELECT r.*, u.email as reporter_email 
+            //   FROM reports r 
+            //   JOIN users u ON r.reported_by = u.id 
+            //   WHERE r.job_id = R1
+            // `, [job.id]).then(res => res.rows);
+          %>
+          
+          <% if (reports && reports.length > 0) { %>
+            <section class="list-group">
+              <% reports.forEach(function(report) { %>
+                <a href="/admin/reports/<%= report.id %>" class="list-group-item list-group-item-action">
+                  <section class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Report from <%= report.reporter_email %></h5>
+                    <small>
+                      <span class="badge badge-<%= 
+                        report.status === 'pending' ? 'warning' :
+                        report.status === 'resolved' ? 'success' :
+                        'danger' 
+                      %>">
+                        <%= report.status.charAt(0).toUpperCase() + report.status.slice(1) %>
+                      </span>
+                    </small>
+                  </section>
+                  <p class="mb-1"><%= report.issue.substring(0, 100) %><%= report.issue.length > 100 ? '...' : '' %></p>
+                  <small><%= new Date(report.created_at).toLocaleString() %></small>
+                </a>
+              <% }); %>
+            </section>
+          <% } else { %>
+            <p class="text-muted">No reports found for this job.</p>
+          <% } %>
+        </section>
+      </section>
+    </section>
+  </section>
+</section>
+
+<script>
+  // Add modal functionality if not using Bootstrap's JavaScript
+  document.addEventListener('DOMContentLoaded', function() {
+    const modalButtons = document.querySelectorAll('[data-toggle="modal"]');
+    
+    modalButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const targetId = this.getAttribute('data-target').substring(1);
+        const modal = document.getElementById(targetId);
+        
+        if (modal) {
+          modal.style.display = 'block';
+          modal.classList.add('show');
+          
+          // Close button functionality
+          const closeButtons = modal.querySelectorAll('[data-dismiss="modal"], .close');
+          closeButtons.forEach(closeBtn => {
+            closeBtn.addEventListener('click', function() {
+              modal.style.display = 'none';
+              modal.classList.remove('show');
+            });
+          });
+          
+          // Close when clicking outside the modal content
+          modal.addEventListener('click', function(event) {
+            if (event.target === modal) {
+              modal.style.display = 'none';
+              modal.classList.remove('show');
+            }
+          });
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  /* Basic modal styles if not using Bootstrap */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1050;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  
+  .modal.show {
+    display: block;
+  }
+  
+  .modal-dialog {
+    position: relative;
+    width: auto;
+    margin: 1.75rem auto;
+    max-width: 500px;
+  }
+  
+  .modal-dialog.modal-lg {
+    max-width: 800px;
+  }
+  
+  .modal-content {
+    position: relative;
+    background-color: #fff;
+    border-radius: 0.3rem;
+    outline: 0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  }
+  
+  .modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 1rem;
+    border-bottom: 1px solid #e9ecef;
+  }
+  
+  .modal-body {
+    position: relative;
+    padding: 1rem;
+  }
+  
+  .modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 1rem;
+    border-top: 1px solid #e9ecef;
+  }
+  
+  .close {
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+</style>
+                                

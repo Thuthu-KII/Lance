@@ -1,0 +1,474 @@
+<%- contentFor('body') %>
+
+<!-- HERO SECTION -->
+<section class="hero">
+  <section id="hero-particles"></section>
+  <section class="hero-content">
+    <h1>Find the Perfect Freelancer for Your Project</h1>
+    <p>Connect with skilled professionals, post jobs, and get your projects done efficiently.</p>
+    <section class="hero-buttons">
+      <% if (!user) { %>
+        <a href="/auth/google" class="btn fancy-btn">
+          <span>Sign Up with Google</span>
+        </a>
+        <a href="/auth/login" class="btn ghost-btn">
+          <span>Login</span>
+        </a>
+      <% } else if (user.role === 'client') { %>
+        <a href="/jobs/create" class="btn fancy-btn"><span>Post a Job</span></a>
+        <a href="/client/dashboard" class="btn ghost-btn"><span>My Dashboard</span></a>
+      <% } else if (user.role === 'freelancer') { %>
+        <a href="/jobs/browse" class="btn fancy-btn"><span>Find Jobs</span></a>
+        <a href="/freelancer/dashboard" class="btn ghost-btn"><span>My Dashboard</span></a>
+      <% } %>
+    </section>
+  </section>
+  <!-- Decorative SVG Waves at Bottom -->
+  <svg class="waves" viewBox="0 0 1440 100" style="display:block;">
+    <path fill="#EEF2FF" fill-opacity="1" d="M0,64L60,80C120,96,240,128,360,117.3C480,107,600,53,720,37.3C840,21,960,43,1080,53.3C1200,64,1320,64,1380,64L1440,64L1440,120L1380,120C1320,120,1200,120,1080,120C960,120,840,120,720,120C600,120,480,120,360,120C240,120,120,120,60,120L0,120Z"></path>
+  </svg>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works" id="how">
+  <h2>How It Works</h2>
+  <p class="subtitle">Our platform makes it easy to connect clients and freelancers</p>
+  <section class="step-cards">
+    <section class="step-card">
+      <span class="step-num">1</span>
+      <section>
+        <h3>Post a Job</h3>
+        <p>Clients can post jobs with details about their requirements and budget.</p>
+      </section>
+    </section>
+    <section class="step-card">
+      <span class="step-num">2</span>
+      <section>
+        <h3>Find Talent</h3>
+        <p>Freelancers apply with their qualifications and you choose the best fit.</p>
+      </section>
+    </section>
+    <section class="step-card">
+      <span class="step-num">3</span>
+      <section>
+        <h3>Complete Projects</h3>
+        <p>Work together efficiently and securely through our platform.</p>
+      </section>
+    </section>
+  </section>
+</section>
+
+<!-- FEATURED CATEGORIES -->
+<section class="featured-categories">
+  <h2>Featured Categories</h2>
+  <p class="subtitle">Explore popular job categories on our platform</p>
+  <section class="cat-cards">
+    <section class="cat-card"><section class="cat-icon">💻</section><h4>Web Development</h4></section>
+    <section class="cat-card"><section class="cat-icon">🎨</section><h4>Design</h4></section>
+    <section class="cat-card"><section class="cat-icon">✍️</section><h4>Writing</h4></section>
+    <section class="cat-card"><section class="cat-icon">📢</section><h4>Marketing</h4></section>
+  </section>
+</section>
+
+<!-- JOIN COMMUNITY -->
+<section class="join-community">
+  <section class="community-bg">
+    <!-- faint grid svg BG for extra effect, optional -->
+    <svg width="100%" height="100%"> <rect width="100%" height="100%" fill="url(#grid-ptn)" /> <defs> <pattern id="grid-ptn" width="60" height="60" patternUnits="userSpaceOnUse"> <path d="M60,0L0,0L0,60" fill="none" stroke="#fff" stroke-width="1" opacity="0.07"/> </pattern></defs></svg>
+  </section>
+  <section class="jcontent">
+    <h2>Join Our Community Today</h2>
+    <p>Start hiring or working on projects in minutes.</p>
+    <a href="/auth/google" class="btn mega-btn"><span>Sign Up Now</span></a>
+  </section>
+</section>
+
+
+<style>
+
+body {
+  margin: 0;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  background: #eef2ff;
+  color: #1e293b;
+}
+h1, h2, h3, h4 {
+  margin: 0 0 0.5em 0;
+}
+p {
+  margin: 0 0 1em 0;
+}
+a {
+  text-decoration: none;
+}
+
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(120deg, #4338ca 0%, #6366f1 80%);
+  color: #fff;
+  padding: 3.5rem 1rem 1rem 1rem;
+  border-radius: 1.4rem;
+  margin-bottom: 2.5rem;
+  min-height: 430px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index:1;
+  animation: pageFadein 1s cubic-bezier(.65,1.75,.48,.7) both;
+}
+@keyframes pageFadein {
+  from {opacity:0;transform: translateY(40px);}
+  to {opacity:1;}
+}
+.hero-content {
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align:center;
+  min-height: 320px;
+}
+.hero h1 {
+  font-size: 2.1rem;
+  font-weight: 900;
+  background-image: linear-gradient(90deg, #fff, #e0e7ff);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+  margin-bottom: 0.4em;
+  filter: drop-shadow(0 2px 8px rgba(67,56,202,0.15));
+}
+.hero p {
+  color: #dbeafe;
+  font-size: 1.1rem;
+  margin-bottom: 1.7em;
+}
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  margin-bottom:2em;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  font-size: 1.1rem;
+  padding: 12px 24px;
+  border-radius: .8em;
+  font-weight: 700;
+  box-shadow: 0 8px 24px 0 rgba(0,0,0,0.08);
+  transition: transform 0.16s, background 0.15s, box-shadow 0.18s;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  margin: 0;
+  position: relative;
+}
+.fancy-btn {
+  background: linear-gradient(90deg, #6366f1, #a78bfa);
+  color: #fff;
+  overflow: hidden;
+  position:relative;
+}
+.fancy-btn:after {
+  content: '';
+  display:block;
+  position:absolute;
+  top:0;left:-80%;
+  width:50%; height:100%;
+  background: linear-gradient(100deg, rgba(255,255,255,0.7) 0%,rgba(255,255,255,0) 70%);
+  pointer-events: none;
+  animation: shine 3s infinite;
+}
+@keyframes shine {
+  0% { left: -80% }
+  80% { left: 110% }
+  100% { left: -80% }
+}
+.fancy-btn:active {transform:scale(.98);}
+.ghost-btn {
+  border: 2px solid rgba(255,255,255,0.3);
+  color: #fff;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(4px);
+  transition: box-shadow 0.2s, transform 0.15s;
+}
+.ghost-btn:active {transform: scale(.98);}
+.btn span {z-index:1;position:relative;}
+.mega-btn {
+  background: linear-gradient(95deg, #fff, #e0e7ff);
+  color:#4338ca;
+  font-size: 1.25rem;
+  animation: pulse 3s infinite;
+}
+@keyframes pulse {
+  0%,100% { box-shadow: 0 0 0 0 #fff7, 0 8px 30px 0 rgba(67,56,202,.12);}
+  50% {box-shadow:0 0 18px 10px #fff4,0 8px 30px 0 rgba(67,56,202,.18);}
+}
+.mega-btn:active{transform:scale(.97);}
+.waves {
+  position: absolute;
+  left:0;bottom:0;width:100%;height:60px;
+  pointer-events: none;
+  z-index:2;
+}
+#hero-particles {
+  position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;
+}
+
+.how-it-works {
+  max-width: 810px;
+  margin: auto;
+  padding: 2.5rem 1rem 1rem 1rem;
+  text-align: center;
+  background: none;
+}
+.how-it-works > h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  background-clip: text;
+  background-image: linear-gradient(90deg, #4338ca, #6d28d9 70%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.subtitle {
+  color: #63677a;
+  font-size: 1.1rem;
+  margin-bottom:1.7rem;
+  margin-top:-1rem;
+}
+.step-cards {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.step-card {
+  flex: 1 1 210px;
+  min-width: 220px;
+  margin-bottom: 1.3em;
+  background:rgba(255,255,255,0.2);
+  border: 1.5px solid rgba(79,70,229,0.14);
+  border-radius: 1.5rem;
+  padding: 2rem 1.3rem 2.2rem 1.3rem;
+  box-shadow: 0 8px 24px 0 rgba(67,56,202,0.04);
+  text-align:left;
+  display:flex; flex-direction:row; align-items:flex-start; gap:1em;
+  opacity:0;
+  transform: translateY(40px);
+  transition: box-shadow .2s, transform 0.24s, opacity .45s cubic-bezier(.53,1.76,.49,.73);
+  background-image:linear-gradient(120deg,rgba(255,255,255,0.25) 40%,rgba(79,70,229,0.07) 100%);
+}
+
+/* Step number circle */
+.step-num {
+  display: flex; align-items: center; justify-content: center;
+  background: #e0e7ff;
+  border-radius: 100vw;
+  width: 2.6em; height: 2.6em;
+  font-size: 1.3em; color:#4f46e5;
+  font-weight:700;
+  margin-right:0.8em;
+  flex-shrink: 0;
+  filter:drop-shadow(0 3px 12px #4f46e532);
+}
+.step-card h3 {
+  font-size: 1.2em;
+  margin-bottom:0.38em;
+  color: #4f46e5;
+  font-weight:bold;
+}
+.step-card p {
+  font-size:1.05em;
+  color:#475569;
+  margin-bottom:0;
+}
+.step-card.scrolled {
+  opacity:1;
+  transform:translateY(0);
+}
+
+.featured-categories {
+  padding: 4rem 0 3.5rem 0;
+  background: linear-gradient(85deg, #eef2ff 20%, #f7f6fe 90%);
+  text-align: center;
+}
+.featured-categories h2 {
+  font-size:2rem;
+  font-weight: 800;
+  background-image: linear-gradient(90deg, #4338ca, #6d28d9 60%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom:.4em;
+}
+.cat-cards {
+  display: flex; flex-wrap:wrap; justify-content:center; gap:1.8rem;
+  margin:2.5em 0 0 0;
+}
+.cat-card {
+  flex: 1 1 170px;
+  min-width: 130px; max-width: 210px;
+  margin-bottom: 1.3rem;
+  background: rgba(255,255,255,0.25);
+  border:1.3px solid rgba(67,56,202,0.12);
+  border-radius:1em;
+  padding:2.1em 1.1em;
+  box-shadow:0 7px 26px 0 rgba(79, 70, 229, 0.04);
+  text-align:center;
+  transition:transform 0.18s, box-shadow 0.19s;
+  cursor:pointer;
+  opacity:0;
+  transform:translateY(24px) scale(0.98);
+  background-image:linear-gradient(120deg,rgba(255,255,255,0.21) 40%,rgba(79,70,229,0.09) 100%);
+}
+.cat-card .cat-icon {font-size:2.3em; margin-bottom:0.7em;}
+.cat-card h4 {font-size:1.13em; font-weight:bold; color:#4f46e5}
+.cat-card.scrolled {
+  opacity:1;
+  transform:translateY(0) scale(1);
+}
+.cat-card:hover {
+  transform:scale(1.05) translateY(-4px) rotate(-1.3deg);
+  box-shadow:0 18px 36px 0 rgba(67,56,202,0.12);
+}
+.cat-card:active {transform:scale(.96);}
+
+@media (max-width: 800px) {
+  .step-cards { flex-direction: column; gap:1.2em;}
+  .step-card { min-width: unset; width:100%;}
+  .cat-cards { flex-wrap: wrap; gap:1em;}
+  .cat-card { min-width: unset; width:92%; margin:0.4em auto;}
+}
+@media (max-width:570px) {
+  .hero h1 {font-size:1.19em;}
+  .hero-content {padding:0.4em;}
+  .featured-categories, .join-community, .how-it-works {padding-top:2.4em;padding-bottom:2em;}
+  .step-cards, .cat-cards {gap:.6em;}
+}
+@media (max-width: 480px) {
+  .btn, .mega-btn {font-size:.97em; padding:10px 13px;}
+  .hero, .how-it-works, .featured-categories, .join-community {border-radius:0.5em;}
+}
+
+.join-community {
+  background: linear-gradient(105deg, #312e81 16%, #7e22ce 60%, #1e40af 96%);
+  color: #fff;
+  padding: 4.7rem 2.5% 5rem 2.5%;
+  text-align: center;
+  border-radius: .7em;
+  position:relative;
+  overflow:hidden;
+  margin-bottom:1.5em;
+  min-height:320px;
+  display: flex;
+  align-items:center;
+  justify-content:center;
+}
+.community-bg {
+  position: absolute; inset: 0; width: 100%; height: 100%; z-index:0;
+}
+.jcontent {
+  z-index: 1;
+  position: relative;
+  width: 100%;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+}
+.join-community h2 {
+  font-size:2.05em; font-weight: 850;
+  background:linear-gradient(87deg, #fff 46%, #c7d2fe 90%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  margin-bottom:0.42em; line-height:1.1;
+}
+.join-community p {color:#ddd6fe; font-size:1.13em; margin-bottom:1.7em;}
+
+.hero section#hero-particles section,
+.join-community .particle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.27);
+  opacity: 0.88;
+  pointer-events: none;
+  will-change: transform, opacity;
+  z-index: 1;
+  animation-name: float-up;
+  animation-iteration-count: infinite;
+}
+
+@keyframes float-up {
+  0%   { transform: translateY(0) scale(1); opacity:0.95;}
+  30%  { opacity: 0.93;}
+  50%  { transform: translateY(-40px) scale(1.13); opacity:0.7;}
+  70%  { opacity: 0.8;}
+  100% { transform: translateY(0) scale(1); opacity:0.93;}
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // === 1. Hero Section Particles ===
+  const heroParticlesContainer = document.getElementById('hero-particles');
+  if (heroParticlesContainer) {
+    let nParticles = window.innerWidth < 700 ? 7 : 13;
+    for (let i = 0; i < nParticles; i++) {
+      let particle = document.createElement('section');
+      // Random position within hero section
+      let top = Math.random() * 75 + 5;
+      let left = Math.random() * 92 + 2;
+      // Random sizes & animation timing
+      let size = Math.random() * 12 + 7;
+      let dur = Math.random() * 4 + 4;
+      let delay = Math.random() * 4;
+      particle.style.top = top + '%';
+      particle.style.left = left + '%';
+      particle.style.width = size + 'px';
+      particle.style.height = size + 'px';
+      particle.style.animationDuration = dur + 's';
+      particle.style.animationDelay = delay + 's';
+      heroParticlesContainer.appendChild(particle);
+    }
+  }
+
+  // === 2. Step & Category Cards Animation on Scroll ===
+  function animateVisibleCards() {
+    // Cards from "How it Works"
+    document.querySelectorAll('.step-card').forEach(function(card, idx) {
+      let rect = card.getBoundingClientRect();
+      if (rect.top < window.innerHeight - 80) {
+        setTimeout(() => card.classList.add('scrolled'), idx * 90);
+      }
+    });
+    // Featured Category Cards
+    document.querySelectorAll('.cat-card').forEach(function(card, idx) {
+      let rect = card.getBoundingClientRect();
+      if (rect.top < window.innerHeight - 80) {
+        setTimeout(() => card.classList.add('scrolled'), idx * 90);
+      }
+    });
+  }
+  animateVisibleCards();
+  window.addEventListener('scroll', animateVisibleCards);
+
+  // === 3. Add extra particles to join-community for fun! ===
+  const jc = document.querySelector('.join-community');
+  if (jc) {
+    for (let i = 0; i < 8; i++) {
+      let particle = document.createElement('section');
+      let top = Math.random() * 100, left = Math.random() * 100;
+      let size = Math.random() * 10 + 8;
+      let dur = Math.random() * 5 + 4;
+      let delay = Math.random() * 5;
+      particle.className = 'particle';
+      particle.style.top = top + '%';
+      particle.style.left = left + '%';
+      particle.style.width = size + 'px';
+      particle.style.height = size + 'px';
+      particle.style.background = 'rgba(255,255,255,0.16)';
+      particle.style.animationName = 'float-up';
+      particle.style.animationDuration = dur + 's';
+      particle.style.animationDelay = delay + 's';
+      jc.appendChild(particle);
+    }
+  }
+});
+</script>

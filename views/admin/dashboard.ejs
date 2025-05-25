@@ -1,0 +1,340 @@
+
+<%- contentFor('body') %>
+
+<h1 class="mb-4">Admin Dashboard</h1>
+
+<section class="dashboard-stats">
+  <section class="stat-card">
+    <section class="stat-card-value"><%= counts.clients %></section>
+    <section class="stat-card-label">Clients</section>
+  </section>
+  
+  <section class="stat-card">
+    <section class="stat-card-value"><%= counts.freelancers %></section>
+    <section class="stat-card-label">Freelancers</section>
+  </section>
+  
+  <section class="stat-card">
+    <section class="stat-card-value"><%= counts.jobs %></section>
+    <section class="stat-card-label">Total Jobs</section>
+  </section>
+  
+  <section class="stat-card">
+    <section class="stat-card-value">R<%= parseFloat(counts.payments).toFixed(2) %></section>
+    <section class="stat-card-label">Total Payments</section>
+  </section>
+</section>
+
+<section class="quick-actions mb-4">
+  <a href="/admin/approvals" class="btn btn-primary quick-action-btn">
+    Pending Approvals <span class="badge badge-light"><%= counts.pendingApprovals %></span>
+  </a>
+  <a href="/admin/reports" class="btn btn-danger quick-action-btn">
+    Reports <span class="badge badge-light"><%= counts.reports %></span>
+  </a>
+  <a href="/admin/users" class="btn btn-secondary quick-action-btn">Manage Users</a>
+  <a href="/admin/jobs" class="btn btn-light quick-action-btn">Manage Jobs</a>
+</section>
+
+<section class="dashboard-container">
+  <section class="dashboard-card">
+    <section class="dashboard-card-header">
+      <h2 class="dashboard-card-title">Recent Jobs</h2>
+      <a href="/admin/jobs" class="btn btn-sm btn-primary">View All</a>
+    </section>
+    <section class="dashboard-card-body">
+      <% if (recentJobs.length === 0) { %>
+        <p class="text-center text-muted">No jobs found in the system.</p>
+      <% } else { %>
+        <section class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Client</th>
+                <th>Budget</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% recentJobs.forEach(function(job) { %>
+                <tr>
+                  <td><%= job.title %></td>
+                  <td><%= job.first_name %> <%= job.last_name %></td>
+                  <td>R<%= parseFloat(job.budget).toFixed(2) %></td>
+                  <td>
+                    <span class="status-badge status-<%= job.status.replace(' ', '-') %>">
+                      <%= job.status.charAt(0).toUpperCase() + job.status.slice(1) %>
+                    </span>
+                  </td>
+                  <td><%= new Date(job.created_at).toLocaleDateString() %></td>
+                  <!-- <td>
+                    <a href="/admin/jobs/<%= job.id %>" class="btn btn-sm btn-light">View</a>
+                  </td> -->
+                </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </section>
+      <% } %>
+    </section>
+  </section>
+  
+  <section class="dashboard-card">
+    <section class="dashboard-card-header">
+      <h2 class="dashboard-card-title">System Status</h2>
+    </section>
+    <section class="dashboard-card-body">
+      <section class="mb-3">
+        <h4 class="mb-2">Pending Tasks</h4>
+        <ul class="list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Freelancer Approvals
+            <span class="badge badge-primary badge-pill"><%= counts.pendingApprovals %></span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Reports to Review
+            <span class="badge badge-danger badge-pill"><%= counts.reports %></span>
+          </li>
+        </ul>
+      </section>
+      
+      <section>
+        <h4 class="mb-2">Quick Stats</h4>
+        <ul class="list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Active Jobs
+            <span class="badge badge-warning badge-pill"><%= counts.jobs - recentJobs.filter(j => j.status === 'completed').length %></span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Total Users
+            <span class="badge badge-info badge-pill"><%= parseInt(counts.clients) + parseInt(counts.freelancers) %></span>
+          </li>
+        </ul>
+      </section>
+    </section>
+  </section>
+</section>
+<style>
+  /* Dashboard Styles */
+.dashboard-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 1.5rem;
+}
+
+.stat-card {
+  flex: 1 0 calc(25% - 20px);
+  padding: 1.5rem;
+  background: var(--glass-bg);
+  backdrop-filter: blur(5px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: var(--shadow);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+.stat-card-value {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+
+.stat-card-label {
+  color: #6c757d;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.quick-action-btn {
+  flex: 1 0 calc(25% - 10px);
+  padding: 0.75rem;
+  background: linear-gradient(135deg, var(--primary-color) 0%, #5a52cc 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.quick-action-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(108, 99, 255, 0.3);
+  background: linear-gradient(135deg, #5a52cc 0%, var(--primary-color) 100%);
+}
+
+.quick-action-btn .badge {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 0.2em 0.5em;
+  font-size: 0.8em;
+}
+
+.dashboard-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 10px 0;
+}
+
+.dashboard-card {
+  flex: 1 0 calc(50% - 20px);
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.dashboard-card-header {
+  padding: 1.2rem;
+  background: linear-gradient(135deg, var(--primary-light) 0%, #f0f3ff 100%);
+  border-bottom: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard-card-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--dark-color);
+}
+
+.dashboard-card-body {
+  padding: 1.5rem;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.35em 0.6em;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 20px;
+  transition: transform 0.2s ease;
+}
+
+.status-badge:hover {
+  transform: scale(1.05);
+}
+
+.status-open {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.status-in-progress {
+  background-color: var(--warning-color);
+  color: white;
+}
+
+.status-completed {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.status-pending {
+  background-color: #6c757d;
+  color: white;
+}
+
+.status-hired {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.status-rejected {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+.list-group {
+  list-style: none;
+  padding: 0;
+}
+
+.list-group-item {
+  padding: 0.75rem 1.25rem;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.list-group-item:hover {
+  background: rgba(108, 99, 255, 0.1);
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(108, 99, 255, 0.05);
+}
+
+/* Responsive design */
+@media (max-width: 992px) {
+  .stat-card {
+    flex: 1 0 calc(50% - 20px);
+  }
+  
+  .quick-action-btn {
+    flex: 1 0 calc(50% - 10px);
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-card {
+    flex: 1 0 calc(100% - 20px);
+  }
+}
+
+@media (max-width: 576px) {
+  .stat-card {
+    flex: 1 0 calc(100% - 20px);
+  }
+  
+  .quick-action-btn {
+    flex: 1 0 calc(100% - 10px);
+  }
+}
+</style>

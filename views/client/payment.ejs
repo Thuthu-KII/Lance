@@ -1,0 +1,125 @@
+<%- contentFor('body') %>
+
+<section class="container">
+  <section class="row justify-content-center">
+    <section class="col-md-8">
+      <section class="card">
+        <section class="card-header">
+          <h1 class="card-title">Payment for Job</h1>
+        </section>
+        <section class="card-body">
+          <section class="mb-4">
+            <h3><%= job.title %></h3>
+            <p class="text-muted">Budget: R<%= parseFloat(job.budget).toFixed(2) %></p>
+          </section>
+          <section class="alert alert-warning">
+            <p><strong>Having trouble with payment?</strong> If you see errors, please temporarily disable any ad blockers or privacy extensions in your browser, then try again.</p>
+          </section>  
+          <section class="alert alert-info mb-4">
+            <p>Your job will be posted and visible to freelancers after payment is completed.</p>
+          </section>
+          
+          <!-- Simplified payment form -->
+          <section id="payment-form" class="mb-4">
+            <section class="mb-3">
+              <p><strong>Total Amount: R<%= parseFloat(job.budget).toFixed(2) %></strong></p>
+            </section>
+
+            <button id="pay-button" class="btn btn-primary btn-lg">Pay Now</button>
+            <section id="payment-error" class="text-danger mt-2"></section>
+          </section>
+          
+          <!-- Common elements -->
+          <section id="payment-processing" class="d-none mt-3">
+            <p>Processing payment...</p>
+            <section class="progress">
+              <section class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></section>
+            </section>
+          </section>
+
+          <section id="payment-success" class="d-none">
+            <section class="alert alert-success">
+              <h4>Processing Payment</h4>
+              <p>When processing is done, you will be redirected to your jobs page.</p>
+            </section>
+            <a href="/client/jobs" class="btn btn-primary">View My Jobs</a>
+          </section>
+        </section>
+      </section>
+    </section>
+  </section>
+</section>
+
+<script src="https://js.yoco.com/sdk/v1/yoco-sdk-web.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Initialize variables
+    const yoco = new window.YocoSDK({
+      publicKey: 'pk_test_ed3c54a6gOol69qa7f45'
+    });
+    
+    // Get DOM elements
+    const payButton = document.getElementById('pay-button');
+    const paymentSuccess = document.getElementById('payment-success');
+    const paymentProcessing = document.getElementById('payment-processing');
+    const paymentError = document.getElementById('payment-error');
+    const paymentForm = document.getElementById('payment-form');
+    
+    // Process payment with a single button
+    payButton.addEventListener('click', function(event) {
+      event.preventDefault();
+      payButton.disabled = true;
+      paymentProcessing.classList.remove('d-none');
+      paymentError.textContent = '';
+      
+      const amountInCents = Math.round(<%= parseFloat(job.budget) %> * 100);
+      console.log(amountInCents);
+      yoco.showPopup({
+        amountInCents: amountInCents,
+        currency: 'ZAR',
+        name: '<%= job.title %>',
+        description: 'Job Posting Payment',
+        callback: async function(result) {
+          if (result.error) {
+            console.error('Yoco popup error:', result.error);
+            payButton.disabled = false;
+            paymentProcessing.classList.add('d-none');
+            paymentError.textContent = result.error.message;
+            return;
+          }
+          console.log('Yoco token received:', result.id);
+          // Process the payment on the server
+          try {
+            console.log('Sending payment request to server...');
+            const response = await fetch('/payments/job/<%= job.id %>', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                token: result.id
+              })
+            });
+            
+            const data = await response.json();
+            console.log('Server response:', data);
+            
+            if (data.success) {
+              // Redirect to the jobs page on success instead of showing the success message
+              window.location.href = '/client/jobs';
+            } else {
+              payButton.disabled = false;
+              paymentProcessing.classList.add('d-none');
+              paymentError.textContent = data.message || 'We are currently experiencing issues, please retry at a later time.';
+            }
+          } catch (error) {
+            console.error('Fetch error:', error);
+            payButton.disabled = false;
+            paymentProcessing.classList.add('d-none');
+            paymentError.textContent = 'We are currently experiencing issues, please retry at a later time.';
+          }
+        }
+      });
+    });
+  });
+</script>
