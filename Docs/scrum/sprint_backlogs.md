@@ -2,7 +2,7 @@
 This document roughly outlines the detailed sprint plans for each of the four sprints carried out during the development of the Freelancer Management Platform. Each section includes the sprint goal, selected backlog items, estimated effort, and any notes relevant to planning.
 ---
 
-## Sprint 1: [Enter Date Range]
+## Sprint 1:
 **Goal**: Establish core infrastructure and user registration flows.
 
 **Selected Backlog Items**:
@@ -24,7 +24,7 @@ This document roughly outlines the detailed sprint plans for each of the four sp
 
 ---
 
-## Sprint 2: [Enter Date Range]
+## Sprint 2:
 **Goal**: Enable core job posting, applications, and admin approval flow.
 
 **Selected Backlog Items**:
@@ -46,7 +46,7 @@ This document roughly outlines the detailed sprint plans for each of the four sp
 
 ---
 
-## Sprint 3: [Enter Date Range]
+## Sprint 3: 
 **Goal**: Finalize job lifecycle, reporting, and payment integration.
 
 **Selected Backlog Items**:
@@ -68,7 +68,7 @@ This document roughly outlines the detailed sprint plans for each of the four sp
 
 ---
 
-## Sprint 4: [Enter Date Range]
+## Sprint 4: 
 **Goal**: Polish UI, finalize testing, deploy app and prepare documentation.
 
 **Selected Backlog Items**:
@@ -86,4 +86,4 @@ This document roughly outlines the detailed sprint plans for each of the four sp
 | Docs | X |
 
 **Notes**:
-<!-- Add sprint planning insights, decisions made, and blockers here -->
+
