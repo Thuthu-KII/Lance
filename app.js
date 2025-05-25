@@ -34,7 +34,7 @@ if (process.env.NODE_ENV === 'production') {
   app.set('trust proxy', 1);
 }
 
-// Set view engine\ napp.set('view engine', 'ejs');
+app.set('view engine', 'ejs');
 const expressLayouts = require('express-ejs-layouts');
 app.use(expressLayouts);
 app.set('layout', 'common/layout');
@@ -59,6 +59,7 @@ app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: '1d' }));
 
 // Session configuration with PostgreSQL store
+//console.log("SESSION_SECRET:", process.env.SESSION_SECRET);
 app.use(session({
   store: new pgSession({
     pool: db.pool,
