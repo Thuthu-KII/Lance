@@ -25,9 +25,3 @@ Each chart shows the remaining story points per sprint for a team member. All ch
 
 > ![Burndown Chart](burndown_chart.png)
 
-
-
-## Notes
-
-- Story points were estimated and tracked using our internal Scrum board.
-- Plots were generated using Python's `matplotlib`.
