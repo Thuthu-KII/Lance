@@ -23,6 +23,7 @@ const jobRoutes = require('./routes/jobRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const profileRoutes = require('./routes/profileRoutes');
 const uploadRoute = require('./routes/upload')
+const pricing = require('./routes/commonRoutes')
 
 // Import passport config
 require('./config/passport');
@@ -91,6 +92,7 @@ app.use((req, res, next) => {
 
 // Routes
 app.use('/auth', authRoutes);
+app.use("/",pricing)
 app.use('/client', clientRoutes);
 app.use('/freelancer', freelancerRoutes);
 app.use('/admin', adminRoutes);

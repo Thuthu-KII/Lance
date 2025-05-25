@@ -1,0 +1,337 @@
+<%- contentFor('body') %>
+
+<main class="blog-container">
+  <header class="blog-header">
+    <h1 class="blog-title">Blog & News</h1>
+    <p class="blog-subtitle">Stay updated with the latest in freelancing and our platform</p>
+  </header>
+
+  <section class="featured-post">
+    <article class="featured-article">
+      <header class="featured-header">
+        <span class="featured-badge">Featured</span>
+        <h2>The Future of Freelancing: Trends Shaping 2025</h2>
+        <div class="post-meta">
+          <time datetime="2025-05-20">May 20, 2025</time>
+          <span class="author">By Platform Team</span>
+        </div>
+      </header>
+      <section class="featured-content">
+        <p>The freelancing industry continues to evolve rapidly, with new technologies and changing work preferences driving unprecedented growth. Our platform has seen remarkable adoption, reflecting broader market trends that are reshaping how work gets done.</p>
+        <a href="#" class="read-more-btn">Read Full Article</a>
+      </section>
+    </article>
+  </section>
+
+  <section class="platform-stats">
+    <h2 class="section-title">Our Platform by the Numbers</h2>
+    <div class="stats-grid">
+      <article class="stat-item">
+        <span class="stat-number">7</span>
+        <span class="stat-label">Active Freelancers</span>
+      </article>
+      <article class="stat-item">
+        <span class="stat-number">1</span>
+        <span class="stat-label">Registered Clients</span>
+      </article>
+      <article class="stat-item">
+        <span class="stat-number">R5.0</span>
+        <span class="stat-label">Total Payments Processed</span>
+      </article>
+      <article class="stat-item">
+        <span class="stat-number">0</span>
+        <span class="stat-label">Projects Completed</span>
+      </article>
+      <article class="stat-item">
+        <span class="stat-number"></span>
+        <span class="stat-label">Average Rating</span>
+      </article>
+      <article class="stat-item">
+        <span class="stat-number">s%</span>
+        <span class="stat-label">Success Rate</span>
+      </article>
+    </div>
+  </section>
+
+  <section class="blog-posts">
+    <h2 class="section-title">Latest Articles</h2>
+    <div class="posts-grid">
+      <article class="blog-post">
+        <header class="post-header">
+          <h3>Why Businesses Are Embracing Remote Freelancers</h3>
+          <div class="post-meta">
+            <time datetime="2025-05-18">May 18, 2025</time>
+            <span class="category">Industry Trends</span>
+          </div>
+        </header>
+        <section class="post-content">
+          <p>Companies worldwide are discovering the benefits of working with remote freelancers. From cost savings to access to global talent, the advantages are compelling.</p>
+          <a href="#" class="post-link">Read More</a>
+        </section>
+      </article>
+
+      <article class="blog-post">
+        <header class="post-header">
+          <h3>Top 10 Skills in High Demand for Freelancers</h3>
+          <div class="post-meta">
+            <time datetime="2025-05-15">May 15, 2025</time>
+            <span class="category">Career Tips</span>
+          </div>
+        </header>
+        <section class="post-content">
+          <p>Discover which skills are most sought after by clients and how you can position yourself for success in the competitive freelancing market.</p>
+          <a href="#" class="post-link">Read More</a>
+        </section>
+      </article>
+
+      <article class="blog-post">
+        <header class="post-header">
+          <h3>How to Set Your Freelance Rates: A Complete Guide</h3>
+          <div class="post-meta">
+            <time datetime="2025-05-12">May 12, 2025</time>
+            <span class="category">Freelancer Guide</span>
+          </div>
+        </header>
+        <section class="post-content">
+          <p>Pricing your services correctly is crucial for freelance success. Learn strategies for setting competitive rates that reflect your value.</p>
+          <a href="#" class="post-link">Read More</a>
+        </section>
+      </article>
+
+      <article class="blog-post">
+        <header class="post-header">
+          <h3>Building Long-term Client Relationships</h3>
+          <div class="post-meta">
+            <time datetime="2025-05-10">May 10, 2025</time>
+            <span class="category">Client Relations</span>
+          </div>
+        </header>
+        <section class="post-content">
+          <p>Successful freelancers know that repeat clients are the key to sustainable income. Learn how to nurture lasting professional relationships.</p>
+          <a href="#" class="post-link">Read More</a>
+        </section>
+      </article>
+
+      <article class="blog-post">
+        <header class="post-header">
+          <h3>Platform Update: New Features for Better Collaboration</h3>
+          <div class="post-meta">
+            <time datetime="2025-05-08">May 8, 2025</time>
+            <span class="category">Platform News</span>
+          </div>
+        </header>
+        <section class="post-content">
+          <p>We've launched new collaboration tools to make project management easier for both freelancers and clients. Here's what's new.</p>
+          <a href="#" class="post-link">Read More</a>
+        </section>
+      </article>
+
+      <article class="blog-post">
+        <header class="post-header">
+          <h3>The Psychology of Successful Freelancing</h3>
+          <div class="post-meta">
+            <time datetime="2025-05-05">May 5, 2025</time>
+            <span class="category">Mindset</span>
+          </div>
+        </header>
+        <section class="post-content">
+          <p>Mental resilience and the right mindset are crucial for freelance success. Explore the psychological aspects of independent work.</p>
+          <a href="#" class="post-link">Read More</a>
+        </section>
+      </article>
+    </div>
+  </section>
+
+  <section class="newsletter-signup">
+    <article class="newsletter-content">
+      <h2>Stay Updated</h2>
+      <p>Subscribe to our newsletter for the latest freelancing tips, platform updates, and industry insights.</p>
+      <form class="newsletter-form" action="/newsletter" method="POST">
+        <input type="email" name="email" placeholder="Enter your email address" required class="newsletter-input">
+        <button type="submit" class="newsletter-button">Subscribe</button>
+      </form>
+    </article>
+  </section>
+</main>
+
+<style>
+.blog-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.blog-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.blog-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+   background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.blog-subtitle {
+  font-size: 1.25rem;
+  color: #666;
+}
+
+.featured-post {
+  margin-bottom: 3rem;
+}
+
+.featured-article {
+  background-color: #f9f9f9;
+  padding: 2rem;
+  border-radius: 0.5rem;
+}
+
+.featured-header h2 {
+  font-size: 1.75rem;
+  margin: 0.5rem 0;
+}
+
+.featured-badge {
+  background-color: var(--primary-color);
+  color: #fff;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+}
+
+.post-meta {
+  font-size: 0.875rem;
+  color: #888;
+}
+
+.read-more-btn {
+  display: inline-block;
+  margin-top: 1rem;
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+.platform-stats {
+  margin-bottom: 3rem;
+}
+
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1.5rem;
+}
+
+.stat-item {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 1.5rem;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.blog-posts {
+  margin-bottom: 3rem;
+}
+
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.blog-post {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.post-header h3 {
+  margin: 0.5rem 0;
+  font-size: 1.25rem;
+}
+
+.category {
+  background-color: #eee;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+}
+
+.post-content p {
+  margin: 1rem 0;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.post-link {
+  color: var(--primary-color);
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.newsletter-signup {
+  background-color: #f5f5f5;
+  padding: 3rem 1rem;
+  text-align: center;
+  border-radius: 0.5rem;
+}
+
+.newsletter-content h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.newsletter-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.newsletter-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
+
+.newsletter-button {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.newsletter-button:hover {
+  background-color: var(--primary-dark);
+}
+</style>
