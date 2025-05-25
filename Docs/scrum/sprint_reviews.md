@@ -12,8 +12,8 @@ This document summarizes the outcomes of our sprint, focusing on the progress ma
 ![Landing Page - Old](./Screenshot%202025-05-25%20133449.png)
 
 **Current Version:**  
-![Landing Page - New]()
-
+![Landing Page - New](./1.png)
+![Landing Page - New](./2.png)
 ---
 
 ## 2. Sign-Up Page
@@ -23,8 +23,8 @@ This document summarizes the outcomes of our sprint, focusing on the progress ma
 ![Sign-Up Page - Old](./Screenshot%202025-05-25%20133501.png)
 
 **Current Version:**  
-![Sign-Up Page - New](./images/signup_new.png)
-
+![Sign-Up Page - New](./3.png)
+![Sign-Up Page - New](./4.png)
 ---
 
 ## 3. Client/Freelancer Dashboard
