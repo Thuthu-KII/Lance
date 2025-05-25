@@ -1,4 +1,3 @@
-// __tests__/db.test.js
 jest.mock('pg', () => {
   const mClient = {
     connect: jest.fn(),
@@ -24,7 +23,7 @@ require('dotenv').config({ path: '.env.test' }); // Use a test-specific .env fil
 
 const { Pool } = require('pg');
 const bcrypt = require('bcryptjs');
-const db = require('../path/to/your/db/file'); // Replace with your actual path
+const db = require('../../config/database'); 
 
 describe('Database Config', () => {
   let mockPool;
