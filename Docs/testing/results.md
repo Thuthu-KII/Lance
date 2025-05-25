@@ -1,15 +1,6 @@
 # Test Results Overview
 
-## Test Execution Results
-
-![Test Results Summary](./images/test-results-summary.png)  
-*Figure 1: Summary of all test cases executed.*
-Got it! Here's the full Markdown content as a single code block you can save as `results_.md`:
-
-
-
-
-\--------------------|---------|----------|---------|---------|-------------------------------------------------------------------------
+## Test Execution Results as per run, subject to change
 
 | File                                       | % Stmts   | % Branch   | % Funcs   | % Lines   | Uncovered Line #s                                                         |
 | ------------------------------------------ | --------- | ---------- | --------- | --------- | ------------------------------------------------------------------------- |
