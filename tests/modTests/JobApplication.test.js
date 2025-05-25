@@ -27,6 +27,11 @@ describe('JobApplication Model', () => {
       const result = await JobApplication.findById(999);
       expect(result).toBeNull();
     });
+
+    it('throws error on db failure', async () => {
+      db.query.mockRejectedValue(new Error('DB error'));
+      await expect(JobApplication.findById(1)).rejects.toThrow('DB error');
+    });
   });
 
   describe('findByJobAndFreelancer', () => {
@@ -47,13 +52,18 @@ describe('JobApplication Model', () => {
       const result = await JobApplication.findByJobAndFreelancer(1, 99);
       expect(result).toBeNull();
     });
+
+    it('throws error on db failure', async () => {
+      db.query.mockRejectedValue(new Error('DB failure'));
+      await expect(JobApplication.findByJobAndFreelancer(1, 2)).rejects.toThrow('DB failure');
+    });
   });
 
   describe('create', () => {
     it('creates a new application if none exists', async () => {
       db.query
-        .mockResolvedValueOnce({ rows: [] }) // for findByJobAndFreelancer
-        .mockResolvedValueOnce({ rows: [{ id: 123 }] }); // for insert
+        .mockResolvedValueOnce({ rows: [] }) // check existing
+        .mockResolvedValueOnce({ rows: [{ id: 123 }] }); // insert
 
       const input = { jobId: 1, freelancerId: 2, motivation: 'I want to apply' };
       const result = await JobApplication.create(input);
@@ -63,11 +73,25 @@ describe('JobApplication Model', () => {
     });
 
     it('throws an error if application exists', async () => {
-      db.query.mockResolvedValueOnce({ rows: [{ id: 1 }] }); // existing application
-
+      db.query.mockResolvedValueOnce({ rows: [{ id: 1 }] });
       await expect(
         JobApplication.create({ jobId: 1, freelancerId: 2, motivation: 'test' })
       ).rejects.toThrow('You have already applied for this job');
+    });
+
+    it('throws error if db check fails', async () => {
+      db.query.mockRejectedValueOnce(new Error('DB error during check'));
+      await expect(JobApplication.create({ jobId: 1, freelancerId: 2, motivation: 'test' }))
+        .rejects.toThrow('DB error during check');
+    });
+
+    it('throws error if insert fails', async () => {
+      db.query
+        .mockResolvedValueOnce({ rows: [] }) // check existing
+        .mockRejectedValueOnce(new Error('Insert error')); // insert fails
+
+      await expect(JobApplication.create({ jobId: 1, freelancerId: 2, motivation: 'apply' }))
+        .rejects.toThrow('Insert error');
     });
   });
 
@@ -88,6 +112,11 @@ describe('JobApplication Model', () => {
       const result = await JobApplication.update(1, {});
       expect(result).toEqual(original);
     });
+
+    it('throws error on db failure', async () => {
+      db.query.mockRejectedValue(new Error('DB failure on update'));
+      await expect(JobApplication.update(1, { motivation: 'x' })).rejects.toThrow('DB failure on update');
+    });
   });
 
   describe('getWithDetails', () => {
@@ -105,6 +134,11 @@ describe('JobApplication Model', () => {
       const result = await JobApplication.getWithDetails(999);
       expect(result).toBeNull();
     });
+
+    it('throws error on db failure', async () => {
+      db.query.mockRejectedValue(new Error('DB failure'));
+      await expect(JobApplication.getWithDetails(1)).rejects.toThrow('DB failure');
+    });
   });
 
   describe('getByJobId', () => {
@@ -115,6 +149,11 @@ describe('JobApplication Model', () => {
       const result = await JobApplication.getByJobId(10);
       expect(result).toEqual(apps);
     });
+
+    it('throws error on db failure', async () => {
+      db.query.mockRejectedValue(new Error('DB error'));
+      await expect(JobApplication.getByJobId(10)).rejects.toThrow('DB error');
+    });
   });
 
   describe('getByFreelancerId', () => {
@@ -124,6 +163,11 @@ describe('JobApplication Model', () => {
 
       const result = await JobApplication.getByFreelancerId(7);
       expect(result).toEqual(apps);
+    });
+
+    it('throws error on db failure', async () => {
+      db.query.mockRejectedValue(new Error('Query fail'));
+      await expect(JobApplication.getByFreelancerId(7)).rejects.toThrow('Query fail');
     });
   });
 
@@ -141,6 +185,11 @@ describe('JobApplication Model', () => {
       const result = await JobApplication.getHiredApplication(5);
       expect(result).toBeNull();
     });
+
+    it('throws error on db failure', async () => {
+      db.query.mockRejectedValue(new Error('Get hired fail'));
+      await expect(JobApplication.getHiredApplication(5)).rejects.toThrow('Get hired fail');
+    });
   });
 
   describe('count', () => {
@@ -157,6 +206,11 @@ describe('JobApplication Model', () => {
 
       const result = await JobApplication.count({ jobId: 1, status: 'pending' });
       expect(result).toBe(2);
+    });
+
+    it('throws error on db failure', async () => {
+      db.query.mockRejectedValue(new Error('Count fail'));
+      await expect(JobApplication.count()).rejects.toThrow('Count fail');
     });
   });
 });
