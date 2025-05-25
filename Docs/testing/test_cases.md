@@ -23,12 +23,22 @@
 
 ---
 
-## Client Tests
+## Client Model Tests
 
-| Test Case ID | Description                         | Precondition             | Steps                          | Expected Result                | Status |
-|--------------|-----------------------------------|-------------------------|--------------------------------|-------------------------------|--------|
-| CLIENT-001   |                                   |                         |                                |                               |        |
-| CLIENT-002   |                                   |                         |                                |                               |        |
+| Test Case ID | Description                      | Precondition        | Steps                         | Expected Result                  |
+|--------------|---------------------------------|--------------------|-------------------------------|---------------------------------|
+| CLIENT-001   | Find client by user ID           | Client exists       | Call `findByUserId(userId)`    | Returns client object            |
+| CLIENT-002   | Find client by user ID (not found)| No client          | Call `findByUserId(userId)`    | Returns null                    |
+| CLIENT-003   | Find client by ID                | Client exists       | Call `findById(id)`            | Returns client object            |
+| CLIENT-004   | Find client by ID (not found)   | No client           | Call `findById(id)`            | Returns null                    |
+| CLIENT-005   | Create new client                | Valid data          | Call `create(data)`            | Returns newly created client    |
+| CLIENT-006   | Update existing client           | Client exists       | Call `update(id, data)`        | Returns updated client          |
+| CLIENT-007   | Update with no data              | Client exists       | Call `update(id, {})`          | Returns existing client         |
+| CLIENT-008   | Get client with user details     | Client exists       | Call `getWithUserDetails(id)`  | Returns client with user details|
+| CLIENT-009   | Get client with user details (none)| No client          | Call `getWithUserDetails(id)`  | Returns null                   |
+| CLIENT-010   | Get all clients with user details| Clients exist       | Call `getAll()`                | Returns list of clients         |
+| CLIENT-011   | Count total clients              | Clients exist       | Call `count()`                 | Returns count                   |
+| CLIENT-012   | Get jobs for client              | Jobs exist          | Call `getJobs(clientId)`       | Returns jobs list               |
 
 ---
 
