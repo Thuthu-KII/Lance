@@ -112,7 +112,7 @@ A comprehensive web application connecting clients with freelancers, enabling jo
   - [Daily Stand-Up Summaries](/Docs/scrum/sprint_retros.md)
   - [Sprint Review Demonstrations](/Docs/scrum/sprint_reviews.md)
 - **Additional Design Documents:**
-  - [Project Plan](/Docs/Planning%and%Design/framework.md)
+  - [Project Plan](/Docs/Planning_and_Design/framework.md)
   - [Architecture Diagram](/Docs/Planning%and%Design/architecthure.md)
   - [Test Plan and Results](/Docs/testing)
 ## License
