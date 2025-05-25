@@ -129,11 +129,3 @@ This project is licensed under the MIT License.
 ```
 
 ---
-
-**Notes:**
-- The Markdown anchors (e.g., `[Features](#features)`) are formatted to work correctly on GitHub, linking to the respective section headers.
-- Code blocks use proper triple-backtick syntax for GitHub rendering.
-- Placeholders (e.g., `SCREEN_RECORDING_VIDEO_LINK`) are unchanged, as you’ll populate them later.
-- The coverage badge at the top is preserved with its original link.
-
-You can copy this directly into your `README.md` file on GitHub. If you need further tweaks or want to provide code files (e.g., `jobsModel.js`) for detailed documentation, let me know!
