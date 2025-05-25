@@ -107,18 +107,16 @@ A comprehensive web application connecting clients with freelancers, enabling jo
 
 - [GitHub Repository](https://github.com/Thuthu-KII/Lance) (public, with full code and commit history)
 - **Scrum Artifacts:**
-  - [Product Backlog](PRODUCT_BACKLOG_LINK)
-  - [Sprint Backlogs](SPRINT_BACKLOGS_LINK)
-  - [Sprint Burndown Charts](BURNDOWN_CHARTS_LINK)
-  - [Sprint Retrospective Reports](RETROSPECTIVE_REPORTS_LINK)
-  - [Daily Stand-Up Summaries](DAILY_STANDUP_SUMMARIES_LINK)
-  - [Sprint Review Demonstrations](SPRINT_REVIEW_LINKS_OR_VIDEOS)
+  - [Product Backlog](/Docs/scrum/product_backlog.md)
+  - [Sprint Backlogs](/Docs/scrum/product_backlog.md)
+  - [Sprint Burndown Charts]/Docs/scrum/burndown_charts.md)
+  - [Sprint Retrospective Reports](/Docs/scrum/sprint_retro.md)
+  - [Daily Stand-Up Summaries](/Docs/scrum/sprint_retro.md)
+  - [Sprint Review Demonstrations](/Docs/scrum/sprint_review.md)
 - **Additional Design Documents:**
-  - [Project Plan](PROJECT_PLAN_LINK)
-  - [Architecture Diagram](ARCHITECTURE_DIAGRAM_LINK)
-  - [Design Documents (class diagrams, wireframes, etc.)](DESIGN_DOCS_LINK)
-  - [Test Plan and Results (including automated test screenshots/logs)](TEST_PLAN_AND_RESULTS_LINK)
-
+  - [Project Plan](/Docs/Planning%and%Design/framework.md)
+  - [Architecture Diagram](/Docs/Planning%and%Design/architecthure.md)
+  - [Test Plan and Results](/Docs/testing)
 ## License
 
 This project is licensed under the MIT License.
