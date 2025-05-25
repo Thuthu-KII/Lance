@@ -1,14 +1,5 @@
 # Test Cases
 
-## Authentication Tests
-
-| Test Case ID | Description                         | Precondition             | Steps                          | Expected Result                | Status |
-|--------------|-----------------------------------|-------------------------|--------------------------------|-------------------------------|--------|
-| AUTH-001     |                                   |                         |                                |                               |        |
-| AUTH-002     |                                   |                         |                                |                               |        |
-
----
-
 ## Admin Tests
 
 | Test Case ID | Description                      | Precondition        | Steps                         | Expected Result                  | Status |
