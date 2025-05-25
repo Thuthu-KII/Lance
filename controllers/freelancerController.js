@@ -163,7 +163,7 @@ exports.getJobDetails = async (req, res) => {
     // Get job details
     const jobResult = await db.query(`
       SELECT j.*, c.first_name AS client_first_name, c.last_name AS client_last_name, 
-             c.company_name, c.skills AS client_skills, c.experience AS client_experience
+             c.company_name
       FROM jobs j
       INNER JOIN clients c ON j.client_id = c.id
       WHERE j.id = $1

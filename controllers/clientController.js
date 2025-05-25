@@ -135,10 +135,9 @@ exports.getJobDetails = async (req, res) => {
   }
 };
 
-// Report a problem with a job
 exports.reportJobIssue = async (req, res) => {
+  const { id } = req.params;
   try {
-    const { id } = req.params;
     const { issue, reportedUser } = req.body;
     const userId = req.user.id;
     
@@ -147,10 +146,14 @@ exports.reportJobIssue = async (req, res) => {
       return res.redirect(`/client/jobs/${id}`);
     }
     
+    // Check if reportedUser is a valid integer
+    const reportedUserId = reportedUser && reportedUser.trim() !== '' ? 
+      parseInt(reportedUser, 10) : null;
+    
     // Create report
     await db.query(
       'INSERT INTO reports (reported_by, reported_user, job_id, issue, status) VALUES ($1, $2, $3, $4, $5)',
-      [userId, reportedUser, id, issue, 'pending']
+      [userId, reportedUserId, id, issue, 'pending']
     );
     
     req.flash('success_msg', 'Issue reported successfully. An admin will review it shortly.');
