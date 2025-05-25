@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Payment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+    <!-- Main Content Wrapper -->
+    <main class="flex-grow flex items-start justify-center pt-10">
+        <section class="w-full max-w-md bg-white rounded-xl shadow-lg p-8 text-center">
+            <h2 class="text-2xl font-bold text-blue-600 mb-6">Popup Payment</h2>
+
+            <input 
+                type="number" 
+                id="popup-amount" 
+                class="w-full px-4 py-2 border border-gray-300 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                placeholder="Enter Amount (R)" 
+                min="1"
+            />
+
+            <button 
+                class="w-full bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition popup-button"
+            >
+                Pay
+            </button>
+
+            <p class="status-message text-red-500 mt-4"></p>
+        </section>
+    </main>
+
+    <!-- Sticky Footer -->
+    <footer class="bg-blue-600 text-white py-8 text-center mt-auto">
+        <h2 class="text-2xl font-bold">Want to go back?</h2>
+        <a href="/" class="underline hover:text-gray-200 transition">Return to Home</a>
+    </footer>
+
+    <!-- External Scripts -->
+    <script src="https://js.yoco.com/sdk/v1/yoco-sdk-web.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="payment.js"></script> <!-- Ensure this path is correct -->
+
+</body>
+</html>
