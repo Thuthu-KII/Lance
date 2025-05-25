@@ -1,5 +1,5 @@
-
-[![Coverage Status](https://coveralls.io/repos/github/Thuthu-KII/Lance/badge.svg?branch=lance)](https://coveralls.io/github/Thuthu-KII/Lance?branch=lance)
+Follow this link to latest coverage, for some reason markdown fails to update
+https://coveralls.io/repos/github/Thuthu-KII/Lance/badge.svg?branch=lance(Coverage Status)!:https://coveralls.io/github/Thuthu-KII/Lance?branch=lance
 
 # Freelancer Management Platform (Lance)
 
