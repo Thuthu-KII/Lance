@@ -23,5 +23,5 @@ We observed the following overall trend:
 
 Each chart shows the remaining story points per sprint for a team member. All charts reflect a general downward trend, consistent with burndown expectations.
 
-> ![Burndown Chart](burndown_chart.png)
+> ![Burndown Chart](chart(1).png)
 
