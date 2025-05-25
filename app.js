@@ -54,6 +54,7 @@ app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Session configuration
+app.set('trust proxy', 1);
 app.use(session({
   secret: process.env.SESSION_SECRET || 'freelancer_platform_secret',
   resave: false,
