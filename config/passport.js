@@ -56,7 +56,7 @@ passport.use(new GoogleStrategy({
   try {
     // Check if user already exists
     console.log("Google OAuth Strategy - Starting authentication for:", profile.emails[0].value);
-    const userResult = await db.query( //client password issue got triggered by this
+    const userResult = await db.query( //client password issue got triggered by this  
       'SELECT * FROM users WHERE google_id = $1 OR email = $2',
       [profile.id, profile.emails[0].value]
     );
