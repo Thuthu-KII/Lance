@@ -38,22 +38,22 @@ This application follows the **MVC (Model-View-Controller)** architecture, a des
 
 - **Purpose**: Visualizes the workflow of user registration and authentication processes.
 
-![Activity Diagram](./images/activity_diagram.png)
+![Activity Diagram](./a2.png)
 
 ### Sequence Diagram
 
 - **Purpose**: Illustrates the interaction between users, the application, and the database during login and registration.
 
-![Sequence Diagram](./images/sequence_diagram.png)
+![Sequence Diagram](./Customer%20Journey%20Map%20-%20Frame%201.jpg.png)
 
 ### State Diagram
 
 - **Purpose**: Depicts the states of a user account (e.g., pending, approved, logged in) and transitions.
 
-![State Diagram](./images/state_diagram.png)
+![State Diagram](./a1.png)
 
 ### Class Diagram
 
 - **Purpose**: Represents the static structure of the system, including entities like Users, Clients, and Freelancers.
 
-![Class Diagram](./images/class_diagram.png)
+![Class Diagram](./Customer%20Journey%20Map%20-%20Frame%202.jpg.png)
