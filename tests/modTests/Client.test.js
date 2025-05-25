@@ -28,6 +28,12 @@ describe('Client Model', () => {
       const result = await Client.findByUserId(99);
       expect(result).toBeNull();
     });
+
+    it('should throw error if query fails', async () => {
+      db.query.mockRejectedValue(new Error('DB failure'));
+
+      await expect(Client.findByUserId(10)).rejects.toThrow('DB failure');
+    });
   });
 
   describe('findById', () => {
@@ -44,6 +50,12 @@ describe('Client Model', () => {
 
       const result = await Client.findById(404);
       expect(result).toBeNull();
+    });
+
+    it('should throw error if query fails', async () => {
+      db.query.mockRejectedValue(new Error('DB error'));
+
+      await expect(Client.findById(2)).rejects.toThrow('DB error');
     });
   });
 
@@ -65,6 +77,12 @@ describe('Client Model', () => {
 
       const result = await Client.create(clientData);
       expect(result).toEqual(mockResult);
+    });
+
+    it('should throw error if insert fails', async () => {
+      db.query.mockRejectedValue(new Error('Insert failed'));
+
+      await expect(Client.create({ userId: 1 })).rejects.toThrow('Insert failed');
     });
   });
 
@@ -94,6 +112,12 @@ describe('Client Model', () => {
       const result = await Client.update(1, {});
       expect(result).toEqual(existingClient);
     });
+
+    it('should throw error if update query fails', async () => {
+      db.query.mockRejectedValue(new Error('Update failed'));
+
+      await expect(Client.update(1, { firstName: 'New' })).rejects.toThrow('Update failed');
+    });
   });
 
   describe('getWithUserDetails', () => {
@@ -116,6 +140,12 @@ describe('Client Model', () => {
       const result = await Client.getWithUserDetails(404);
       expect(result).toBeNull();
     });
+
+    it('should throw error if query fails', async () => {
+      db.query.mockRejectedValue(new Error('Join query failed'));
+
+      await expect(Client.getWithUserDetails(1)).rejects.toThrow('Join query failed');
+    });
   });
 
   describe('getAll', () => {
@@ -126,6 +156,12 @@ describe('Client Model', () => {
       const result = await Client.getAll();
       expect(result).toEqual(mockClients);
     });
+
+    it('should throw error if query fails', async () => {
+      db.query.mockRejectedValue(new Error('Fetch all failed'));
+
+      await expect(Client.getAll()).rejects.toThrow('Fetch all failed');
+    });
   });
 
   describe('count', () => {
@@ -134,6 +170,12 @@ describe('Client Model', () => {
 
       const result = await Client.count();
       expect(result).toBe(5);
+    });
+
+    it('should throw error if count query fails', async () => {
+      db.query.mockRejectedValue(new Error('Count error'));
+
+      await expect(Client.count()).rejects.toThrow('Count error');
     });
   });
 
@@ -147,6 +189,12 @@ describe('Client Model', () => {
 
       const result = await Client.getJobs(1);
       expect(result).toEqual(mockJobs);
+    });
+
+    it('should throw error if job fetch fails', async () => {
+      db.query.mockRejectedValue(new Error('Jobs query failed'));
+
+      await expect(Client.getJobs(1)).rejects.toThrow('Jobs query failed');
     });
   });
 });

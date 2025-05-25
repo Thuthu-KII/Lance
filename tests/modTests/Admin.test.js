@@ -28,6 +28,11 @@ describe('Admin Model', () => {
       const result = await Admin.findByUserId(99);
       expect(result).toBeNull();
     });
+
+    it('should throw an error when findByUserId fails', async () => {
+      db.query.mockRejectedValueOnce(new Error('DB error'));
+      await expect(Admin.findByUserId(10)).rejects.toThrow('DB error');
+    });
   });
 
   describe('findById', () => {
@@ -38,6 +43,11 @@ describe('Admin Model', () => {
       const result = await Admin.findById(2);
       expect(result).toEqual(mockAdmin);
       expect(db.query).toHaveBeenCalledWith('SELECT * FROM admins WHERE id = $1', [2]);
+    });
+
+    it('should throw an error when findById fails', async () => {
+      db.query.mockRejectedValueOnce(new Error('DB error'));
+      await expect(Admin.findById(1)).rejects.toThrow('DB error');
     });
   });
 
@@ -58,6 +68,12 @@ describe('Admin Model', () => {
         'INSERT INTO admins (user_id, first_name, last_name) VALUES ($1, $2, $3) RETURNING *',
         [20, 'Alice', 'Wonderland']
       );
+    });
+
+    it('should throw an error when create fails', async () => {
+      db.query.mockRejectedValueOnce(new Error('DB error'));
+      const adminData = { userId: 1, firstName: 'Test', lastName: 'Admin' };
+      await expect(Admin.create(adminData)).rejects.toThrow('DB error');
     });
   });
 
@@ -94,6 +110,12 @@ describe('Admin Model', () => {
         expect.arrayContaining(['Updated', 'Admin', expect.any(Date), 4])
       );
     });
+
+    it('should throw an error when update fails', async () => {
+      db.query.mockRejectedValueOnce(new Error('DB error'));
+      const adminData = { firstName: 'Fail', lastName: 'Case' };
+      await expect(Admin.update(1, adminData)).rejects.toThrow('DB error');
+    });
   });
 
   describe('getAll', () => {
@@ -109,6 +131,11 @@ describe('Admin Model', () => {
       expect(result).toEqual(mockAdmins);
       expect(db.query).toHaveBeenCalledWith(expect.stringContaining('SELECT a.*, u.email'));
     });
+
+    it('should throw an error when getAll fails', async () => {
+      db.query.mockRejectedValueOnce(new Error('DB error'));
+      await expect(Admin.getAll()).rejects.toThrow('DB error');
+    });
   });
 
   describe('count', () => {
@@ -118,6 +145,11 @@ describe('Admin Model', () => {
       const result = await Admin.count();
       expect(result).toBe(5);
       expect(db.query).toHaveBeenCalledWith('SELECT COUNT(*) FROM admins');
+    });
+
+    it('should throw an error when count fails', async () => {
+      db.query.mockRejectedValueOnce(new Error('DB error'));
+      await expect(Admin.count()).rejects.toThrow('DB error');
     });
   });
 });
