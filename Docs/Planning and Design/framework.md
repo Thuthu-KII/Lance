@@ -1,14 +1,16 @@
 # Wireframe Overview
 
 ## Purpose
-This document contains initial wireframes created to guide the layout and user interface design of our application.
-The wireframe was to big so it is split into seperate files
+This wireframe, created using Eraser.io, was part of the initial planning phase to visualize the general structure of the application.
+
 ---
 
-## General  Wireframe
+## General Wireframe (Split View)
 
-![Landing Page Wireframe](./images/landing_wireframe.png)
+![Wireframe 1](./wf1.png)
 
+![Wireframe 2](./wf2.png)
 
-## Notes
-These wireframes were created using Eraser.io and served as a foundational reference during the planning and development phases.
+![Wireframe 3](./wf3.png)
+
+![Wireframe 4](./wf4.png)
