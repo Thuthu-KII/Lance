@@ -51,6 +51,9 @@ class Freelancer {
   
   // Update a freelancer profile
   static async update(id, freelancerData) {
+    if (Object.keys(freelancerData).length === 0) {
+      return await this.findById(id);
+    }
     try {
       const { 
         firstName, lastName, phone, address, 
