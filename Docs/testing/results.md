@@ -1,5 +1,3 @@
-[![Coverage Status](https://coveralls.io/repos/github/Thuthu-KII/Lance/badge.svg?branch=lance)](https://coveralls.io/github/Thuthu-KII/Lance?branch=lance)
-
 # Test Results Overview
 
 ## Test Execution Results as per run, subject to change
