@@ -42,10 +42,4 @@ A prioritized list of features and tasks for the Freelancer Management Platform,
 - [Low] As a user, I want a responsive UI for mobile and desktop use.
 - [Low] As a team, we want centralized error logging for debugging.
 ```
-## Notes on the Product Backlog
 
-This backlog outlines the core functionality required for each user role — Client, Freelancer, and Admin — along with technical and platform-wide priorities. Items are tagged by importance to guide incremental development and sprint planning.
-
-Each user story is framed from the user’s perspective to ensure feature relevance and usability. As development progresses, stories can be broken down further into tasks and acceptance criteria.
-
-The backlog is designed to evolve — new stories may be added as features expand, user feedback is received, or technical needs change. Use it as a living document during team planning and retrospectives.
