@@ -46,20 +46,25 @@ exports.getJobDetails = async (req, res) => {
     // Check if current freelancer has already applied
     let hasApplied = false;
     
-    if (req.user && req.user.role === 'freelancer') {
+    // if (req.user && req.user.role === 'freelancer') {
+    //   const applicationResult = await db.query(
+    //     'SELECT * FROM job_applications WHERE job_id = $1 AND freelancer_id = $2',
+    //     [id, req.user.profile ? req.user.profile.id : req.user.id]
+    //   );
+      
       const applicationResult = await db.query(
         'SELECT * FROM job_applications WHERE job_id = $1 AND freelancer_id = $2',
-        [id, req.user.profile ? req.user.profile.id : req.user.id]
-      );
-      
+        [id, req.user.profile ? req.user.profile.id : req.user.id]);
+
       hasApplied = applicationResult.rows.length > 0;
-    }
+    
         let application = 0;
     if (applicationResult.rows.length > 0) {
       application = applicationResult.rows[0];
     }
 
     res.render('freelancer/job-details', {
+      applicationResult,
       application,
       job,
       hasApplied,

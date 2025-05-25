@@ -61,14 +61,12 @@ async function createDefaultUsers() {
       );
       
       await client.query(
-        'INSERT INTO clients (user_id, first_name, last_name, company_name, skills, experience) VALUES ($1, $2, $3, $4, $5, $6)',
+        'INSERT INTO clients (user_id, first_name, last_name, company_name) VALUES ($1, $2, $3, $4)',
         [
           clientInsert.rows[0].id, 
           'Test', 
           'Client', 
-          'Test Company', 
-          ['Web Development', 'Design', 'Marketing'],
-          'We are a small company looking for skilled freelancers for various projects.'
+          'Test Company',
         ]
       );
       
