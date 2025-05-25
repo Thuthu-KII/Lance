@@ -12,12 +12,12 @@ We observed the following overall trend:
 
 ## Team Members
 
-- Student A
-- Student B
-- Student C
-- Student D
-- Student E
-- Student F
+- Boitumelo A
+- jordan B
+- george C
+- thuthu D
+- Banele
+
 
 ## Burndown Visualization
 
