@@ -9,7 +9,7 @@ This document summarizes the outcomes of our sprint, focusing on the progress ma
 
 **Initial Version:**  
 ![Landing Page - Old](./Screenshot%202025-05-25%20133440.png)
-![Landing Page - Old](./Screenshot%2025-05-25%133449.png)
+![Landing Page - Old](./Screenshot%202025-05-25%20133449.png)
 
 **Current Version:**  
 ![Landing Page - New]()
