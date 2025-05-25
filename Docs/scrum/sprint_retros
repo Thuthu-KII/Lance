@@ -1,0 +1,11 @@
+##  Sprint Retrospectives
+
+###  [Sprint 1 Retrospective](sprint_retro.md#sprint-1)
+- Focused on setting up OAuth, UI roles, and MVP structure.
+- Team aligned on core functionality: login, dashboard, posting, and applying for jobs.
+- CI/CD and GitHub Actions pipelines were initialized by Jordan and Thuthu.
+
+### [Sprint 2 Retrospective](sprint_retro.md#sprint-2)
+- Emphasis on freelancer job flow and client posting features.
+- Boitumelo completed functional dashboards; George and Banele built backend routes.
+- Thuthu and Jordan solidified Azure CI/CD and coverage reporting via Codecov.
