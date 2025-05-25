@@ -1,0 +1,277 @@
+<%- contentFor('body') %>
+
+<main class="about-container">
+  <header class="about-header">
+    <h1 class="about-title">About Us</h1>
+    <p class="about-subtitle">Connecting talent with opportunity, one project at a time</p>
+  </header>
+
+  <section class="hero-section">
+    <article class="hero-content">
+      <h2>Our Story</h2>
+      <p>We believe in the power of freelancing to transform careers and businesses. Our platform was built to bridge the gap between talented freelancers and clients who need their expertise, creating a space where quality work meets fair compensation.</p>
+    </article>
+  </section>
+
+  <section class="mission-section">
+    <h2 class="section-title">Our Mission</h2>
+    <article class="mission-grid">
+      <div class="mission-item">
+        <span class="mission-icon">🎯</span>
+        <h3>Empower Freelancers</h3>
+        <p>We provide freelancers with the tools and opportunities they need to build successful independent careers and showcase their skills to the world.</p>
+      </div>
+      <div class="mission-item">
+        <span class="mission-icon">🤝</span>
+        <h3>Support Businesses</h3>
+        <p>We help businesses find the right talent for their projects, from small tasks to large-scale initiatives, with complete confidence and security.</p>
+      </div>
+      <div class="mission-item">
+        <span class="mission-icon">🔒</span>
+        <h3>Ensure Security</h3>
+        <p>Our secure payment system and dispute resolution process protect both freelancers and clients, building trust in every transaction.</p>
+      </div>
+      <div class="mission-item">
+        <span class="mission-icon">🌟</span>
+        <h3>Drive Innovation</h3>
+        <p>We continuously innovate our platform to provide the best user experience and stay ahead of industry trends and needs.</p>
+      </div>
+    </article>
+  </section>
+
+  <section class="values-section">
+    <h2 class="section-title">Our Values</h2>
+    <article class="values-content">
+      <div class="value-card">
+        <h3>Transparency</h3>
+        <p>We believe in clear communication, honest pricing, and transparent processes that build trust between all parties.</p>
+      </div>
+      <div class="value-card">
+        <h3>Quality</h3>
+        <p>We're committed to maintaining high standards for both the work delivered and the experience on our platform.</p>
+      </div>
+      <div class="value-card">
+        <h3>Community</h3>
+        <p>We foster a supportive community where freelancers and clients can grow, learn, and succeed together.</p>
+      </div>
+    </article>
+  </section>
+
+  <section class="team-section">
+    <h2 class="section-title">Why Choose Us</h2>
+    <article class="features-grid">
+      <div class="feature-item">
+        <span class="feature-icon">⚡</span>
+        <h3>Fast & Efficient</h3>
+        <p>Quick project matching and streamlined processes to get work started faster.</p>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">💼</span>
+        <h3>Professional Network</h3>
+        <p>Access to verified professionals across multiple industries and skill sets.</p>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">📈</span>
+        <h3>Growth Focused</h3>
+        <p>Tools and resources to help both freelancers and businesses scale and grow.</p>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">🛡️</span>
+        <h3>Secure Platform</h3>
+        <p>Advanced security measures and payment protection for peace of mind.</p>
+      </div>
+    </article>
+  </section>
+</main>
+
+<style>
+.about-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.about-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.about-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, var(--primary-color) 0%, #5a52cc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.about-subtitle {
+  font-size: 1.2rem;
+  color: #6c757d;
+  margin: 0;
+}
+
+.hero-section {
+  margin-bottom: 4rem;
+}
+
+.hero-content {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: var(--shadow);
+  padding: 3rem;
+  text-align: center;
+}
+
+.hero-content h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--primary-color);
+}
+
+.hero-content p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #6c757d;
+  margin: 0;
+}
+
+.mission-section, .values-section, .team-section {
+  margin-bottom: 4rem;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: var(--dark-color);
+}
+
+.mission-grid, .features-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.mission-item, .feature-item {
+  flex: 1 0 calc(25% - 1.5rem);
+  text-align: center;
+  background: var(--glass-bg);
+  backdrop-filter: blur(5px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 2rem 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mission-item:hover, .feature-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+.mission-icon, .feature-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.mission-item h3, .feature-item h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+
+.mission-item p, .feature-item p {
+  color: #6c757d;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.values-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.value-card {
+  flex: 1 0 calc(33.333% - 1.5rem);
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: var(--shadow);
+  padding: 2rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.value-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.value-card h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+.value-card p {
+  color: #6c757d;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Responsive design */
+@media (max-width: 992px) {
+  .mission-item, .feature-item {
+    flex: 1 0 calc(50% - 1.5rem);
+  }
+  
+  .value-card {
+    flex: 1 0 calc(50% - 1.5rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .about-title {
+    font-size: 2rem;
+  }
+  
+  .about-subtitle {
+    font-size: 1rem;
+  }
+  
+  .hero-content {
+    padding: 2rem;
+  }
+  
+  .hero-content h2 {
+    font-size: 1.5rem;
+  }
+  
+  .mission-item, .feature-item, .value-card {
+    flex: 1 0 calc(100% - 1.5rem);
+  }
+}
+
+@media (max-width: 576px) {
+  .about-container {
+    padding: 1rem 0.5rem;
+  }
+  
+  .hero-content {
+    padding: 1.5rem;
+  }
+  
+  .section-title {
+    font-size: 1.5rem;
+  }
+}
+</style>

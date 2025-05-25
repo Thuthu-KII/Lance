@@ -1,0 +1,372 @@
+<%- contentFor('body') %>
+
+<main class="pricing-container">
+  <header class="pricing-header">
+    <h1 class="pricing-title">Pricing & Payment</h1>
+    <p class="pricing-subtitle">Transparent pricing model that works for everyone</p>
+  </header>
+
+  <section class="pricing-section">
+    <article class="pricing-card">
+      <header class="pricing-card-header">
+        <h2 class="pricing-card-title">For Clients</h2>
+        <span class="pricing-icon">💼</span>
+      </header>
+      <section class="pricing-card-body">
+        <article class="pricing-feature">
+          <h3>Set Your Own Budget</h3>
+          <p>You have complete control over project pricing. Define your budget based on project scope, complexity, and timeline.</p>
+        </article>
+        <article class="pricing-feature">
+          <h3>Secure Payment Escrow</h3>
+          <p>Your payments are held securely until work is completed and approved. This protects both you and the freelancer.</p>
+        </article>
+        <article class="pricing-feature">
+          <h3>Milestone-Based Payments</h3>
+          <p>Break projects into milestones and release payments as work progresses, giving you full control over the process.</p>
+        </article>
+      </section>
+    </article>
+
+    <article class="pricing-card">
+      <header class="pricing-card-header">
+        <h2 class="pricing-card-title">For Freelancers</h2>
+        <span class="pricing-icon">🎯</span>
+      </header>
+      <section class="pricing-card-body">
+        <article class="pricing-feature">
+          <h3>Set Your Own Rates</h3>
+          <p>You determine your hourly rates or project fees based on your expertise, experience, and the value you provide.</p>
+        </article>
+        <article class="pricing-feature">
+          <h3>Guaranteed Payment</h3>
+          <p>Once a client accepts your work, payment is guaranteed. No more chasing clients for what you've earned.</p>
+        </article>
+        <article class="pricing-feature">
+          <h3>Quick Payment Release</h3>
+          <p>Payments are released promptly upon work approval, ensuring you get paid for your efforts without delay.</p>
+        </article>
+      </section>
+    </article>
+  </section>
+
+  <section class="how-it-works">
+    <h2 class="section-title">How Our Payment System Works</h2>
+    <ol class="steps-container">
+      <li class="step">
+        <span class="step-number">1</span>
+        <article class="step-content">
+          <h3>Project Agreement</h3>
+          <p>Client and freelancer agree on project scope and payment terms</p>
+        </article>
+      </li>
+      <li class="step">
+        <span class="step-number">2</span>
+        <article class="step-content">
+          <h3>Payment Secured</h3>
+          <p>Client funds are held securely in our escrow system</p>
+        </article>
+      </li>
+      <li class="step">
+        <span class="step-number">3</span>
+        <article class="step-content">
+          <h3>Work Delivery</h3>
+          <p>Freelancer completes and delivers the agreed work</p>
+        </article>
+      </li>
+      <li class="step">
+        <span class="step-number">4</span>
+        <article class="step-content">
+          <h3>Payment Released</h3>
+          <p>Once work is approved, payment is released to the freelancer</p>
+        </article>
+      </li>
+    </ol>
+  </section>
+
+  <section class="benefits-section">
+    <h2 class="section-title">Why Our Pricing Model Works</h2>
+    <ul class="benefits-grid">
+      <li class="benefit-item">
+        <span class="benefit-icon">🔒</span>
+        <h3>Security</h3>
+        <p>Funds are held securely until work completion ensures protection for both parties</p>
+      </li>
+      <li class="benefit-item">
+        <span class="benefit-icon">⚖️</span>
+        <h3>Fairness</h3>
+        <p>Both clients and freelancers set their own terms, creating a balanced marketplace</p>
+      </li>
+      <li class="benefit-item">
+        <span class="benefit-icon">⚡</span>
+        <h3>Efficiency</h3>
+        <p>Streamlined payment process reduces disputes and ensures quick transactions</p>
+      </li>
+      <li class="benefit-item">
+        <span class="benefit-icon">🤝</span>
+        <h3>Trust</h3>
+        <p>Our escrow system builds confidence between clients and freelancers</p>
+      </li>
+    </ul>
+  </section>
+</main>
+
+<style>
+.pricing-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.pricing-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.pricing-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, var(--primary-color) 0%, #5a52cc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.pricing-subtitle {
+  font-size: 1.2rem;
+  color: #6c757d;
+  margin: 0;
+}
+
+.pricing-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.pricing-card {
+  flex: 1 0 calc(50% - 1rem);
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pricing-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.pricing-card-header {
+  padding: 2rem;
+  background: linear-gradient(135deg, var(--primary-light) 0%, #f0f3ff 100%);
+  text-align: center;
+  position: relative;
+}
+
+.pricing-card-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+  color: var(--dark-color);
+}
+
+.pricing-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.pricing-card-body {
+  padding: 2rem;
+}
+
+.pricing-feature {
+  margin-bottom: 2rem;
+}
+
+.pricing-feature:last-child {
+  margin-bottom: 0;
+}
+
+.pricing-feature h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+
+.pricing-feature p {
+  color: #6c757d;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.how-it-works {
+  margin-bottom: 4rem;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: var(--dark-color);
+}
+
+.steps-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.step {
+  flex: 1 0 calc(25% - 1.5rem);
+  max-width: 250px;
+  text-align: center;
+  background: var(--glass-bg);
+  backdrop-filter: blur(5px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.step:hover {
+  transform: translateY(-5px);
+}
+
+.step-number {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, #5a52cc 100%);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0 auto 1rem auto;
+}
+
+.step-content h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--dark-color);
+}
+
+.step-content p {
+  color: #6c757d;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.benefits-section {
+  margin-bottom: 2rem;
+}
+
+.benefits-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.benefit-item {
+  flex: 1 0 calc(25% - 1.5rem);
+  text-align: center;
+  background: var(--glass-bg);
+  backdrop-filter: blur(5px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 2rem 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.benefit-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+.benefit-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.benefit-item h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+
+.benefit-item p {
+  color: #6c757d;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Responsive design */
+@media (max-width: 992px) {
+  .pricing-card {
+    flex: 1 0 calc(100% - 1rem);
+  }
+  
+  .step {
+    flex: 1 0 calc(50% - 1.5rem);
+  }
+  
+  .benefit-item {
+    flex: 1 0 calc(50% - 1.5rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .pricing-title {
+    font-size: 2rem;
+  }
+  
+  .pricing-subtitle {
+    font-size: 1rem;
+  }
+  
+  .step {
+    flex: 1 0 calc(100% - 1.5rem);
+  }
+  
+  .benefit-item {
+    flex: 1 0 calc(100% - 1.5rem);
+  }
+  
+  .steps-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .pricing-container {
+    padding: 1rem 0.5rem;
+  }
+  
+  .pricing-card-header {
+    padding: 1.5rem;
+  }
+  
+  .pricing-card-body {
+    padding: 1.5rem;
+  }
+  
+  .section-title {
+    font-size: 1.5rem;
+  }
+}
+</style>
