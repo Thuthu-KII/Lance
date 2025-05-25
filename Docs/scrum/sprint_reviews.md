@@ -19,8 +19,8 @@ This document summarizes the outcomes of our sprint, focusing on the progress ma
 ## 2. Sign-Up Page
 
 **Initial Version:**  
-![Sign-Up Page - Old](./Screenshot%202025-05-25%133455.png)
-![Sign-Up Page - Old](./Screenshot%202025-05-25%133501.png)
+![Sign-Up Page - Old](./Screenshot%202025-05-25%20133455.png)
+![Sign-Up Page - Old](./Screenshot%202025-05-25%20133501.png)
 
 **Current Version:**  
 ![Sign-Up Page - New](./images/signup_new.png)
