@@ -27,6 +27,11 @@ describe('Payment Model', () => {
       const result = await Payment.findById(999);
       expect(result).toBeNull();
     });
+
+    it('throws an error when DB fails', async () => {
+      db.query.mockRejectedValue(new Error('DB error'));
+      await expect(Payment.findById(1)).rejects.toThrow('DB error');
+    });
   });
 
   describe('create', () => {
@@ -48,6 +53,11 @@ describe('Payment Model', () => {
       expect(result).toEqual(mockResponse.rows[0]);
       expect(db.query).toHaveBeenCalled();
     });
+
+    it('throws an error when DB fails', async () => {
+      db.query.mockRejectedValue(new Error('DB error'));
+      await expect(Payment.create({ amount: 100 })).rejects.toThrow('DB error');
+    });
   });
 
   describe('update', () => {
@@ -68,6 +78,11 @@ describe('Payment Model', () => {
       const result = await Payment.update(1, {});
       expect(result).toEqual(mockFound);
     });
+
+    it('throws an error when DB fails during update', async () => {
+      db.query.mockRejectedValue(new Error('Update failed'));
+      await expect(Payment.update(1, { status: 'completed' })).rejects.toThrow('Update failed');
+    });
   });
 
   describe('getWithDetails', () => {
@@ -77,6 +92,11 @@ describe('Payment Model', () => {
 
       const result = await Payment.getWithDetails(1);
       expect(result).toEqual(mockDetails);
+    });
+
+    it('throws an error when DB fails', async () => {
+      db.query.mockRejectedValue(new Error('Details fetch error'));
+      await expect(Payment.getWithDetails(1)).rejects.toThrow('Details fetch error');
     });
   });
 
@@ -97,6 +117,11 @@ describe('Payment Model', () => {
       const result = await Payment.getAll();
       expect(result).toEqual(mockPayments);
     });
+
+    it('throws an error when DB fails', async () => {
+      db.query.mockRejectedValue(new Error('Query failed'));
+      await expect(Payment.getAll()).rejects.toThrow('Query failed');
+    });
   });
 
   describe('getPendingFreelancerPayments', () => {
@@ -106,6 +131,11 @@ describe('Payment Model', () => {
 
       const result = await Payment.getPendingFreelancerPayments();
       expect(result).toEqual(mockPayments);
+    });
+
+    it('throws an error when getAll fails', async () => {
+      jest.spyOn(Payment, 'getAll').mockRejectedValue(new Error('Failed to get all'));
+      await expect(Payment.getPendingFreelancerPayments()).rejects.toThrow('Failed to get all');
     });
   });
 
@@ -117,6 +147,11 @@ describe('Payment Model', () => {
       const result = await Payment.getUserPaymentHistory(10);
       expect(result).toEqual(mockHistory);
       expect(db.query).toHaveBeenCalledWith(expect.any(String), [10]);
+    });
+
+    it('throws an error when DB fails', async () => {
+      db.query.mockRejectedValue(new Error('Failed to fetch history'));
+      await expect(Payment.getUserPaymentHistory(10)).rejects.toThrow('Failed to fetch history');
     });
   });
 
@@ -139,10 +174,15 @@ describe('Payment Model', () => {
     });
 
     it('handles missing values safely', async () => {
-      db.query.mockResolvedValue({ rows: [{}] }); // Return empty stats
+      db.query.mockResolvedValue({ rows: [{}] });
 
       const result = await Payment.getStatistics();
       expect(result.totalPayments).toBe(0);
+    });
+
+    it('throws an error when DB fails during stats aggregation', async () => {
+      db.query.mockRejectedValue(new Error('Stat fetch error'));
+      await expect(Payment.getStatistics()).rejects.toThrow('Stat fetch error');
     });
   });
 });
