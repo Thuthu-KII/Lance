@@ -109,10 +109,10 @@ A comprehensive web application connecting clients with freelancers, enabling jo
 - **Scrum Artifacts:**
   - [Product Backlog](/Docs/scrum/product_backlog.md)
   - [Sprint Backlogs](/Docs/scrum/product_backlog.md)
-  - [Sprint Burndown Charts]/Docs/scrum/burndown_charts.md)
+  - [Sprint Burndown Charts](/Docs/scrum/burndown_charts.md)
   - [Sprint Retrospective Reports](/Docs/scrum/sprint_retro.md)
   - [Daily Stand-Up Summaries](/Docs/scrum/sprint_retro.md)
-  - [Sprint Review Demonstrations](/Docs/scrum/sprint_review.md)
+  - [Sprint Review Demonstrations](/Docs/scrum/sprint_reviews.md)
 - **Additional Design Documents:**
   - [Project Plan](/Docs/Planning%and%Design/framework.md)
   - [Architecture Diagram](/Docs/Planning%and%Design/architecthure.md)
